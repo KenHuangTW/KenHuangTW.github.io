@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.2">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="前言第一次嘗試寫blog，怕不寫下來兩個星期以後都忘記了，現在還很菜，鞭小力一點。 這次的主題是python上熱門的ORM工具 — sqlalchemy。 起初在寫一個有關於成績分析的sideproject，因為使用到資料庫做為儲存資料的方式，所以免不了的需要對資料庫的表格進行一些操作，原本的想法是使用 python 的 module 去做，但寫到一半發現，要是一個一個用 SQL 的語法寫下去，後">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python sqlalchemy note — 1">
+<meta property="og:url" content="https://example.com/2022/09/05/PythonSqlalchemy1/index.html">
+<meta property="og:site_name" content="窩不知道">
+<meta property="og:description" content="前言第一次嘗試寫blog，怕不寫下來兩個星期以後都忘記了，現在還很菜，鞭小力一點。 這次的主題是python上熱門的ORM工具 — sqlalchemy。 起初在寫一個有關於成績分析的sideproject，因為使用到資料庫做為儲存資料的方式，所以免不了的需要對資料庫的表格進行一些操作，原本的想法是使用 python 的 module 去做，但寫到一半發現，要是一個一個用 SQL 的語法寫下去，後">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://example.com/2022/09/05/PythonSqlalchemy1/demotable.png">
+<meta property="article:published_time" content="2022-09-05T01:23:19.000Z">
+<meta property="article:modified_time" content="2022-09-05T07:38:30.000Z">
+<meta property="article:author" content="KenHuang">
+<meta property="article:tag" content="Python">
+<meta property="article:tag" content="Sqlalchemy">
+<meta property="article:tag" content="Note">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://example.com/2022/09/05/PythonSqlalchemy1/demotable.png">
+
+<link rel="canonical" href="https://example.com/2022/09/05/PythonSqlalchemy1/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-TW'
+  };
+</script>
+
+  <title>Python sqlalchemy note — 1 | 窩不知道</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">窩不知道</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>關於</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://example.com/2022/09/05/PythonSqlalchemy1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="KenHuang">
+      <meta itemprop="description" content="技能樹很歪的工程師的筆記<br>主要寫Python<br>偶爾寫寫Swift">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="窩不知道">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Python sqlalchemy note — 1
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+              
+
+              <time title="創建時間：2022-09-05 09:23:19 / 修改時間：15:38:30" itemprop="dateCreated datePublished" datetime="2022-09-05T09:23:19+08:00">2022-09-05</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/" itemprop="url" rel="index"><span itemprop="name">Python</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/ORM/" itemprop="url" rel="index"><span itemprop="name">ORM</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>第一次嘗試寫blog，怕不寫下來兩個星期以後都忘記了，現在還很菜，鞭小力一點。</p>
+<p>這次的主題是python上熱門的ORM工具 — <strong>sqlalchemy</strong>。</p>
+<p>起初在寫一個有關於成績分析的sideproject，因為使用到資料庫做為儲存資料的方式，所以免不了的需要對資料庫的表格進行一些操作，原本的想法是使用 python 的 module 去做，但寫到一半發現，要是一個一個用 SQL 的語法寫下去，後面維護起來肯定是直接送急診。</p>
+<p>於是乎就開始思考，有沒有什麼方式可以解決我的困擾。<br>剛好工作的關係，接觸到了一種可以方便使用者對資料庫執行操作的方式 — <strong>ORM</strong>。</p>
+<span id="more"></span>
+<style>
+hr.style-one {
+    border: 0;
+    height: 5px;
+    background: #333;
+    background-image: linear-gradient(to right, #ccc, #333, #ccc);
+}
+</style>
+<hr class="style-one" />
+
+<h2 id="ORM-是什麼"><a href="#ORM-是什麼" class="headerlink" title="ORM 是什麼"></a>ORM 是什麼</h2><p>ORM(Object Relational Mapping)是一種程式設計技術，用於實現物件導向程式語言裡不同類型系統的資料之間的轉換。</p>
+<blockquote>
+<p><strong>用最白話的方式來說，就是一個中繼站的概念，幫我們去和資料庫做溝通，我們可以用ORM的語法來撰寫程式就好。</strong></p>
+</blockquote>
+<p>什麼意思呢? 舉例：假設我們今天有一個 Table 叫做 Student</p>
+<p><img src="/2022/09/05/PythonSqlalchemy1/demotable.png"></p>
+<p>如果今天我們要查詢所有一年級的學生，在SQL的語法裡面我們會這樣寫</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> &quot;Student&quot; <span class="keyword">WHERE</span> &quot;grade&quot; <span class="operator">=</span> <span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+<p>這樣看起來好像還好</p>
+<p>但如果我們今天表格之間的關係開始複雜起來呢</p>
+<p>你可能中間需要先去查詢別的表格的 id，再拿回來當作條件，同時又需要一起輸出出來，甚至還要根據使用者的條件來做篩選。可能就有機會長成這樣:</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> (&quot;table.ele1&quot;, &quot;table.ele2&quot;, &quot;number&quot;, &quot;name&quot;)</span><br><span class="line"><span class="keyword">FROM</span> &quot;student&quot;</span><br><span class="line"><span class="keyword">inner</span> <span class="keyword">JOIN</span> &quot;table&quot;</span><br><span class="line"><span class="keyword">ON</span> &quot;table&quot;.&quot;id&quot; <span class="operator">=</span> &quot;student&quot;.id</span><br><span class="line"><span class="keyword">WHERE</span> a <span class="keyword">condition</span></span><br><span class="line"><span class="keyword">AND</span> anthor <span class="keyword">condition</span></span><br><span class="line"><span class="keyword">AND</span> anthor <span class="keyword">condition</span> again</span><br></pre></td></tr></table></figure>
+
+<p>這樣看起來就麻煩了不少，不幸的是這個狀況在這個專案一定會出現而且頻率非常高。</p>
+<p>這時就可以讓我們的ORM派上用場，省下我們寶貴的時間。</p>
+<blockquote>
+<p>最大的優點就是直接用ORM的語法來代替上面那一串又臭又長的SQL語法，另外還可以提升安全性。</p>
+</blockquote>
+<p>雖然我不是時間管理大師，但這聽起來很棒對吧?</p>
+<p>你說這個東西厲害到成仙了，難道他沒有缺點嗎。<br>當然有，方便換來的就是效能上的犧牲。我們沒辦法一個一個用SQL的語法來最佳化查詢的效能。</p>
+<p>但我認為在這個效能飛起的時代，這是可以接受的。</p>
+<style>
+hr.style-one {
+    border: 0;
+    height: 5px;
+    background: #333;
+    background-image: linear-gradient(to right, #ccc, #333, #ccc);
+}
+</style>
+<hr class="style-one" />
+
+<h2 id="實際應用"><a href="#實際應用" class="headerlink" title="實際應用"></a>實際應用</h2><p>首先我們要先建立與資料庫的連線(以下以 postgresql 為例)</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> sqlalchemy</span><br><span class="line"></span><br><span class="line">engine = sqlalchemy.create_engine(</span><br><span class="line">    <span class="string">&#x27;postgresql://username:password@your_ip:yourportyour_database_name&#x27;</span>, echo=<span class="literal">True</span>)</span><br><span class="line"><span class="comment"># 結構: 資料庫名稱://使用者名稱:密碼@資料庫ip:資料庫port/資料庫名稱</span></span><br></pre></td></tr></table></figure>
+<p>這樣就可以建立好一個連線了</p>
+<p>如果是其他資料庫的話，可以參考<a target="_blank" rel="noopener" href="https://docs.sqlalchemy.org/en/14/core/engines.html">官方文件</a></p>
+<p>建立好連線之後我們要來定義一個新的Table</p>
+<ul>
+<li>這個 Table 叫做 students</li>
+<li>Primary Key 是 id 且會自動生成數字</li>
+<li>grade, class, number 是唯一組合的</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sqlalchemy <span class="keyword">import</span> Column, Integer, String, Boolean  <span class="comment"># 型別</span></span><br><span class="line"><span class="keyword">from</span> sqlalchemy.ext.declarative <span class="keyword">import</span> declarative_base </span><br><span class="line"><span class="keyword">from</span> sqlalchemy <span class="keyword">import</span> UniqueConstraint  <span class="comment"># 唯一組合</span></span><br><span class="line"></span><br><span class="line">Base = declarative_base()</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Student</span>(<span class="title class_ inherited__">Base</span>):</span><br><span class="line">    __tablename__ = <span class="string">&#x27;students&#x27;</span>  <span class="comment"># 表格名稱</span></span><br><span class="line">    <span class="built_in">id</span> = Column(<span class="string">&#x27;id&#x27;</span>, Integer, primary_key=<span class="literal">True</span>)</span><br><span class="line">    name = Column(<span class="string">&#x27;name&#x27;</span>, String(<span class="number">20</span>), nullable=<span class="literal">False</span>)  <span class="comment"># 20為最大長度</span></span><br><span class="line">    grade = Column(<span class="string">&#x27;grade&#x27;</span>, Integer, nullable=<span class="literal">False</span>)</span><br><span class="line">    class_  = Column(<span class="string">&#x27;class&#x27;</span>, Integer, nullable=<span class="literal">False</span>)</span><br><span class="line">    number = Column(<span class="string">&#x27;number&#x27;</span>, Integer, nullable=<span class="literal">False</span>)</span><br><span class="line">    UniqueConstraint(grade, class_, number, name=<span class="string">&#x27;basic_info&#x27;</span>)</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, name, number, grade, class_</span>):</span><br><span class="line">        self.name = name</span><br><span class="line">        self.number = number</span><br><span class="line">        self.grade = grade</span><br><span class="line">        self.class_ = class_</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__repr__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">        回傳要顯示的資料</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;&lt;student(&#x27;%s&#x27;, &#x27;%d&#x27;, &#x27;%d&#x27;, &#x27;%d&#x27;)&gt;&quot;</span>%(</span><br><span class="line">            self.name, self.grade, self.class_, self.number)</span><br><span class="line"></span><br><span class="line">Base.metadata.create_all(engine)  <span class="comment"># 建立所有表格</span></span><br></pre></td></tr></table></figure>
+
+<p>這樣我們就建立好一個 Table 了</p>
+<p>再來我們要新增一筆資料進去</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sqlalchemy.orm <span class="keyword">import</span> sessionmaker</span><br><span class="line"></span><br><span class="line">value = &#123;<span class="string">&quot;name&quot;</span>: <span class="string">&quot;大偉&quot;</span>, <span class="string">&quot;grade&quot;</span>: <span class="number">1</span>, <span class="string">&quot;class_&quot;</span>: <span class="number">1</span>, <span class="string">&quot;number&quot;</span>: <span class="number">1</span>&#125;</span><br><span class="line">Session = sessionmaker(bind=engine)</span><br><span class="line">session = Session()</span><br><span class="line">session.add(Students(**values))</span><br><span class="line"><span class="comment"># 也可以使用 session.add(Student(&quot;大偉&quot;, 1, 1, 1))</span></span><br><span class="line">session.commit()  <span class="comment"># 記得儲存</span></span><br></pre></td></tr></table></figure>
+
+<p>你說我們有沒有快一點的方式</p>
+<p>當然有的，我們可以改用 add_all 這個方法</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">student_value = [Student(<span class="string">&quot;阿明&quot;</span>, <span class="number">2</span>, <span class="number">1</span>, <span class="number">2</span>), Student(<span class="string">&quot;小瑪莉&quot;</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>)]</span><br><span class="line">session.add_all(student_value)</span><br><span class="line">session.commit()  <span class="comment"># 記得儲存</span></span><br></pre></td></tr></table></figure>
+
+<p>最後我們來查詢資料</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">data = session.query(Student)</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> data:</span><br><span class="line">    <span class="built_in">print</span>(i)</span><br></pre></td></tr></table></figure>
+
+<p>以下是完整的程式碼</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> sqlalchemy</span><br><span class="line"><span class="keyword">from</span> sqlalchemy.orm <span class="keyword">import</span> sessionmaker</span><br><span class="line"><span class="keyword">from</span> sqlalchemy <span class="keyword">import</span> select</span><br><span class="line"><span class="keyword">from</span> sqlalchemy <span class="keyword">import</span> Column, Integer, String, Boolean  <span class="comment"># 型別</span></span><br><span class="line"><span class="keyword">from</span> sqlalchemy.ext.declarative <span class="keyword">import</span> declarative_base</span><br><span class="line"><span class="keyword">from</span> sqlalchemy <span class="keyword">import</span> UniqueConstraint</span><br><span class="line"></span><br><span class="line">Base = declarative_base()</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Students</span>(<span class="title class_ inherited__">Base</span>):</span><br><span class="line">    __tablename__ = <span class="string">&#x27;students&#x27;</span>  <span class="comment"># 表格名稱</span></span><br><span class="line">    <span class="built_in">id</span> = Column(<span class="string">&#x27;id&#x27;</span>, Integer, primary_key=<span class="literal">True</span>)</span><br><span class="line">    name = Column(<span class="string">&#x27;name&#x27;</span>, String(<span class="number">20</span>), nullable=<span class="literal">False</span>)  <span class="comment"># 20為最大長度</span></span><br><span class="line">    grade = Column(<span class="string">&#x27;grade&#x27;</span>, Integer, nullable=<span class="literal">False</span>)</span><br><span class="line">    class_  = Column(<span class="string">&#x27;class&#x27;</span>, Integer, nullable=<span class="literal">False</span>)</span><br><span class="line">    number = Column(<span class="string">&#x27;number&#x27;</span>, Integer, nullable=<span class="literal">False</span>)</span><br><span class="line">    UniqueConstraint(grade, class_, number, name=<span class="string">&#x27;basic_info&#x27;</span>)</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, name, number, grade, class_</span>):</span><br><span class="line">        self.name = name</span><br><span class="line">        self.number = number</span><br><span class="line">        self.grade = grade</span><br><span class="line">        self.class_ = class_</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__repr__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">        回傳要顯示的資料</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;&lt;student(&#x27;%s&#x27;, &#x27;%d&#x27;, &#x27;%d&#x27;, &#x27;%d&#x27;)&gt;&quot;</span>%(</span><br><span class="line">            self.name, self.grade, self.class_, self.number)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    engine = sqlalchemy.create_engine(yoursql_info)  <span class="comment"># 排版問題請往上看</span></span><br><span class="line">    Session = sessionmaker(bind=engine)</span><br><span class="line">    session = Session()</span><br><span class="line">    Base.metadata.create_all(engine)  <span class="comment"># 建立 Table</span></span><br><span class="line">    </span><br><span class="line">    value = &#123;<span class="string">&quot;name&quot;</span>: <span class="string">&quot;大偉&quot;</span>, <span class="string">&quot;grade&quot;</span>: <span class="number">1</span>, <span class="string">&quot;class_&quot;</span>: <span class="number">1</span>, <span class="string">&quot;number&quot;</span>: <span class="number">1</span>&#125;</span><br><span class="line">    session.add(Student(**values))  <span class="comment"># 新增資料進去 Table </span></span><br><span class="line">    student_value = [Student(<span class="string">&quot;阿明&quot;</span>, <span class="number">2</span>, <span class="number">1</span>, <span class="number">2</span>), Student(<span class="string">&quot;小瑪莉&quot;</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>)]</span><br><span class="line">    session.add_all(student_value)  <span class="comment"># 一次新增多筆</span></span><br><span class="line">    <span class="comment"># 取得 &quot;所有&quot; 資料</span></span><br><span class="line">    data = session.query(Student)</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> data:</span><br><span class="line">        <span class="built_in">print</span>(i)</span><br><span class="line">    session.commit()  <span class="comment"># 儲存資料</span></span><br><span class="line">    session.close()  <span class="comment"># 關閉 </span></span><br></pre></td></tr></table></figure>
+
+<style>
+hr.style-one {
+    border: 0;
+    height: 5px;
+    background: #333;
+    background-image: linear-gradient(to right, #ccc, #333, #ccc);
+}
+</style>
+<hr class="style-one" />
+
+<h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><p><a target="_blank" rel="noopener" href="https://zh.wikipedia.org/zh-tw%E5%AF%B9%E8%B1%A1%E5%85%B3%E7%B3%BB%E6%98%A0%E5%B0%84">Wiki</a><br><a target="_blank" rel="noopener" href="https://docs.sqlalchemy.org/en/14/">官方文件</a></p>
+<style>
+hr.style-one {
+    border: 0;
+    height: 5px;
+    background: #333;
+    background-image: linear-gradient(to right, #ccc, #333, #ccc);
+}
+</style>
+<hr class="style-one" />
+
+<p>以上就是簡單的 sqlalchemy 介紹，如果有錯誤的部份，歡迎指正，謝謝。<br>如果你喜歡這篇文章，請幫我拍手<br>只需要註冊會員就可以囉，完全不用花費任何一毛錢就可以用來鼓裡創作者囉</p>
+<div>
+    <script type="text/javascript">
+    document.write(
+        "<iframe scrolling='no' frameborder='0' sandbox='allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox allow-storage-access-by-user-activation' style='height: 212px; width: 100%;' src='https://button.like.co/in/embed/wtf81905/button?referrer=" +
+        encodeURIComponent(location.href.split("?")[0].split("#")[0]) + "'></iframe>");
+    </script>
+</div>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Python/" rel="tag"># Python</a>
+              <a href="/tags/Sqlalchemy/" rel="tag"># Sqlalchemy</a>
+              <a href="/tags/Note/" rel="tag"># Note</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2022/09/05/PythonSqlalchemy2/" rel="next" title="Python sqlalchemy note — 2">
+      Python sqlalchemy note — 2 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ORM-%E6%98%AF%E4%BB%80%E9%BA%BC"><span class="nav-number">2.</span> <span class="nav-text">ORM 是什麼</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AF%A6%E9%9A%9B%E6%87%89%E7%94%A8"><span class="nav-number">3.</span> <span class="nav-text">實際應用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="nav-number">4.</span> <span class="nav-text">參考資料</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">KenHuang</p>
+  <div class="site-description" itemprop="description">技能樹很歪的工程師的筆記<br>主要寫Python<br>偶爾寫寫Swift</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">3</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">分類</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">標籤</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">KenHuang</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 強力驅動
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
