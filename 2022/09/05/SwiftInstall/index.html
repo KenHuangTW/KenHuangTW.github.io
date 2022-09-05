@@ -233,7 +233,7 @@ hr.style-one {
 <figure class="highlight dos"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">copy</span> <span class="variable">%SDKROOT%</span>\usr\share\ucrt.modulemap &quot;<span class="variable">%UniversalCRTSdkDir%</span>\Include\<span class="variable">%UCRTVersion%</span>\ucrt\module.modulemap&quot;</span><br><span class="line"><span class="built_in">copy</span> <span class="variable">%SDKROOT%</span>\usr\share\visualc.modulemap &quot;<span class="variable">%VCToolsInstallDir%</span>\include\module.modulemap&quot;</span><br><span class="line"><span class="built_in">copy</span> <span class="variable">%SDKROOT%</span>\usr\share\visualc.apinotes &quot;<span class="variable">%VCToolsInstallDir%</span>\include\visualc.apinotes&quot;</span><br><span class="line"><span class="built_in">copy</span> <span class="variable">%SDKROOT%</span>\usr\share\winsdk.modulemap &quot;<span class="variable">%UniversalCRTSdkDir%</span>\Include\<span class="variable">%UCRTVersion%</span>\um\module.modulemap&quot;</span><br></pre></td></tr></table></figure>
 
 <p><strong>之後我們的資料夾需要有這樣的路徑</strong><br>C:\Library\Developer\Toolchains\unknown-Asserts-development.xctoolchain\usr\lib\swift\windows\x86_64</p>
-<p>``在這邊我有遇到一個問題是，\lib\swift\之後的都沒有了，不過沒關係<br>我們到<br>C:\Library\Developer\Platforms\Windows.platform\Developer\SDKs\Windows.sdk\usr\lib\swift\windows</p>
+<p>&#96;&#96;在這邊我有遇到一個問題是，\lib\swift\之後的都沒有了，不過沒關係<br>我們到<br>C:\Library\Developer\Platforms\Windows.platform\Developer\SDKs\Windows.sdk\usr\lib\swift\windows</p>
 <p>把 \lib 之後的 copy 過去就大功告成了</p>
 <p>我們來測試看看是否能運作呢</p>
 <figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Hello World&quot;</span>)</span><br></pre></td></tr></table></figure>
@@ -288,7 +288,7 @@ hr.style-one {
 <p>再來輸入指令解壓縮</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo tar xzf your_download_swift_file</span><br></pre></td></tr></table></figure>
 
-<p>再來轉移到另一個資料夾 /usr/share/swift 底下</p>
+<p>再來轉移到另一個資料夾 &#x2F;usr&#x2F;share&#x2F;swift 底下</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo <span class="built_in">mv</span> your_tar_swift_file /usr/share/swift</span><br></pre></td></tr></table></figure>
 
 <p>最後設置為環境變數</p>
