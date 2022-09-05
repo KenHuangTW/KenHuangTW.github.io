@@ -358,7 +358,7 @@
 <script>
   function loadCount() {
     var d = document, s = d.createElement('script');
-    s.src = 'https://KenH_TW.disqus.com/count.js';
+    s.src = 'https://kenh-tw.disqus.com/count.js';
     s.id = 'dsq-count-scr';
     (d.head || d.body).appendChild(s);
   }
@@ -370,6 +370,7 @@
     this.page.url = "https://kenhuangtw.github.io/about/index.html";
     this.page.identifier = "about/index.html";
     this.page.title = "我是誰";
+    this.language = "zh_TW";
     };
   NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
     if (window.DISQUS) {
@@ -379,7 +380,7 @@
       });
     } else {
       var d = document, s = d.createElement('script');
-      s.src = 'https://KenH_TW.disqus.com/embed.js';
+      s.src = 'https://kenh-tw.disqus.com/embed.js';
       s.setAttribute('data-timestamp', '' + +new Date());
       (d.head || d.body).appendChild(s);
     }
