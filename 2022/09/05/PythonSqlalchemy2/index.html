@@ -28,7 +28,7 @@
 <meta property="og:description" content="前言這次要來繼續說明 sqlalchemy 的更多操作，如果沒有看過第一篇的朋友們，可以先去看第一篇">
 <meta property="og:locale" content="zh_TW">
 <meta property="article:published_time" content="2022-09-05T05:39:37.000Z">
-<meta property="article:modified_time" content="2022-09-06T14:43:28.152Z">
+<meta property="article:modified_time" content="2022-09-06T15:29:38.243Z">
 <meta property="article:author" content="KenHuang">
 <meta property="article:tag" content="Note">
 <meta property="article:tag" content="Python">
@@ -188,7 +188,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新於</span>
-                <time title="修改時間：2022-09-06 22:43:28" itemprop="dateModified" datetime="2022-09-06T22:43:28+08:00">2022-09-06</time>
+                <time title="修改時間：2022-09-06 23:29:38" itemprop="dateModified" datetime="2022-09-06T23:29:38+08:00">2022-09-06</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -229,7 +229,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>這次要來繼續說明 <strong>sqlalchemy</strong> 的更多操作，如果沒有看過<a href="https://kenhuangtw.github.io/2022/09/05/PythonSqlalchemy1/#more">第一篇</a>的朋友們，可以先去看<a href="https://kenhuangtw.github.io/2022/09/05/PythonSqlalchemy1/#more">第一篇</a></p>
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>這次要來繼續說明 <strong>sqlalchemy</strong> 的更多操作，如果沒有看過<a href="https://kenhuangtw.github.io/2022/09/05/PythonSqlalchemy1/#more">第一篇</a>的朋友們，可以先去看<a href="https://kenhuangtw.github.io/2022/09/05/PythonSqlalchemy1/#more">第一篇</a></p>
 <span id="more"></span>
 <style>
 hr.style-one {
@@ -259,7 +259,7 @@ hr.style-one {
 </style>
 <hr class="style-one" />
 
-<h2 id="多個條件篩選"><a href="#多個條件篩選" class="headerlink" title="多個條件篩選"></a>多個條件篩選</h2><p>只要條件越多，使用 ORM 絕對會比使用 SQL 的語法方便不少，更不用說我們還是在 python 上寫這些，要是要一個一個用 SQL 語法也不是不行，就把語法當作字串就好，再變成格式化字串填入我們要填的條件，不過這樣就會非常麻煩、難以維護而且看起來很醜。</p>
+<h1 id="多個條件篩選"><a href="#多個條件篩選" class="headerlink" title="多個條件篩選"></a>多個條件篩選</h1><p>只要條件越多，使用 ORM 絕對會比使用 SQL 的語法方便不少，更不用說我們還是在 python 上寫這些，要是要一個一個用 SQL 語法也不是不行，就把語法當作字串就好，再變成格式化字串填入我們要填的條件，不過這樣就會非常麻煩、難以維護而且看起來很醜。</p>
 <p>扯遠了，假設我們今天要篩選 一班 和 二班 的學生，總不可能我們去下兩次 filter 吧，這樣只要條件一多，肯定是打 filter 打到晚上睡覺都會夢到。</p>
 <blockquote>
 <p>為了因應這個情況，sqlalchemy 提供了 model 一個方法，就是 .in_()。</p>
@@ -294,7 +294,7 @@ hr.style-one {
 </style>
 <hr class="style-one" />
 
-<h2 id="更新資料"><a href="#更新資料" class="headerlink" title="更新資料"></a>更新資料</h2><p>我們可以用幾種方式更新資料，這邊簡單介紹兩種</p>
+<h1 id="更新資料"><a href="#更新資料" class="headerlink" title="更新資料"></a>更新資料</h1><p>我們可以用幾種方式更新資料，這邊簡單介紹兩種</p>
 <p>第一種: 一個一個慢慢來</p>
 <p>這種情況比較適合少量更新，例如：小瑪莉改名字了，改成Amy</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">student = session.query(Student).<span class="built_in">filter</span>(<span class="string">&quot;name&quot;</span>).one()  <span class="comment"># 直接回傳物件studnet.name = &quot;Amy&quot;</span></span><br><span class="line">session.commit()  <span class="comment"># 儲存資料</span></span><br><span class="line">session.close()  <span class="comment"># 關閉</span></span><br></pre></td></tr></table></figure>
@@ -313,7 +313,7 @@ hr.style-one {
 </style>
 <hr class="style-one" />
 
-<h2 id="刪除資料"><a href="#刪除資料" class="headerlink" title="刪除資料"></a>刪除資料</h2><p>和<code>.update()</code>相似，可以在Query這個物件後面加上<code>.delete()</code>這個方法</p>
+<h1 id="刪除資料"><a href="#刪除資料" class="headerlink" title="刪除資料"></a>刪除資料</h1><p>和<code>.update()</code>相似，可以在Query這個物件後面加上<code>.delete()</code>這個方法</p>
 <p>例如: 刪除所有叫做杰哥的學生</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">session.query(Student).<span class="built_in">filter</span>(Student.name == <span class="string">&quot;杰哥&quot;</span>).delete()</span><br><span class="line">session.commit()</span><br><span class="line">session.close()</span><br></pre></td></tr></table></figure>
 <p>如果不使用Query這個物件來做刪除有沒有辦法呢?</p>
@@ -321,7 +321,7 @@ hr.style-one {
 <p>例如: 刪除 2年級的學生</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">student = session.query(Student).<span class="built_in">filter</span>(Student.grade == <span class="number">2</span>)</span><br><span class="line">session.delete(student)</span><br><span class="line">session.commit()</span><br><span class="line">session.colse()</span><br></pre></td></tr></table></figure>
 
-<h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><p><a target="_blank" rel="noopener" href="https://docs.sqlalchemy.org/en/14/">官方文件</a></p>
+<h1 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h1><p><a target="_blank" rel="noopener" href="https://docs.sqlalchemy.org/en/14/">官方文件</a></p>
 <style>
 hr.style-one {
     border: 0;
@@ -431,7 +431,7 @@ hr.style-one {
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%9A%E5%80%8B%E6%A2%9D%E4%BB%B6%E7%AF%A9%E9%81%B8"><span class="nav-number">2.</span> <span class="nav-text">多個條件篩選</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9B%B4%E6%96%B0%E8%B3%87%E6%96%99"><span class="nav-number">3.</span> <span class="nav-text">更新資料</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%AA%E9%99%A4%E8%B3%87%E6%96%99"><span class="nav-number">4.</span> <span class="nav-text">刪除資料</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="nav-number">5.</span> <span class="nav-text">參考資料</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A4%9A%E5%80%8B%E6%A2%9D%E4%BB%B6%E7%AF%A9%E9%81%B8"><span class="nav-number">2.</span> <span class="nav-text">多個條件篩選</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9B%B4%E6%96%B0%E8%B3%87%E6%96%99"><span class="nav-number">3.</span> <span class="nav-text">更新資料</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%AA%E9%99%A4%E8%B3%87%E6%96%99"><span class="nav-number">4.</span> <span class="nav-text">刪除資料</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="nav-number">5.</span> <span class="nav-text">參考資料</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
