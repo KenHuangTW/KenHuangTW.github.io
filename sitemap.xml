@@ -2,6 +2,15 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://kenhuangtw.github.io/googlef8b5a1b5484682f9.html</loc>
+    
+    <lastmod>2022-09-09</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://kenhuangtw.github.io/tags/index.html</loc>
     
     <lastmod>2022-09-06</lastmod>
@@ -132,14 +141,14 @@
   </url>
   
   <url>
-    <loc>https://kenhuangtw.github.io/categories/Python/ORM/</loc>
+    <loc>https://kenhuangtw.github.io/categories/Swift/</loc>
     <lastmod>2022-09-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://kenhuangtw.github.io/categories/Swift/</loc>
+    <loc>https://kenhuangtw.github.io/categories/Python/ORM/</loc>
     <lastmod>2022-09-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
