@@ -101,27 +101,6 @@
 
   
   <url>
-    <loc>https://kenhuangtw.github.io/tags/Python/</loc>
-    <lastmod>2022-10-07</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://kenhuangtw.github.io/tags/Sqlalchemy/</loc>
-    <lastmod>2022-10-07</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://kenhuangtw.github.io/tags/Note/</loc>
-    <lastmod>2022-10-07</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://kenhuangtw.github.io/tags/Hexo/</loc>
     <lastmod>2022-10-07</lastmod>
     <changefreq>weekly</changefreq>
@@ -136,7 +115,21 @@
   </url>
   
   <url>
-    <loc>https://kenhuangtw.github.io/tags/Tkinter/</loc>
+    <loc>https://kenhuangtw.github.io/tags/Note/</loc>
+    <lastmod>2022-10-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://kenhuangtw.github.io/tags/Python/</loc>
+    <lastmod>2022-10-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://kenhuangtw.github.io/tags/Sqlalchemy/</loc>
     <lastmod>2022-10-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -149,14 +142,14 @@
     <priority>0.2</priority>
   </url>
   
-
-  
   <url>
-    <loc>https://kenhuangtw.github.io/categories/Python/</loc>
+    <loc>https://kenhuangtw.github.io/tags/Tkinter/</loc>
     <lastmod>2022-10-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
+  
+
   
   <url>
     <loc>https://kenhuangtw.github.io/categories/Hexo/</loc>
@@ -166,14 +159,7 @@
   </url>
   
   <url>
-    <loc>https://kenhuangtw.github.io/categories/Python/GUI/</loc>
-    <lastmod>2022-10-07</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://kenhuangtw.github.io/categories/Python/ORM/</loc>
+    <loc>https://kenhuangtw.github.io/categories/Python/</loc>
     <lastmod>2022-10-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -187,7 +173,21 @@
   </url>
   
   <url>
+    <loc>https://kenhuangtw.github.io/categories/Python/ORM/</loc>
+    <lastmod>2022-10-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://kenhuangtw.github.io/categories/Swift/Install/</loc>
+    <lastmod>2022-10-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://kenhuangtw.github.io/categories/Python/GUI/</loc>
     <lastmod>2022-10-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
