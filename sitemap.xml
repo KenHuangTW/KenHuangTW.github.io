@@ -11,6 +11,15 @@
   </url>
   
   <url>
+    <loc>https://kenhuangtw.github.io/2022/09/05/SwiftInstall/</loc>
+    
+    <lastmod>2023-05-27</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://kenhuangtw.github.io/about/index.html</loc>
     
     <lastmod>2023-05-27</lastmod>
@@ -30,15 +39,6 @@
   
   <url>
     <loc>https://kenhuangtw.github.io/2022/10/08/Codewars-RGB-Use-Swift/</loc>
-    
-    <lastmod>2022-10-08</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://kenhuangtw.github.io/2022/09/05/SwiftInstall/</loc>
     
     <lastmod>2022-10-08</lastmod>
     
@@ -170,14 +170,14 @@
   </url>
   
   <url>
-    <loc>https://kenhuangtw.github.io/tags/Golang/</loc>
+    <loc>https://kenhuangtw.github.io/tags/Load-Balancer/</loc>
     <lastmod>2023-05-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://kenhuangtw.github.io/tags/leetcode/</loc>
+    <loc>https://kenhuangtw.github.io/tags/note/</loc>
     <lastmod>2023-05-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -191,7 +191,14 @@
   </url>
   
   <url>
-    <loc>https://kenhuangtw.github.io/tags/Load-Balancer/</loc>
+    <loc>https://kenhuangtw.github.io/tags/Golang/</loc>
+    <lastmod>2023-05-27</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://kenhuangtw.github.io/tags/leetcode/</loc>
     <lastmod>2023-05-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -235,7 +242,7 @@
   </url>
   
   <url>
-    <loc>https://kenhuangtw.github.io/categories/Python/ORM/</loc>
+    <loc>https://kenhuangtw.github.io/categories/System-Design/</loc>
     <lastmod>2023-05-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -243,6 +250,13 @@
   
   <url>
     <loc>https://kenhuangtw.github.io/categories/Python/Golang/</loc>
+    <lastmod>2023-05-27</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://kenhuangtw.github.io/categories/Python/ORM/</loc>
     <lastmod>2023-05-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -264,13 +278,6 @@
   
   <url>
     <loc>https://kenhuangtw.github.io/categories/Python/Golang/Swift/leetcode/</loc>
-    <lastmod>2023-05-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://kenhuangtw.github.io/categories/System-Design/</loc>
     <lastmod>2023-05-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
