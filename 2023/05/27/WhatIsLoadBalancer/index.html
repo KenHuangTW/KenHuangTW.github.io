@@ -20,20 +20,23 @@
     var CONFIG = {"hostname":"kenhuangtw.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"enable":null,"type":null,"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
   </script>
 
-  <meta name="description" content="前言這篇單純記錄我遇到一些不熟悉的地方而已 我們先來看題目 - RGB To Hex Conversion">
+  <meta name="description" content="前言現在也是個工作第二年的後端了，是時候該學一些系統設計的知識 系統設計顧名思義是指設計軟體系統的過程，例如說我們要設計一個大型社交網站那我們可能就會需要非常非常多的技術，包含：用什麼語言去寫Server、使用什麼樣的Database、如果說系統Loading太大該怎麼辦等等，族繁不及備載。 要考量的點實在太多了，而且也沒有所謂的正確答案，端看能不能有效解決問題能夠利用手上會的知識，去整合並且設計">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Codewars - RGB To Hex Conversion (Use Swift)">
-<meta property="og:url" content="https://kenhuangtw.github.io/2022/10/08/Codewars-RGB-Use-Swift/index.html">
+<meta property="og:title" content="什麼是 Load Balancer">
+<meta property="og:url" content="https://kenhuangtw.github.io/2023/05/27/WhatIsLoadBalancer/index.html">
 <meta property="og:site_name" content="窩不知道">
-<meta property="og:description" content="前言這篇單純記錄我遇到一些不熟悉的地方而已 我們先來看題目 - RGB To Hex Conversion">
+<meta property="og:description" content="前言現在也是個工作第二年的後端了，是時候該學一些系統設計的知識 系統設計顧名思義是指設計軟體系統的過程，例如說我們要設計一個大型社交網站那我們可能就會需要非常非常多的技術，包含：用什麼語言去寫Server、使用什麼樣的Database、如果說系統Loading太大該怎麼辦等等，族繁不及備載。 要考量的點實在太多了，而且也沒有所謂的正確答案，端看能不能有效解決問題能夠利用手上會的知識，去整合並且設計">
 <meta property="og:locale" content="zh_TW">
-<meta property="article:published_time" content="2022-10-08T05:52:04.000Z">
-<meta property="article:modified_time" content="2022-10-08T06:01:23.000Z">
+<meta property="og:image" content="https://kenhuangtw.github.io/2023/05/27/WhatIsLoadBalancer/LoadBalancer.jpg">
+<meta property="og:image" content="https://kenhuangtw.github.io/2023/05/27/WhatIsLoadBalancer/LeastResponseTimeMethod.png">
+<meta property="article:published_time" content="2023-05-27T08:46:59.000Z">
+<meta property="article:modified_time" content="2023-05-27T11:09:51.886Z">
 <meta property="article:author" content="KenHuang">
-<meta property="article:tag" content="Swift">
+<meta property="article:tag" content="Load Balancer">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://kenhuangtw.github.io/2023/05/27/WhatIsLoadBalancer/LoadBalancer.jpg">
 
-<link rel="canonical" href="https://kenhuangtw.github.io/2022/10/08/Codewars-RGB-Use-Swift/">
+<link rel="canonical" href="https://kenhuangtw.github.io/2023/05/27/WhatIsLoadBalancer/">
 
 
 <script id="page-configurations">
@@ -46,7 +49,7 @@
   };
 </script>
 
-  <title>Codewars - RGB To Hex Conversion (Use Swift) | 窩不知道</title>
+  <title>什麼是 Load Balancer | 窩不知道</title>
   
 
 
@@ -196,7 +199,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="https://kenhuangtw.github.io/2022/10/08/Codewars-RGB-Use-Swift/">
+    <link itemprop="mainEntityOfPage" href="https://kenhuangtw.github.io/2023/05/27/WhatIsLoadBalancer/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -209,7 +212,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Codewars - RGB To Hex Conversion (Use Swift)
+          什麼是 Load Balancer
         </h1>
 
         <div class="post-meta">
@@ -220,7 +223,7 @@
               <span class="post-meta-item-text">發表於</span>
               
 
-              <time title="創建時間：2022-10-08 13:52:04 / 修改時間：14:01:23" itemprop="dateCreated datePublished" datetime="2022-10-08T13:52:04+08:00">2022-10-08</time>
+              <time title="創建時間：2023-05-27 16:46:59 / 修改時間：19:09:51" itemprop="dateCreated datePublished" datetime="2023-05-27T16:46:59+08:00">2023-05-27</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -228,11 +231,7 @@
               </span>
               <span class="post-meta-item-text">分類於</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Swift/" itemprop="url" rel="index"><span itemprop="name">Swift</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Swift/Codewars/" itemprop="url" rel="index"><span itemprop="name">Codewars</span></a>
+                  <a href="/categories/System-Design/" itemprop="url" rel="index"><span itemprop="name">System Design</span></a>
                 </span>
             </span>
 
@@ -245,8 +244,8 @@
       </span>
       <span class="post-meta-item-text">Disqus：</span>
     
-    <a title="disqus" href="/2022/10/08/Codewars-RGB-Use-Swift/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2022/10/08/Codewars-RGB-Use-Swift/" itemprop="commentCount"></span>
+    <a title="disqus" href="/2023/05/27/WhatIsLoadBalancer/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2023/05/27/WhatIsLoadBalancer/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -261,46 +260,36 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>這篇單純記錄我遇到一些不熟悉的地方而已</p>
-<p><a target="_blank" rel="noopener" href="https://www.codewars.com/kata/513e08acc600c94f01000001">我們先來看題目 - RGB To Hex Conversion</a></p>
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>現在也是個工作第二年的後端了，是時候該學一些系統設計的知識</p>
+<p>系統設計顧名思義是指設計軟體系統的過程，例如說我們要設計一個大型社交網站<br>那我們可能就會需要非常非常多的技術，包含：用什麼語言去寫Server、使用什麼樣的Database、如果說系統Loading太大該怎麼辦等等，族繁不及備載。</p>
+<p>要考量的點實在太多了，而且也沒有所謂的正確答案，端看能不能有效解決問題<br>能夠利用手上會的知識，去整合並且設計系統</p>
+<p>另外面試的時候不會要你真的設計一個超級完整的系統，每個細節都要做到<br>不會，因為時間不夠，而且要你在臨場想出來也是強人所難，別人花了好幾次會議好幾個月甚至好幾年才構思出來的系統，要你在45~60分鐘內想出來，屬實過分。<br>所以我們在面試的時候必須持續溝通，詢問面試官說，這邊的需求，你想怎麼做等等。</p>
+<p>系統設計面試都是開放式的問題，沒有標準答案，所以要慢慢限縮問題的範圍，而且實際面對需求或客戶，本來也就是這樣，每個人的認知都不同，你的大跟我的大應該是不同的。這時候如果沒有釐清需求，直接給他做下去，相信我87%痛苦的都是自己。</p>
+<p>好了，我們先來介紹什麼是Load Balancer吧</p>
 <span id="more"></span>
 
-<h1 id="題目"><a href="#題目" class="headerlink" title="題目"></a>題目</h1><p>題目非常簡單，就是轉成色碼而已，所以大於 255(FF) 或是 小於 0 的都是無效的，題目要求我們把它變成最接近的數值也就是</p>
-<blockquote>
-<p>大於255就當做255，小於0當做0</p>
-</blockquote>
-<p>所以這邊我們可以額外寫一個函式，專門處理範圍的</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">func</span> <span class="title function_">limit</span>(<span class="keyword">_</span> <span class="params">color</span>: <span class="type">Int</span>) -&gt; <span class="type">Int</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">min</span>(<span class="number">255</span>, <span class="built_in">max</span>(<span class="number">0</span>, color))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="什麼是Load-Balancer"><a href="#什麼是Load-Balancer" class="headerlink" title="什麼是Load Balancer"></a>什麼是Load Balancer</h1><p>負責分散每個 Server 或是 Service 的壓力，就是 Load Balancer 的工作<br><img src="/2023/05/27/WhatIsLoadBalancer/LoadBalancer.jpg"></p>
+<p>假設今天我們有三台 Server(A, B, C)， Load Balancer 的工作就必須要把流量平均分布到各個Server上<br>避免流量過度集中在某個 Server 而過度爆掉</p>
+<p>你可以想像，Server 是員工，Load Balancer就像是我們的主管一樣，負責把每個任務每個任務平均分配到每個人手上(如果你的主管沒有，那我也沒辦法🌚)</p>
+<h1 id="常見的-Public-Rule"><a href="#常見的-Public-Rule" class="headerlink" title="常見的 Public Rule"></a>常見的 Public Rule</h1><ul>
+<li><p>Least Connection Method: 就是我們剛剛說的平均分配每個流量給不同的Server的方式</p>
+</li>
+<li><p>Least Response Time Method: 分配給沒有那麼多用戶端連結的Server，並且那個Server的回應時間是最短的</p>
+<details>
+<summary>圖片</summary>
+<img src="LeastResponseTimeMethod.png" id="image" class="collapsed">
+</details>
+</li>
+<li><p>Least Bandwidth Method: 把流量分到目前每秒頻寬(MB)最小的Server</p>
+</li>
+<li><p>Round Robin Method: 按照順序分，如果 Server 掛了就跳過，適用於硬體配備相差不多的 Server 上</p>
+<ul>
+<li>IP Hash: 按照使用者的 IP 去分</li>
+</ul>
+</li>
+</ul>
+<h1 id="Redundant-Load-Balancer"><a href="#Redundant-Load-Balancer" class="headerlink" title="Redundant Load Balancer"></a>Redundant Load Balancer</h1><p>防止 Load Balancer 掛了還有另一個 Load Balancer 可以用</p>
 
-<p>接下來就可以處理字串了</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">func</span> <span class="title function_">rgb</span>(<span class="keyword">_</span> <span class="params">r</span>: <span class="type">Int</span>, <span class="keyword">_</span> <span class="params">g</span>: <span class="type">Int</span>, <span class="keyword">_</span> <span class="params">b</span>: <span class="type">Int</span>) -&gt; <span class="type">String</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="type">String</span>(format: <span class="string">&quot;%02X%02X%02X&quot;</span>, limit(r), limit(g), limit(b))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>這樣就完成了</p>
-<h1 id="解析"><a href="#解析" class="headerlink" title="解析"></a>解析</h1><p>第一個 limit 這個函式，簡單來說就式處理範圍的(廢話)<br>第二個就是題目要求我們需要回傳的字串，使用<code>String(format: &quot;yourformat&quot;, argument: yourargument)</code>來達成我們要的，其中<br><code>%02X</code>代表:</p>
-<blockquote>
-<p>使用十六進位且大寫(X 的部份)，並且不足2位數就補0(02的部份)</p>
-</blockquote>
-<p>這樣就可以達到題目的要求了<br>完整程式碼如下</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">func</span> <span class="title function_">limit</span>(<span class="keyword">_</span> <span class="params">color</span>: <span class="type">Int</span>) -&gt; <span class="type">Int</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">min</span>(<span class="number">255</span>, <span class="built_in">max</span>(<span class="number">0</span>, color))</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">func</span> <span class="title function_">rgb</span>(<span class="keyword">_</span> <span class="params">r</span>: <span class="type">Int</span>, <span class="keyword">_</span> <span class="params">g</span>: <span class="type">Int</span>, <span class="keyword">_</span> <span class="params">b</span>: <span class="type">Int</span>) -&gt; <span class="type">String</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="type">String</span>(format: <span class="string">&quot;%02X%02X%02X&quot;</span>, limit(r), limit(g), limit(b))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<style>
-hr.style-one {
-    border: 0;
-    height: 5px;
-    background: #333;
-    background-image: linear-gradient(to right, #ccc, #333, #ccc);
-}
-</style>
-<hr class="style-one" />
-
-<p>如果有錯誤的部份，歡迎指正，謝謝。<br>如果你喜歡這篇文章，請幫我拍手<br>只需要註冊會員就可以囉，完全不用花費任何一毛錢就可以用來鼓裡創作者囉</p>
-<div>
-    <script type="text/javascript">
-    document.write(
-        "<iframe scrolling='no' frameborder='0' sandbox='allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox allow-storage-access-by-user-activation' style='height: 212px; width: 100%;' src='https://button.like.co/in/embed/wtf81905/button?referrer=" +
-        encodeURIComponent(location.href.split("?")[0].split("#")[0]) + "'></iframe>");
-    </script>
-</div>
     </div>
 
     
@@ -309,7 +298,7 @@ hr.style-one {
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/Swift/" rel="tag"># Swift</a>
+              <a href="/tags/Load-Balancer/" rel="tag"># Load Balancer</a>
           </div>
 
         
@@ -318,13 +307,10 @@ hr.style-one {
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2022/10/08/fucktk/" rel="prev" title="Python Tkinter 之你該仔細想想是否要用Tk">
-      <i class="fa fa-chevron-left"></i> Python Tkinter 之你該仔細想想是否要用Tk
+    <a href="/2023/01/28/leetcode997/" rel="prev" title="Leetcode - 997 with Python and Golang">
+      <i class="fa fa-chevron-left"></i> Leetcode - 997 with Python and Golang
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2023/01/28/leetcode997/" rel="next" title="Leetcode - 997 with Python and Golang">
-      Leetcode - 997 with Python and Golang <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -390,7 +376,7 @@ hr.style-one {
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A1%8C%E7%9B%AE"><span class="nav-number">2.</span> <span class="nav-text">題目</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%A7%A3%E6%9E%90"><span class="nav-number">3.</span> <span class="nav-text">解析</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BB%80%E9%BA%BC%E6%98%AFLoad-Balancer"><span class="nav-number">2.</span> <span class="nav-text">什麼是Load Balancer</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B8%B8%E8%A6%8B%E7%9A%84-Public-Rule"><span class="nav-number">3.</span> <span class="nav-text">常見的 Public Rule</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Redundant-Load-Balancer"><span class="nav-number">4.</span> <span class="nav-text">Redundant Load Balancer</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -525,9 +511,9 @@ hr.style-one {
 </script>
 <script>
   var disqus_config = function() {
-    this.page.url = "https://kenhuangtw.github.io/2022/10/08/Codewars-RGB-Use-Swift/";
-    this.page.identifier = "2022/10/08/Codewars-RGB-Use-Swift/";
-    this.page.title = "Codewars - RGB To Hex Conversion (Use Swift)";
+    this.page.url = "https://kenhuangtw.github.io/2023/05/27/WhatIsLoadBalancer/";
+    this.page.identifier = "2023/05/27/WhatIsLoadBalancer/";
+    this.page.title = "什麼是 Load Balancer";
     this.language = "zh_TW";
     };
   NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {

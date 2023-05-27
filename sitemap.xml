@@ -2,6 +2,15 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://kenhuangtw.github.io/2023/05/27/WhatIsLoadBalancer/</loc>
+    
+    <lastmod>2023-05-27</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://kenhuangtw.github.io/about/index.html</loc>
     
     <lastmod>2023-05-27</lastmod>
@@ -181,6 +190,13 @@
     <priority>0.2</priority>
   </url>
   
+  <url>
+    <loc>https://kenhuangtw.github.io/tags/Load-Balancer/</loc>
+    <lastmod>2023-05-27</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
 
   
   <url>
@@ -248,6 +264,13 @@
   
   <url>
     <loc>https://kenhuangtw.github.io/categories/Python/Golang/Swift/leetcode/</loc>
+    <lastmod>2023-05-27</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://kenhuangtw.github.io/categories/System-Design/</loc>
     <lastmod>2023-05-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
