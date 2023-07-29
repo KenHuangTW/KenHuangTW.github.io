@@ -2,6 +2,24 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://kenhuangtw.github.io/2023/07/29/RefactorMVC/</loc>
+    
+    <lastmod>2023-07-29</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://kenhuangtw.github.io/2022/09/06/HowToSetDisqus/</loc>
+    
+    <lastmod>2023-07-29</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://kenhuangtw.github.io/2023/05/27/WhatIsLoadBalancer/</loc>
     
     <lastmod>2023-05-27</lastmod>
@@ -101,15 +119,6 @@
   </url>
   
   <url>
-    <loc>https://kenhuangtw.github.io/2022/09/06/HowToSetDisqus/</loc>
-    
-    <lastmod>2022-09-06</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://kenhuangtw.github.io/2022/09/05/PythonSqlalchemy2/</loc>
     
     <lastmod>2022-09-06</lastmod>
@@ -121,85 +130,106 @@
 
   <url>
     <loc>https://kenhuangtw.github.io/</loc>
-    <lastmod>2023-05-27</lastmod>
+    <lastmod>2023-07-29</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
 
   
   <url>
-    <loc>https://kenhuangtw.github.io/tags/Swift/</loc>
-    <lastmod>2023-05-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://kenhuangtw.github.io/tags/Hexo/</loc>
-    <lastmod>2023-05-27</lastmod>
+    <lastmod>2023-07-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://kenhuangtw.github.io/tags/Disqus/</loc>
-    <lastmod>2023-05-27</lastmod>
+    <lastmod>2023-07-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://kenhuangtw.github.io/tags/Note/</loc>
-    <lastmod>2023-05-27</lastmod>
+    <lastmod>2023-07-29</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://kenhuangtw.github.io/tags/Swift/</loc>
+    <lastmod>2023-07-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://kenhuangtw.github.io/tags/Python/</loc>
-    <lastmod>2023-05-27</lastmod>
+    <lastmod>2023-07-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://kenhuangtw.github.io/tags/Sqlalchemy/</loc>
-    <lastmod>2023-05-27</lastmod>
+    <lastmod>2023-07-29</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://kenhuangtw.github.io/tags/MVC/</loc>
+    <lastmod>2023-07-29</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://kenhuangtw.github.io/tags/MTV/</loc>
+    <lastmod>2023-07-29</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://kenhuangtw.github.io/tags/Refactor/</loc>
+    <lastmod>2023-07-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://kenhuangtw.github.io/tags/Load-Balancer/</loc>
-    <lastmod>2023-05-27</lastmod>
+    <lastmod>2023-07-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://kenhuangtw.github.io/tags/note/</loc>
-    <lastmod>2023-05-27</lastmod>
+    <lastmod>2023-07-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://kenhuangtw.github.io/tags/Tkinter/</loc>
-    <lastmod>2023-05-27</lastmod>
+    <lastmod>2023-07-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://kenhuangtw.github.io/tags/Golang/</loc>
-    <lastmod>2023-05-27</lastmod>
+    <lastmod>2023-07-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://kenhuangtw.github.io/tags/leetcode/</loc>
-    <lastmod>2023-05-27</lastmod>
+    <lastmod>2023-07-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
@@ -207,78 +237,99 @@
 
   
   <url>
-    <loc>https://kenhuangtw.github.io/categories/Swift/</loc>
-    <lastmod>2023-05-27</lastmod>
+    <loc>https://kenhuangtw.github.io/categories/Hexo/</loc>
+    <lastmod>2023-07-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://kenhuangtw.github.io/categories/Hexo/</loc>
-    <lastmod>2023-05-27</lastmod>
+    <loc>https://kenhuangtw.github.io/categories/Swift/</loc>
+    <lastmod>2023-07-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://kenhuangtw.github.io/categories/Python/</loc>
-    <lastmod>2023-05-27</lastmod>
+    <lastmod>2023-07-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://kenhuangtw.github.io/categories/Swift/Codewars/</loc>
-    <lastmod>2023-05-27</lastmod>
+    <loc>https://kenhuangtw.github.io/categories/MVC/</loc>
+    <lastmod>2023-07-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://kenhuangtw.github.io/categories/Swift/Install/</loc>
-    <lastmod>2023-05-27</lastmod>
+    <lastmod>2023-07-29</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://kenhuangtw.github.io/categories/Swift/Codewars/</loc>
+    <lastmod>2023-07-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://kenhuangtw.github.io/categories/System-Design/</loc>
-    <lastmod>2023-05-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://kenhuangtw.github.io/categories/Python/Golang/</loc>
-    <lastmod>2023-05-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://kenhuangtw.github.io/categories/Python/ORM/</loc>
-    <lastmod>2023-05-27</lastmod>
+    <lastmod>2023-07-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://kenhuangtw.github.io/categories/Python/GUI/</loc>
-    <lastmod>2023-05-27</lastmod>
+    <lastmod>2023-07-29</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://kenhuangtw.github.io/categories/Python/ORM/</loc>
+    <lastmod>2023-07-29</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://kenhuangtw.github.io/categories/Python/Golang/</loc>
+    <lastmod>2023-07-29</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://kenhuangtw.github.io/categories/MVC/MTV/</loc>
+    <lastmod>2023-07-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://kenhuangtw.github.io/categories/Python/Golang/Swift/</loc>
-    <lastmod>2023-05-27</lastmod>
+    <lastmod>2023-07-29</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://kenhuangtw.github.io/categories/MVC/MTV/Refactor/</loc>
+    <lastmod>2023-07-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://kenhuangtw.github.io/categories/Python/Golang/Swift/leetcode/</loc>
-    <lastmod>2023-05-27</lastmod>
+    <lastmod>2023-07-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>

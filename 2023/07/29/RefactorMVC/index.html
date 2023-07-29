@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.2">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"kenhuangtw.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"enable":null,"type":null,"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
+
+  <meta name="description" content="前言當我們在寫Laravel, Django 等MVC以及MVT的架構時，部分的人可能都會習慣把所有的邏輯，包含Usecase, API 等等全部寫在同一包裡面 一開始或許開發的時候比較方便，你自己在自幹的時候想怎麼寫都沒差 但換個角度，當今天這個專案是10個人一起做的呢？甚至是過了10個月你再回來看，我們要花多少時間來看這些架構 再來，當我們今天要新增一個功能或是更改Use Case時，我們又要">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MVC與MVT框架的重構">
+<meta property="og:url" content="https://kenhuangtw.github.io/2023/07/29/RefactorMVC/index.html">
+<meta property="og:site_name" content="窩不知道">
+<meta property="og:description" content="前言當我們在寫Laravel, Django 等MVC以及MVT的架構時，部分的人可能都會習慣把所有的邏輯，包含Usecase, API 等等全部寫在同一包裡面 一開始或許開發的時候比較方便，你自己在自幹的時候想怎麼寫都沒差 但換個角度，當今天這個專案是10個人一起做的呢？甚至是過了10個月你再回來看，我們要花多少時間來看這些架構 再來，當我們今天要新增一個功能或是更改Use Case時，我們又要">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://kenhuangtw.github.io/2023/07/29/RefactorMVC/%E5%9E%83%E5%9C%BE.png">
+<meta property="og:image" content="https://kenhuangtw.github.io/2023/07/29/RefactorMVC/employee.png">
+<meta property="og:image" content="https://kenhuangtw.github.io/2023/07/29/RefactorMVC/productivity.png">
+<meta property="og:image" content="https://kenhuangtw.github.io/2023/07/29/RefactorMVC/average.png">
+<meta property="og:image" content="https://kenhuangtw.github.io/2023/07/29/RefactorMVC/MVC.png">
+<meta property="og:image" content="https://kenhuangtw.github.io/2023/07/29/RefactorMVC/newMVC.png">
+<meta property="og:image" content="https://kenhuangtw.github.io/2023/07/29/RefactorMVC/newMVCSequence.png">
+<meta property="article:published_time" content="2023-07-29T02:11:29.000Z">
+<meta property="article:modified_time" content="2023-07-29T04:58:42.984Z">
+<meta property="article:author" content="KenHuang">
+<meta property="article:tag" content="MVC">
+<meta property="article:tag" content="MTV">
+<meta property="article:tag" content="Refactor">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://kenhuangtw.github.io/2023/07/29/RefactorMVC/%E5%9E%83%E5%9C%BE.png">
+
+<link rel="canonical" href="https://kenhuangtw.github.io/2023/07/29/RefactorMVC/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-TW'
+  };
+</script>
+
+  <title>MVC與MVT框架的重構 | 窩不知道</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">窩不知道</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>關於</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分類</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜尋
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜尋..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://kenhuangtw.github.io/2023/07/29/RefactorMVC/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="KenHuang">
+      <meta itemprop="description" content="技能樹很歪的工程師的筆記<br>主要寫Python<br>工作用Go、PHP<br>偶爾寫寫Swift">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="窩不知道">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          MVC與MVT框架的重構
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+              
+
+              <time title="創建時間：2023-07-29 10:11:29 / 修改時間：12:58:42" itemprop="dateCreated datePublished" datetime="2023-07-29T10:11:29+08:00">2023-07-29</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/MVC/" itemprop="url" rel="index"><span itemprop="name">MVC</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/MVC/MTV/" itemprop="url" rel="index"><span itemprop="name">MTV</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/MVC/MTV/Refactor/" itemprop="url" rel="index"><span itemprop="name">Refactor</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2023/07/29/RefactorMVC/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2023/07/29/RefactorMVC/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>當我們在寫Laravel, Django 等MVC以及MVT的架構時，部分的人可能都會習慣把所有的邏輯，包含Usecase, API 等等全部寫在同一包裡面</p>
+<p>一開始或許開發的時候比較方便，你自己在自幹的時候想怎麼寫都沒差</p>
+<p>但換個角度，當今天這個專案是10個人一起做的呢？甚至是過了10個月你再回來看，我們要花多少時間來看這些架構</p>
+<p>再來，當我們今天要新增一個功能或是更改<code>Use Case</code>時，我們又要花多少時間來做閱讀？</p>
+<p>其實在看過Clean Code, Clean Coder 和 Clean Architecture之後其實就會知道，傳統的MVC框架真的滿髒亂而且不容易維護的</p>
+<span id="more"></span>
+
+<h1 id="一般MVC架構"><a href="#一般MVC架構" class="headerlink" title="一般MVC架構"></a>一般MVC架構</h1><p>看個範例，以註冊會員為例子好了，假設我們帶入<code>member_name</code>, <code>member_email</code>, <code>member_password</code></p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MemberController</span> <span class="keyword">extends</span> <span class="title">Controller</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">store</span>(<span class="params">Request <span class="variable">$request</span></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="comment">// 驗證請求參數</span></span><br><span class="line">        <span class="variable">$validatedData</span> = <span class="variable">$request</span>-&gt;<span class="title function_ invoke__">validate</span>([</span><br><span class="line">            <span class="string">&#x27;member_name&#x27;</span> =&gt; <span class="string">&#x27;required|string|min:1|max:60&#x27;</span>,</span><br><span class="line">            <span class="string">&#x27;member_email&#x27;</span> =&gt; <span class="string">&#x27;required|string|email|max:255|unique:members&#x27;</span>, // 確保email在資料庫中唯一</span><br><span class="line">            <span class="string">&#x27;member_password&#x27;</span> =&gt; <span class="string">&#x27;required|string|max:255&#x27;</span>,</span><br><span class="line">        ]);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 在資料庫中建立會員資料</span></span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="variable">$member</span> = <span class="title class_">Member</span>::<span class="title function_ invoke__">create</span>([</span><br><span class="line">                <span class="string">&#x27;member_name&#x27;</span> =&gt; <span class="variable">$validatedData</span>[<span class="string">&#x27;member_name&#x27;</span>],</span><br><span class="line">                <span class="string">&#x27;member_email&#x27;</span> =&gt; <span class="variable">$validatedData</span>[<span class="string">&#x27;member_email&#x27;</span>],</span><br><span class="line">                <span class="string">&#x27;member_password&#x27;</span> =&gt; <span class="variable">$validatedData</span>[<span class="string">&#x27;member_password&#x27;</span>],</span><br><span class="line">            ]);</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 成功建立資料，回傳201 Created狀態碼</span></span><br><span class="line">            <span class="keyword">return</span> <span class="title function_ invoke__">response</span>()-&gt;<span class="title function_ invoke__">json</span>([<span class="string">&#x27;message&#x27;</span> =&gt; <span class="string">&#x27;會員資料建立成功&#x27;</span>], <span class="number">201</span>);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (\<span class="built_in">Exception</span> <span class="variable">$e</span>) &#123;</span><br><span class="line">            <span class="comment">// 發生錯誤，回傳錯誤訊息</span></span><br><span class="line">            <span class="keyword">return</span> <span class="title function_ invoke__">response</span>()-&gt;<span class="title function_ invoke__">json</span>([<span class="string">&#x27;message&#x27;</span> =&gt; <span class="string">&#x27;會員資料建立失敗&#x27;</span>], <span class="number">500</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>光是簡單的驗證和建立資料庫就已經有點長度了，如果我今天還要再加入更多功能進來，例如要付費才能建立會員，所以要使用金流，或是什麼註冊會員送好禮，所以又要使用物流等等的功能。</p>
+<p>一開始可能還好，但不要忘了，<strong>隨著軟體生命週期的增長，維護的成本是會越來越高的</strong>。更不用說多數的人希望有新的功能加進自己的軟體裡面。</p>
+<p>到時候一個新進來的人要花上多少時間來熟悉這些Code，且維護又要花上多少時間?</p>
+<p>這個架構甚至連單元測試都測不了，出問題要從哪邊找起搞不好都是一個問題。</p>
+<p>更不用說還有一堆公司會為了追求快速開發而把前後端的Code寫在同一包檔案裡面，到時候要加一個新功能都有很有可能要花很大的時間去修改和Study</p>
+<p><img src="/2023/07/29/RefactorMVC/%E5%9E%83%E5%9C%BE.png"></p>
+<p><strong>甚至這不是你寫的Code，還要花多少時間來讀懂作者的邏輯</strong>?</p>
+<h1 id="軟體的維護"><a href="#軟體的維護" class="headerlink" title="軟體的維護"></a>軟體的維護</h1><p>隨著時間時間增長，可能會有新增加的功能，或是配合市場要調整的部分，此時架構或是Code如果不夠乾淨，那維護的時間將是隨著指數增長</p>
+<p>我們引用Clean Code這本書中的資料<br>80年代某不願具名軟體公司的內部統計資料:</p>
+<table>
+<thead>
+<tr>
+<th>工程人員的增長</th>
+<th>同一時期的生產力</th>
+<th>每行程式碼的平均成本</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><img src="/2023/07/29/RefactorMVC/employee.png"></td>
+<td><img src="/2023/07/29/RefactorMVC/productivity.png"></td>
+<td><img src="/2023/07/29/RefactorMVC/average.png"></td>
+</tr>
+</tbody></table>
+<p>我們可以發現幾件事情</p>
+<ul>
+<li>工程人員持續且倍數的增長</li>
+<li>每行程式碼的平均成本也是持續且倍數的增長</li>
+<li>但生產力自從第三年之後就沒有增長多少，後續甚至是幾乎持平的</li>
+</ul>
+<blockquote>
+<p>「當對程式碼的整潔程度或設計的結構沒有多少想法時，那你就會跟這條曲線一樣走到最終悲慘的結局」<br>取自: Clean Architecture (p.6)</p>
+</blockquote>
+<p>再舉一個極端的例子</p>
+<blockquote>
+<p>「我知道有一間公司在 80 年代後期開發了一個殺手級應用，但後來發行的週期開始拖長，程式裡的錯誤也無法在下次發行之前修復，程式載入的時間與崩潰機率也愈來愈長和高。不久，這家公司就倒閉了。我問他當時發生了什麼…」<br>「急於將產品上市，導致他們的程式碼變得一團糟，當他們加入愈來愈多的產品特點時，程式碼就變得愈來愈糟糕，一直到他們再也無法管理這團混亂。劣質的程式碼導致了這家公司的倒閉」<br>取自: Clean Code (p.3)</p>
+</blockquote>
+<p>如果你問我說，「我的主管要求我一定要在三天內產出這個專案，那我該怎麼辦?」<br>我建議你先去看一下<strong>Clean Coder</strong>，上面有很多身為一個專業人士該做的事情和應對方式。<br>如果主管還是不合理的要求你，那我只好搬出那句話，<strong>程式跟人只要有一個能跑就好</strong>。</p>
+<blockquote>
+<p>隨時準備好可以跳槽的準備。</p>
+</blockquote>
+<h1 id="實作"><a href="#實作" class="headerlink" title="實作"></a>實作</h1><h2 id="傳統-MVC-和-MTV"><a href="#傳統-MVC-和-MTV" class="headerlink" title="傳統 MVC 和 MTV"></a>傳統 MVC 和 MTV</h2><p>我們先來看看傳統 MVC 或是 MTV 架構的樣子<br><img src="/2023/07/29/RefactorMVC/MVC.png"></p>
+<p>其實滿簡單的，就是Model負責與資料庫有關的操作，Controller和其他兩層溝通，View負責畫面顯示<br>以傳統的MVC來說，甚至會有前後端不分離也就是伺服器端渲染（Server-Side Rendering，簡稱 SSR）的狀況<br>但這個模式到現在，隨著前端技術的進步，以及開始重視團隊協作的現在，過去的 SSR 其實顯得有非常多的問題，像是開發效率、維護性等等。</p>
+<p>現代的MVC可能連View那一層都不會有了(後端的部分)，因為View的部分已經給了前端</p>
+<h2 id="調整過後的架構"><a href="#調整過後的架構" class="headerlink" title="調整過後的架構"></a>調整過後的架構</h2><p>這邊我從<a target="_blank" rel="noopener" href="https://github.com/bxcodec">bxcodec</a>的<a target="_blank" rel="noopener" href="https://github.com/bxcodec/go-clean-arch">go-clean-arch</a>得到很大的靈感<br>以上方的 <a href="#%E4%B8%80%E8%88%ACMVC%E6%9E%B6%E6%A7%8B"><strong>註冊會員</strong></a> 為例子，我們需要驗證、儲存資料、金流和物流以及回傳資料<br>我們可以得到這張圖<br><img src="/2023/07/29/RefactorMVC/newMVC.png"></p>
+<p>搭配一下時序圖來了解狀況<br><img src="/2023/07/29/RefactorMVC/newMVCSequence.png"></p>
+<p>我們可以得知這個順序是</p>
+<ol>
+<li>Request 進入 Controller</li>
+<li>Controller 向 Validator 驗證使用者的資料</li>
+<li>Controller 向 UseCase 傳遞資料(處理業務邏輯，像是金流物流)</li>
+<li>Controller 向 Repository 請求建立資料</li>
+<li>Repository 向 Model 請求建立資料</li>
+<li>Model 向 DB 建立資料</li>
+<li>Controller 向 Formatter 請求回傳資料</li>
+<li>Controller 給出 Response</li>
+</ol>
+<p>也就是說，我們這邊盡量讓Controller只做資料傳遞的動作，不處理其他的業務邏輯<br>Code大概會長這樣(這邊先不講DI的部分，有時間這個移到鐵人賽再說XD)</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MemberController</span> <span class="keyword">extends</span> <span class="title">Controller</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">protected</span> <span class="variable">$member_validator</span>;</span><br><span class="line">    <span class="keyword">protected</span> <span class="variable">$member_use_case</span>;</span><br><span class="line">    <span class="keyword">protected</span> <span class="variable">$member_repository</span>;</span><br><span class="line">    <span class="keyword">protected</span> <span class="variable">$member_formatter</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_ invoke__">__construct</span>(MemberValidator <span class="variable">$member_validator</span>, MemberUseCase <span class="variable">$member_use_case</span>, MemberRepository <span class="variable">$member_repository</span>, MemberFormatter <span class="variable">$member_formatter</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="variable language_">$this</span>-&gt;member_validator = <span class="variable">$member_validator</span>;</span><br><span class="line">        <span class="variable language_">$this</span>-&gt;member_use_case = <span class="variable">$member_use_case</span>;</span><br><span class="line">        <span class="variable language_">$this</span>-&gt;member_repository = <span class="variable">$member_repository</span>;</span><br><span class="line">        <span class="variable language_">$this</span>-&gt;member_formatter = <span class="variable">$member_formatter</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">registerMember</span>(<span class="params">Request <span class="variable">$request</span></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="variable">$request_data</span> = <span class="variable">$request</span>-&gt;data;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 驗證請求參數</span></span><br><span class="line">        <span class="variable">$error_key_group</span> = <span class="variable language_">$this</span>-&gt;member_validator-&gt;<span class="title function_ invoke__">getRegisterMemberErrorKeyGroup</span>(<span class="variable">$request</span>-&gt;data);</span><br><span class="line">        <span class="keyword">if</span> (<span class="title function_ invoke__">count</span>(error_key_group) != <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="variable">$validate_fail_response_data</span> = <span class="variable language_">$this</span>-&gt;<span class="variable">$member_formatter</span>-&gt;<span class="title function_ invoke__">getValidateFailResponseData</span>(<span class="variable">$error_key_group</span>)</span><br><span class="line">            <span class="keyword">return</span> <span class="title function_ invoke__">response</span>()-&gt;<span class="title function_ invoke__">json</span>(<span class="variable">$validate_fail_response_data</span>, <span class="number">400</span>)</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 金流和物流</span></span><br><span class="line">        <span class="keyword">if</span> (!<span class="variable language_">$this</span>-&gt;member_use_case-&gt;<span class="title function_ invoke__">isPaySuccessful</span>(<span class="variable">$request_data</span>)) &#123;</span><br><span class="line">            <span class="variable">$pay_fail_response_data</span> = <span class="variable language_">$this</span>-&gt;<span class="variable">$member_formatter</span>-&gt;<span class="title function_ invoke__">getPayFailResponseData</span>()</span><br><span class="line">            <span class="keyword">return</span> <span class="title function_ invoke__">response</span>()-&gt;<span class="title function_ invoke__">json</span>(<span class="variable">$pay_fail_response_data</span>, <span class="number">400</span>)</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (!<span class="variable language_">$this</span>-&gt;member_use_case-&gt;<span class="title function_ invoke__">isGiftSuccessful</span>(<span class="variable">$request_data</span>)) &#123;</span><br><span class="line">            <span class="variable">$gift_fail_response_data</span> = <span class="variable language_">$this</span>-&gt;<span class="variable">$member_formatter</span>-&gt;<span class="title function_ invoke__">getGiftFailResponseData</span>()</span><br><span class="line">            <span class="keyword">return</span> <span class="title function_ invoke__">response</span>()-&gt;<span class="title function_ invoke__">json</span>(<span class="variable">$gift_fail_response_data</span>, <span class="number">400</span>)</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 建立資料</span></span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="variable language_">$this</span>-&gt;member_repository-&gt;<span class="title function_ invoke__">createMember</span>(<span class="variable">$request_data</span>);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (\<span class="built_in">Exception</span> <span class="variable">$e</span>) &#123;</span><br><span class="line">            <span class="variable">$create_data_fail_response_data</span> = <span class="variable language_">$this</span>-&gt;<span class="variable">$member_formatter</span>-&gt;<span class="title function_ invoke__">getCreateDataFailResponseData</span>();</span><br><span class="line">            <span class="keyword">return</span> <span class="title function_ invoke__">response</span>()-&gt;<span class="title function_ invoke__">json</span>(<span class="variable">$create_data_fail_response_data</span>, <span class="number">400</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="variable">$success_response_data</span> = <span class="variable language_">$this</span>-&gt;<span class="variable">$member_formatter</span>-&gt;<span class="title function_ invoke__">getSuccessResponseData</span>();</span><br><span class="line">        <span class="keyword">return</span> <span class="title function_ invoke__">response</span>()-&gt;<span class="title function_ invoke__">json</span>(<span class="variable">$success_response_data</span>, <span class="number">201</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>這麼做最大的好處有幾個</p>
+<ol>
+<li>我可以撰寫單元測試，來驗證每一個function的邏輯是否正確</li>
+<li>以後要加什麼功能，我可以很清楚知道我要在哪裡做</li>
+<li>他不再是互相依賴的關係，而是有需要才會使用到</li>
+</ol>
+<h1 id="結語"><a href="#結語" class="headerlink" title="結語"></a>結語</h1><p>如果我真的要把裡面用到的概念全部講完，大概要好幾篇文章<br>這個流到鐵人賽再來說吧，如果我有參賽，沒意外應該是會講Laravel的開發流程，且不走傳統的方式，但可惜我對前端不熟，我不太會寫 HTML，可能我也不太會花時間去講太多 Blade 的東西<br>畢竟我也滿討厭把前端跟後端的邏輯寫在一起的。</p>
+<h1 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h1><p><a target="_blank" rel="noopener" href="https://ithelp.ithome.com.tw/articles/10264853">Day 01: 【序】– 架構與設計、代碼、工程師</a><br><a target="_blank" rel="noopener" href="https://docs.google.com/presentation/d/1rOWNct6tu8u63Gss8hHwz8KncWkP3yI3BR8dsDs1-Sg/htmlpresent">打造 Laravel 優美架構</a><br><a target="_blank" rel="noopener" href="https://ithelp.ithome.com.tw/articles/10240228">DAY6 - 你的 Backend 可以更有彈性一點 - Clean Architecture 概念篇</a><br><a target="_blank" rel="noopener" href="https://github.com/bxcodec/go-clean-arch">go-clean-arch</a></p>
+<style>
+hr.style-one {
+    border: 0;
+    height: 5px;
+    background: #333;
+    background-image: linear-gradient(to right, #ccc, #333, #ccc);
+}
+</style>
+<hr class="style-one" />
+
+<p>如果有錯誤的部份，歡迎指正，謝謝。<br>如果你喜歡這篇文章，請幫我拍手<br>只需要註冊會員就可以囉，完全不用花費任何一毛錢就可以用來鼓裡創作者囉</p>
+<div>
+    <script type="text/javascript">
+    document.write(
+        "<iframe scrolling='no' frameborder='0' sandbox='allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox allow-storage-access-by-user-activation' style='height: 212px; width: 100%;' src='https://button.like.co/in/embed/wtf81905/button?referrer=" +
+        encodeURIComponent(location.href.split("?")[0].split("#")[0]) + "'></iframe>");
+    </script>
+</div>
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/MVC/" rel="tag"># MVC</a>
+              <a href="/tags/MTV/" rel="tag"># MTV</a>
+              <a href="/tags/Refactor/" rel="tag"># Refactor</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/05/27/WhatIsLoadBalancer/" rel="prev" title="什麼是 Load Balancer">
+      <i class="fa fa-chevron-left"></i> 什麼是 Load Balancer
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%80%E8%88%ACMVC%E6%9E%B6%E6%A7%8B"><span class="nav-number">2.</span> <span class="nav-text">一般MVC架構</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%BB%9F%E9%AB%94%E7%9A%84%E7%B6%AD%E8%AD%B7"><span class="nav-number">3.</span> <span class="nav-text">軟體的維護</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AF%A6%E4%BD%9C"><span class="nav-number">4.</span> <span class="nav-text">實作</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%82%B3%E7%B5%B1-MVC-%E5%92%8C-MTV"><span class="nav-number">4.1.</span> <span class="nav-text">傳統 MVC 和 MTV</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AA%BF%E6%95%B4%E9%81%8E%E5%BE%8C%E7%9A%84%E6%9E%B6%E6%A7%8B"><span class="nav-number">4.2.</span> <span class="nav-text">調整過後的架構</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%B5%90%E8%AA%9E"><span class="nav-number">5.</span> <span class="nav-text">結語</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="nav-number">6.</span> <span class="nav-text">參考資料</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">KenHuang</p>
+  <div class="site-description" itemprop="description">技能樹很歪的工程師的筆記<br>主要寫Python<br>工作用Go、PHP<br>偶爾寫寫Swift</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">9</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/KenHuangTW" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;KenHuangTW" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">KenHuang</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://KenH-TW.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  var disqus_config = function() {
+    this.page.url = "https://kenhuangtw.github.io/2023/07/29/RefactorMVC/";
+    this.page.identifier = "2023/07/29/RefactorMVC/";
+    this.page.title = "MVC與MVT框架的重構";
+    this.language = "zh_TW";
+    };
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://KenH-TW.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  });
+</script>
+
+</body>
+</html>
