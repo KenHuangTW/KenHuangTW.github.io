@@ -137,6 +137,13 @@
 
   
   <url>
+    <loc>https://kenhuangtw.github.io/tags/Swift/</loc>
+    <lastmod>2023-07-29</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://kenhuangtw.github.io/tags/Hexo/</loc>
     <lastmod>2023-07-29</lastmod>
     <changefreq>weekly</changefreq>
@@ -152,13 +159,6 @@
   
   <url>
     <loc>https://kenhuangtw.github.io/tags/Note/</loc>
-    <lastmod>2023-07-29</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://kenhuangtw.github.io/tags/Swift/</loc>
     <lastmod>2023-07-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -237,13 +237,6 @@
 
   
   <url>
-    <loc>https://kenhuangtw.github.io/categories/Hexo/</loc>
-    <lastmod>2023-07-29</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://kenhuangtw.github.io/categories/Swift/</loc>
     <lastmod>2023-07-29</lastmod>
     <changefreq>weekly</changefreq>
@@ -251,7 +244,21 @@
   </url>
   
   <url>
+    <loc>https://kenhuangtw.github.io/categories/Hexo/</loc>
+    <lastmod>2023-07-29</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://kenhuangtw.github.io/categories/Python/</loc>
+    <lastmod>2023-07-29</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://kenhuangtw.github.io/categories/Swift/Codewars/</loc>
     <lastmod>2023-07-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -266,13 +273,6 @@
   
   <url>
     <loc>https://kenhuangtw.github.io/categories/Swift/Install/</loc>
-    <lastmod>2023-07-29</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://kenhuangtw.github.io/categories/Swift/Codewars/</loc>
     <lastmod>2023-07-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
