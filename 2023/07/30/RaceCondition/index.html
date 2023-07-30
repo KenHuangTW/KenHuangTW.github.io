@@ -20,24 +20,20 @@
     var CONFIG = {"hostname":"kenhuangtw.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"enable":null,"type":null,"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
   </script>
 
-  <meta name="description" content="前言現在也是個工作第二年的後端了，是時候該學一些系統設計的知識 系統設計顧名思義是指設計軟體系統的過程，例如說我們要設計一個大型社交網站那我們可能就會需要非常非常多的技術，包含：用什麼語言去寫Server、使用什麼樣的Database、如果說系統Loading太大該怎麼辦等等，族繁不及備載。 要考量的點實在太多了，而且也沒有所謂的正確答案，端看能不能有效解決問題能夠利用手上會的知識，去整合並且設計">
+  <meta name="description" content="前言同步競爭(Race Condition)是指說某個資料因為多個行程而導致最終資料不正確的狀況 這其實滿淺顯易懂的，但懂歸懂有時候還是會忽略到一些狀況。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="什麼是 Load Balancer">
-<meta property="og:url" content="https://kenhuangtw.github.io/2023/05/27/WhatIsLoadBalancer/index.html">
+<meta property="og:title" content="Race Condition">
+<meta property="og:url" content="https://kenhuangtw.github.io/2023/07/30/RaceCondition/index.html">
 <meta property="og:site_name" content="窩不知道">
-<meta property="og:description" content="前言現在也是個工作第二年的後端了，是時候該學一些系統設計的知識 系統設計顧名思義是指設計軟體系統的過程，例如說我們要設計一個大型社交網站那我們可能就會需要非常非常多的技術，包含：用什麼語言去寫Server、使用什麼樣的Database、如果說系統Loading太大該怎麼辦等等，族繁不及備載。 要考量的點實在太多了，而且也沒有所謂的正確答案，端看能不能有效解決問題能夠利用手上會的知識，去整合並且設計">
+<meta property="og:description" content="前言同步競爭(Race Condition)是指說某個資料因為多個行程而導致最終資料不正確的狀況 這其實滿淺顯易懂的，但懂歸懂有時候還是會忽略到一些狀況。">
 <meta property="og:locale" content="zh_TW">
-<meta property="og:image" content="https://kenhuangtw.github.io/2023/05/27/WhatIsLoadBalancer/LoadBalancer.jpg">
-<meta property="og:image" content="https://kenhuangtw.github.io/2023/05/27/WhatIsLoadBalancer/LeastResponseTimeMethod.png">
-<meta property="article:published_time" content="2023-05-27T08:46:59.000Z">
-<meta property="article:modified_time" content="2023-05-27T11:19:07.847Z">
+<meta property="article:published_time" content="2023-07-30T11:54:48.000Z">
+<meta property="article:modified_time" content="2023-07-30T11:57:59.395Z">
 <meta property="article:author" content="KenHuang">
-<meta property="article:tag" content="Load Balancer">
-<meta property="article:tag" content="note">
+<meta property="article:tag" content="Golang">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://kenhuangtw.github.io/2023/05/27/WhatIsLoadBalancer/LoadBalancer.jpg">
 
-<link rel="canonical" href="https://kenhuangtw.github.io/2023/05/27/WhatIsLoadBalancer/">
+<link rel="canonical" href="https://kenhuangtw.github.io/2023/07/30/RaceCondition/">
 
 
 <script id="page-configurations">
@@ -50,7 +46,7 @@
   };
 </script>
 
-  <title>什麼是 Load Balancer | 窩不知道</title>
+  <title>Race Condition | 窩不知道</title>
   
 
 
@@ -200,7 +196,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="https://kenhuangtw.github.io/2023/05/27/WhatIsLoadBalancer/">
+    <link itemprop="mainEntityOfPage" href="https://kenhuangtw.github.io/2023/07/30/RaceCondition/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -213,7 +209,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          什麼是 Load Balancer
+          Race Condition
         </h1>
 
         <div class="post-meta">
@@ -224,7 +220,7 @@
               <span class="post-meta-item-text">發表於</span>
               
 
-              <time title="創建時間：2023-05-27 16:46:59 / 修改時間：19:19:07" itemprop="dateCreated datePublished" datetime="2023-05-27T16:46:59+08:00">2023-05-27</time>
+              <time title="創建時間：2023-07-30 19:54:48 / 修改時間：19:57:59" itemprop="dateCreated datePublished" datetime="2023-07-30T19:54:48+08:00">2023-07-30</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -232,7 +228,11 @@
               </span>
               <span class="post-meta-item-text">分類於</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/System-Design/" itemprop="url" rel="index"><span itemprop="name">System Design</span></a>
+                  <a href="/categories/%E7%A8%8B%E5%BC%8F%E9%96%8B%E7%99%BC/" itemprop="url" rel="index"><span itemprop="name">程式開發</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%A8%8B%E5%BC%8F%E9%96%8B%E7%99%BC/Golang/" itemprop="url" rel="index"><span itemprop="name">Golang</span></a>
                 </span>
             </span>
 
@@ -245,8 +245,8 @@
       </span>
       <span class="post-meta-item-text">Disqus：</span>
     
-    <a title="disqus" href="/2023/05/27/WhatIsLoadBalancer/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2023/05/27/WhatIsLoadBalancer/" itemprop="commentCount"></span>
+    <a title="disqus" href="/2023/07/30/RaceCondition/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2023/07/30/RaceCondition/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -261,37 +261,19 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>現在也是個工作第二年的後端了，是時候該學一些系統設計的知識</p>
-<p>系統設計顧名思義是指設計軟體系統的過程，例如說我們要設計一個大型社交網站<br>那我們可能就會需要非常非常多的技術，包含：用什麼語言去寫Server、使用什麼樣的Database、如果說系統Loading太大該怎麼辦等等，族繁不及備載。</p>
-<p>要考量的點實在太多了，而且也沒有所謂的正確答案，端看能不能有效解決問題<br>能夠利用手上會的知識，去整合並且設計系統</p>
-<p>另外面試的時候不會要你真的設計一個超級完整的系統，每個細節都要做到<br>不會，因為時間不夠，而且要你在臨場想出來也是強人所難，別人花了好幾次會議好幾個月甚至好幾年才構思出來的系統，要你在45~60分鐘內想出來，屬實過分。<br>所以我們在面試的時候必須持續溝通，詢問面試官說，這邊的需求，你想怎麼做等等。</p>
-<p>系統設計面試都是開放式的問題，沒有標準答案，所以要慢慢限縮問題的範圍，而且實際面對需求或客戶，本來也就是這樣，每個人的認知都不同，你的大跟我的大應該是不同的。這時候如果沒有釐清需求，直接給他做下去，相信我87%痛苦的都是自己。</p>
-<p>好了，我們先來介紹什麼是Load Balancer吧</p>
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>同步競爭(Race Condition)是指說某個資料因為多個行程而導致最終資料不正確的狀況</p>
+<p>這其實滿淺顯易懂的，但懂歸懂有時候還是會忽略到一些狀況。</p>
 <span id="more"></span>
 
-<h1 id="什麼是Load-Balancer"><a href="#什麼是Load-Balancer" class="headerlink" title="什麼是Load Balancer"></a>什麼是Load Balancer</h1><p>負責分散每個 Server 或是 Service 的壓力，就是 Load Balancer 的工作<br><img src="/2023/05/27/WhatIsLoadBalancer/LoadBalancer.jpg"></p>
-<p>假設今天我們有三台 Server(A, B, C)， Load Balancer 的工作就必須要把流量平均分布到各個Server上<br>避免流量過度集中在某個 Server 而過度爆掉</p>
-<p>你可以想像，Server 是員工，Load Balancer就像是我們的主管一樣，負責把每個任務每個任務平均分配到每個人手上(如果你的主管沒有，那我也沒辦法🌚)</p>
-<h1 id="常見的-Public-Rule"><a href="#常見的-Public-Rule" class="headerlink" title="常見的 Public Rule"></a>常見的 Public Rule</h1><ul>
-<li><p>Least Connection Method: 就是我們剛剛說的平均分配每個流量給不同的Server的方式</p>
-</li>
-<li><p>Least Response Time Method: 分配給沒有那麼多用戶端連結的Server，並且那個Server的回應時間是最短的</p>
-<details>
-<summary>圖片</summary>
-<img src="LeastResponseTimeMethod.png" id="image" class="collapsed">
-</details>
-</li>
-<li><p>Least Bandwidth Method: 把流量分到目前每秒頻寬(MB)最小的Server</p>
-</li>
-<li><p>Round Robin Method: 按照順序分，如果 Server 掛了就跳過，適用於硬體配備相差不多的 Server 上</p>
-<ul>
-<li>IP Hash: 按照使用者的 IP 去分</li>
-</ul>
-</li>
-</ul>
-<h1 id="Redundant-Load-Balancer"><a href="#Redundant-Load-Balancer" class="headerlink" title="Redundant Load Balancer"></a>Redundant Load Balancer</h1><p>防止 Load Balancer 掛了還有另一個 Load Balancer 可以用</p>
-<h1 id="聲明"><a href="#聲明" class="headerlink" title="聲明"></a>聲明</h1><p>本人只是將學習 Load Balancer 的過程記錄下來，並且整合成一篇筆記<br>如有侵權煩請告知<br>This writings just record the swift install process. If infringement, please be informed.</p>
-<h1 id="資料來源"><a href="#資料來源" class="headerlink" title="資料來源"></a>資料來源</h1><p><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=32946vRu4RA&amp;ab_channel=%E4%BB%8A%E5%A4%A9%E6%AF%94%E6%98%A8%E5%A4%A9%E5%8E%B2%E5%AE%B3">https://www.youtube.com/watch?v=32946vRu4RA&amp;ab_channel=%E4%BB%8A%E5%A4%A9%E6%AF%94%E6%98%A8%E5%A4%A9%E5%8E%B2%E5%AE%B3</a></p>
+<h1 id="介紹"><a href="#介紹" class="headerlink" title="介紹"></a>介紹</h1><p>我們先來看下面的程式碼</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">&quot;fmt&quot;</span></span><br><span class="line">	<span class="string">&quot;time&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">foo</span><span class="params">(a *<span class="type">int</span>)</span></span> &#123;</span><br><span class="line">	*a = *a + <span class="number">3</span></span><br><span class="line">	fmt.Println(<span class="string">&quot;a = &quot;</span>, *a)</span><br><span class="line">	<span class="keyword">if</span> *a%<span class="number">3</span> == <span class="number">0</span> &#123;</span><br><span class="line">		fmt.Println(<span class="string">&quot;Hello foo&quot;</span>)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">boo</span><span class="params">(b *<span class="type">int</span>)</span></span> &#123;</span><br><span class="line">	*b = *b + <span class="number">5</span></span><br><span class="line">	fmt.Println(<span class="string">&quot;b = &quot;</span>, *b)</span><br><span class="line">	<span class="keyword">if</span> *b%<span class="number">3</span> == <span class="number">0</span> &#123;</span><br><span class="line">		fmt.Println(<span class="string">&quot;Hello boo&quot;</span>)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	a := <span class="number">0</span></span><br><span class="line">	<span class="keyword">go</span> <span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123;</span><br><span class="line">		<span class="keyword">for</span> i := <span class="number">0</span>; i &lt; <span class="number">3</span>; i++ &#123;</span><br><span class="line">			foo(&amp;a)</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;()</span><br><span class="line"></span><br><span class="line">	<span class="keyword">go</span> <span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123;</span><br><span class="line">		<span class="keyword">for</span> i := <span class="number">0</span>; i &lt; <span class="number">3</span>; i++ &#123;</span><br><span class="line">			boo(&amp;a)</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;()</span><br><span class="line"></span><br><span class="line">	time.Sleep(<span class="number">1</span> * time.Second) <span class="comment">// 讓主執行緒休眠1秒</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在這段 Code 中，我期待每次用 <code>foo()</code> 和 <code>boo()</code> 都會跑裡面的條件式</p>
+<p>但實際上發生什麼事我們來看看</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">b =  8</span><br><span class="line">b =  13</span><br><span class="line">b =  18</span><br><span class="line">Hello boo</span><br><span class="line">a =  3</span><br><span class="line">Hello foo</span><br><span class="line">a =  21</span><br><span class="line">Hello foo</span><br><span class="line">a =  24</span><br><span class="line">Hello foo</span><br></pre></td></tr></table></figure>
+
+<p>發現了嗎，不只是條件式沒有跑出來，連同 b 和 a 的順序不同，這到底是為什麼</p>
+<h1 id="為什麼會發生"><a href="#為什麼會發生" class="headerlink" title="為什麼會發生"></a>為什麼會發生</h1><p>因為在這段 Code 中，我們會看到 <code>foo()</code> 和 <code>boo()</code> 會是併發的狀況，變成是<strong>這兩者不再是照順序執行的且 function 中傳遞的還是指標，所以在這個情況下，就會同時修改同一個記憶體位址的值</strong></p>
 <div>
     <script type="text/javascript">
     document.write(
@@ -307,8 +289,7 @@
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/Load-Balancer/" rel="tag"># Load Balancer</a>
-              <a href="/tags/note/" rel="tag"># note</a>
+              <a href="/tags/Golang/" rel="tag"># Golang</a>
           </div>
 
         
@@ -317,13 +298,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2023/01/28/leetcode997/" rel="prev" title="Leetcode - 997 with Python and Golang">
-      <i class="fa fa-chevron-left"></i> Leetcode - 997 with Python and Golang
+    <a href="/2023/07/29/RefactorMVC/" rel="prev" title="MVC與MTV框架的重構">
+      <i class="fa fa-chevron-left"></i> MVC與MTV框架的重構
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2023/07/29/RefactorMVC/" rel="next" title="MVC與MTV框架的重構">
-      MVC與MTV框架的重構 <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -389,7 +367,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BB%80%E9%BA%BC%E6%98%AFLoad-Balancer"><span class="nav-number">2.</span> <span class="nav-text">什麼是Load Balancer</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B8%B8%E8%A6%8B%E7%9A%84-Public-Rule"><span class="nav-number">3.</span> <span class="nav-text">常見的 Public Rule</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Redundant-Load-Balancer"><span class="nav-number">4.</span> <span class="nav-text">Redundant Load Balancer</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%81%B2%E6%98%8E"><span class="nav-number">5.</span> <span class="nav-text">聲明</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%B3%87%E6%96%99%E4%BE%86%E6%BA%90"><span class="nav-number">6.</span> <span class="nav-text">資料來源</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BB%8B%E7%B4%B9"><span class="nav-number">2.</span> <span class="nav-text">介紹</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%82%BA%E4%BB%80%E9%BA%BC%E6%9C%83%E7%99%BC%E7%94%9F"><span class="nav-number">3.</span> <span class="nav-text">為什麼會發生</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -524,9 +502,9 @@
 </script>
 <script>
   var disqus_config = function() {
-    this.page.url = "https://kenhuangtw.github.io/2023/05/27/WhatIsLoadBalancer/";
-    this.page.identifier = "2023/05/27/WhatIsLoadBalancer/";
-    this.page.title = "什麼是 Load Balancer";
+    this.page.url = "https://kenhuangtw.github.io/2023/07/30/RaceCondition/";
+    this.page.identifier = "2023/07/30/RaceCondition/";
+    this.page.title = "Race Condition";
     this.language = "zh_TW";
     };
   NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {

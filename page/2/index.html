@@ -23,7 +23,7 @@
   <meta name="description" content="技能樹很歪的工程師的筆記主要寫Python工作用Go、PHP偶爾寫寫Swift">
 <meta property="og:type" content="website">
 <meta property="og:title" content="窩不知道">
-<meta property="og:url" content="https://kenhuangtw.github.io/index.html">
+<meta property="og:url" content="https://kenhuangtw.github.io/page/2/index.html">
 <meta property="og:site_name" content="窩不知道">
 <meta property="og:description" content="技能樹很歪的工程師的筆記主要寫Python工作用Go、PHP偶爾寫寫Swift">
 <meta property="og:locale" content="zh_TW">
@@ -31,7 +31,7 @@
 <meta property="article:tag" content="Python, Go, PHP, Swift, Note, Hexo">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="https://kenhuangtw.github.io/">
+<link rel="canonical" href="https://kenhuangtw.github.io/page/2/">
 
 
 <script id="page-configurations">
@@ -193,7 +193,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="https://kenhuangtw.github.io/2023/07/30/RaceCondition/">
+    <link itemprop="mainEntityOfPage" href="https://kenhuangtw.github.io/2022/10/08/fucktk/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -207,7 +207,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2023/07/30/RaceCondition/" class="post-title-link" itemprop="url">Race Condition</a>
+            <a href="/2022/10/08/fucktk/" class="post-title-link" itemprop="url">Python Tkinter 之你該仔細想想是否要用Tk</a>
         </h2>
 
         <div class="post-meta">
@@ -218,7 +218,7 @@
               <span class="post-meta-item-text">發表於</span>
               
 
-              <time title="創建時間：2023-07-30 19:54:48 / 修改時間：19:57:59" itemprop="dateCreated datePublished" datetime="2023-07-30T19:54:48+08:00">2023-07-30</time>
+              <time title="創建時間：2022-10-08 01:24:40 / 修改時間：02:18:22" itemprop="dateCreated datePublished" datetime="2022-10-08T01:24:40+08:00">2022-10-08</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -226,11 +226,11 @@
               </span>
               <span class="post-meta-item-text">分類於</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%A8%8B%E5%BC%8F%E9%96%8B%E7%99%BC/" itemprop="url" rel="index"><span itemprop="name">程式開發</span></a>
+                  <a href="/categories/Python/" itemprop="url" rel="index"><span itemprop="name">Python</span></a>
                 </span>
                   ，
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%A8%8B%E5%BC%8F%E9%96%8B%E7%99%BC/Golang/" itemprop="url" rel="index"><span itemprop="name">Golang</span></a>
+                  <a href="/categories/Python/GUI/" itemprop="url" rel="index"><span itemprop="name">GUI</span></a>
                 </span>
             </span>
 
@@ -243,8 +243,8 @@
       </span>
       <span class="post-meta-item-text">Disqus：</span>
     
-    <a title="disqus" href="/2023/07/30/RaceCondition/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2023/07/30/RaceCondition/" itemprop="commentCount"></span>
+    <a title="disqus" href="/2022/10/08/fucktk/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2022/10/08/fucktk/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -259,11 +259,13 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>同步競爭(Race Condition)是指說某個資料因為多個行程而導致最終資料不正確的狀況</p>
-<p>這其實滿淺顯易懂的，但懂歸懂有時候還是會忽略到一些狀況。</p>
+          <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>目前接下的 SideProject 也告一個段落了，用了兩個月的時間寫出一個小系統，這其中最困難的地方莫過於<strong>幾乎全部是我通靈出來的</strong></p>
+<p>如果有下次，我希望能夠和我好好討論一些細節，不用讓我那麼痛苦。</p>
+<p>好了廢話說到這</p>
+<p>接下來是正題，我們繼續看下去</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2023/07/30/RaceCondition/#more" rel="contents">
+              <a class="btn" href="/2022/10/08/fucktk/#more" rel="contents">
                 閱讀全文 &raquo;
               </a>
             </div>
@@ -287,7 +289,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="https://kenhuangtw.github.io/2023/07/29/RefactorMVC/">
+    <link itemprop="mainEntityOfPage" href="https://kenhuangtw.github.io/2022/09/06/HowToSetDisqus/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -301,7 +303,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2023/07/29/RefactorMVC/" class="post-title-link" itemprop="url">MVC與MTV框架的重構</a>
+            <a href="/2022/09/06/HowToSetDisqus/" class="post-title-link" itemprop="url">Hexo留言板 - Disqus(使用 Next 主題)</a>
         </h2>
 
         <div class="post-meta">
@@ -311,14 +313,14 @@
               </span>
               <span class="post-meta-item-text">發表於</span>
 
-              <time title="創建時間：2023-07-29 10:11:29" itemprop="dateCreated datePublished" datetime="2023-07-29T10:11:29+08:00">2023-07-29</time>
+              <time title="創建時間：2022-09-06 19:07:04" itemprop="dateCreated datePublished" datetime="2022-09-06T19:07:04+08:00">2022-09-06</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新於</span>
-                <time title="修改時間：2023-07-30 19:56:45" itemprop="dateModified" datetime="2023-07-30T19:56:45+08:00">2023-07-30</time>
+                <time title="修改時間：2023-07-29 11:35:02" itemprop="dateModified" datetime="2023-07-29T11:35:02+08:00">2023-07-29</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -326,15 +328,7 @@
               </span>
               <span class="post-meta-item-text">分類於</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/MVC/" itemprop="url" rel="index"><span itemprop="name">MVC</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/MVC/MTV/" itemprop="url" rel="index"><span itemprop="name">MTV</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/MVC/MTV/Refactor/" itemprop="url" rel="index"><span itemprop="name">Refactor</span></a>
+                  <a href="/categories/Hexo/" itemprop="url" rel="index"><span itemprop="name">Hexo</span></a>
                 </span>
             </span>
 
@@ -347,8 +341,8 @@
       </span>
       <span class="post-meta-item-text">Disqus：</span>
     
-    <a title="disqus" href="/2023/07/29/RefactorMVC/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2023/07/29/RefactorMVC/" itemprop="commentCount"></span>
+    <a title="disqus" href="/2022/09/06/HowToSetDisqus/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2022/09/06/HowToSetDisqus/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -363,14 +357,11 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>當我們在寫Laravel, Django 等MVC以及MTV的架構時，部分的人可能都會習慣把所有的邏輯，包含Use Case, 資料驗證 等等全部寫在同一包裡面</p>
-<p>一開始或許開發的時候比較方便，你自己在自幹的時候想怎麼寫都沒差</p>
-<p>但換個角度，當今天這個專案是10個人一起做的呢？甚至是過了10個月你再回來看，我們要花多少時間來看這些架構</p>
-<p>再來，當我們今天要新增一個功能或是更改 Use Case 時，我們又要花多少時間來做閱讀？</p>
-<p>其實在看過Clean Code, Clean Coder 和 Clean Architecture之後其實就會知道，傳統的MVC框架真的滿髒亂而且不容易維護的</p>
+          <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>昨天晚上吃完烤肉跑回來繼續搞留言區，但為了這個 Disqus 我竟然搞了一個小時。<br>在設定的時候整個都跑不太出來也不知道為什麼，後來在自己摸索跟看網路上的文章才知道哪裡做錯了。<br>所以我決定把這過程重新記錄下來，也當作筆記跟教學給大家參考</p>
+<h1 id="版本"><a href="#版本" class="headerlink" title="版本"></a>版本</h1><p><strong>HEXO 5.4.2</strong><br><strong>HEXO-cli 4.3.0</strong><br><strong>node.js 16.13.0</strong></p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2023/07/29/RefactorMVC/#more" rel="contents">
+              <a class="btn" href="/2022/09/06/HowToSetDisqus/#more" rel="contents">
                 閱讀全文 &raquo;
               </a>
             </div>
@@ -394,7 +385,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="https://kenhuangtw.github.io/2023/05/27/WhatIsLoadBalancer/">
+    <link itemprop="mainEntityOfPage" href="https://kenhuangtw.github.io/2022/09/05/SwiftInstall/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -408,101 +399,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2023/05/27/WhatIsLoadBalancer/" class="post-title-link" itemprop="url">什麼是 Load Balancer</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">發表於</span>
-              
-
-              <time title="創建時間：2023-05-27 16:46:59 / 修改時間：19:19:07" itemprop="dateCreated datePublished" datetime="2023-05-27T16:46:59+08:00">2023-05-27</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分類於</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/System-Design/" itemprop="url" rel="index"><span itemprop="name">System Design</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/2023/05/27/WhatIsLoadBalancer/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2023/05/27/WhatIsLoadBalancer/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>現在也是個工作第二年的後端了，是時候該學一些系統設計的知識</p>
-<p>系統設計顧名思義是指設計軟體系統的過程，例如說我們要設計一個大型社交網站<br>那我們可能就會需要非常非常多的技術，包含：用什麼語言去寫Server、使用什麼樣的Database、如果說系統Loading太大該怎麼辦等等，族繁不及備載。</p>
-<p>要考量的點實在太多了，而且也沒有所謂的正確答案，端看能不能有效解決問題<br>能夠利用手上會的知識，去整合並且設計系統</p>
-<p>另外面試的時候不會要你真的設計一個超級完整的系統，每個細節都要做到<br>不會，因為時間不夠，而且要你在臨場想出來也是強人所難，別人花了好幾次會議好幾個月甚至好幾年才構思出來的系統，要你在45~60分鐘內想出來，屬實過分。<br>所以我們在面試的時候必須持續溝通，詢問面試官說，這邊的需求，你想怎麼做等等。</p>
-<p>系統設計面試都是開放式的問題，沒有標準答案，所以要慢慢限縮問題的範圍，而且實際面對需求或客戶，本來也就是這樣，每個人的認知都不同，你的大跟我的大應該是不同的。這時候如果沒有釐清需求，直接給他做下去，相信我87%痛苦的都是自己。</p>
-<p>好了，我們先來介紹什麼是Load Balancer吧</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2023/05/27/WhatIsLoadBalancer/#more" rel="contents">
-                閱讀全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="https://kenhuangtw.github.io/2023/01/28/leetcode997/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="KenHuang">
-      <meta itemprop="description" content="技能樹很歪的工程師的筆記<br>主要寫Python<br>工作用Go、PHP<br>偶爾寫寫Swift">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="窩不知道">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2023/01/28/leetcode997/" class="post-title-link" itemprop="url">Leetcode - 997 with Python and Golang</a>
+            <a href="/2022/09/05/SwiftInstall/" class="post-title-link" itemprop="url">Swift如何在windows系統和Linux上安裝</a>
         </h2>
 
         <div class="post-meta">
@@ -512,14 +409,117 @@
               </span>
               <span class="post-meta-item-text">發表於</span>
 
-              <time title="創建時間：2023-01-28 23:15:22" itemprop="dateCreated datePublished" datetime="2023-01-28T23:15:22+08:00">2023-01-28</time>
+              <time title="創建時間：2022-09-05 14:09:19" itemprop="dateCreated datePublished" datetime="2022-09-05T14:09:19+08:00">2022-09-05</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新於</span>
-                <time title="修改時間：2023-01-29 22:59:21" itemprop="dateModified" datetime="2023-01-29T22:59:21+08:00">2023-01-29</time>
+                <time title="修改時間：2023-05-27 16:52:18" itemprop="dateModified" datetime="2023-05-27T16:52:18+08:00">2023-05-27</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Swift/" itemprop="url" rel="index"><span itemprop="name">Swift</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Swift/Install/" itemprop="url" rel="index"><span itemprop="name">Install</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2022/09/05/SwiftInstall/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2022/09/05/SwiftInstall/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>上個月剛入手了一台 M1pro版本的 macPro 做為學習 swift 以及寫 sideproject 的生產力工具。</p>
+<p>其實之前就想嘗試在 Linux 和 Windows 上跑 swift，只是那時候卡在一個問題：這兩個平台都沒辦法運行 Xcode</p>
+<p>Xcode 作為一個 IDE，他最強大的功能就是可以讓你邊寫邊看程式在裝置上的結果如何，但可惜其他平台找了那麼久終究沒有找到方法(歡迎各路大神提供方法)</p>
+<p>不過我本身比較習慣看大螢幕，也比較習慣我桌機的鍵盤(在筆電上打字速度降低 50%…</p>
+<p>所以這幾天半夜睡不著就決定研究怎麼在 Windows 還有 Linux 上安裝 swift</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/09/05/SwiftInstall/#more" rel="contents">
+                閱讀全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://kenhuangtw.github.io/2022/09/05/PythonSqlalchemy2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="KenHuang">
+      <meta itemprop="description" content="技能樹很歪的工程師的筆記<br>主要寫Python<br>工作用Go、PHP<br>偶爾寫寫Swift">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="窩不知道">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/09/05/PythonSqlalchemy2/" class="post-title-link" itemprop="url">Python sqlalchemy note — 2</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2022-09-05 13:39:37" itemprop="dateCreated datePublished" datetime="2022-09-05T13:39:37+08:00">2022-09-05</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新於</span>
+                <time title="修改時間：2022-09-06 23:29:40" itemprop="dateModified" datetime="2022-09-06T23:29:40+08:00">2022-09-06</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -531,15 +531,7 @@
                 </span>
                   ，
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Python/Golang/" itemprop="url" rel="index"><span itemprop="name">Golang</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Python/Golang/Swift/" itemprop="url" rel="index"><span itemprop="name">Swift</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Python/Golang/Swift/leetcode/" itemprop="url" rel="index"><span itemprop="name">leetcode</span></a>
+                  <a href="/categories/Python/ORM/" itemprop="url" rel="index"><span itemprop="name">ORM</span></a>
                 </span>
             </span>
 
@@ -552,8 +544,8 @@
       </span>
       <span class="post-meta-item-text">Disqus：</span>
     
-    <a title="disqus" href="/2023/01/28/leetcode997/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2023/01/28/leetcode997/" itemprop="commentCount"></span>
+    <a title="disqus" href="/2022/09/05/PythonSqlalchemy2/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2022/09/05/PythonSqlalchemy2/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -568,11 +560,10 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>紀錄一下解決 Leetcode 第 997 題的過程</p>
-<p><a target="_blank" rel="noopener" href="https://leetcode.com/problems/find-the-town-judge/">我們先來看題目 - Find the Town Judge</a></p>
+          <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>這次要來繼續說明 <strong>sqlalchemy</strong> 的更多操作，如果沒有看過<a href="https://kenhuangtw.github.io/2022/09/05/PythonSqlalchemy1/#more">第一篇</a>的朋友們，可以先去看<a href="https://kenhuangtw.github.io/2022/09/05/PythonSqlalchemy1/#more">第一篇</a></p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2023/01/28/leetcode997/#more" rel="contents">
+              <a class="btn" href="/2022/09/05/PythonSqlalchemy2/#more" rel="contents">
                 閱讀全文 &raquo;
               </a>
             </div>
@@ -596,7 +587,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="https://kenhuangtw.github.io/2022/10/08/Codewars-RGB-Use-Swift/">
+    <link itemprop="mainEntityOfPage" href="https://kenhuangtw.github.io/2022/09/05/PythonSqlalchemy1/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -610,7 +601,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2022/10/08/Codewars-RGB-Use-Swift/" class="post-title-link" itemprop="url">Codewars - RGB To Hex Conversion (Use Swift)</a>
+            <a href="/2022/09/05/PythonSqlalchemy1/" class="post-title-link" itemprop="url">Python sqlalchemy note — 1</a>
         </h2>
 
         <div class="post-meta">
@@ -619,21 +610,27 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">發表於</span>
-              
 
-              <time title="創建時間：2022-10-08 13:52:04 / 修改時間：14:01:23" itemprop="dateCreated datePublished" datetime="2022-10-08T13:52:04+08:00">2022-10-08</time>
+              <time title="創建時間：2022-09-05 09:23:19" itemprop="dateCreated datePublished" datetime="2022-09-05T09:23:19+08:00">2022-09-05</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新於</span>
+                <time title="修改時間：2022-10-08 01:53:12" itemprop="dateModified" datetime="2022-10-08T01:53:12+08:00">2022-10-08</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
               </span>
               <span class="post-meta-item-text">分類於</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Swift/" itemprop="url" rel="index"><span itemprop="name">Swift</span></a>
+                  <a href="/categories/Python/" itemprop="url" rel="index"><span itemprop="name">Python</span></a>
                 </span>
                   ，
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Swift/Codewars/" itemprop="url" rel="index"><span itemprop="name">Codewars</span></a>
+                  <a href="/categories/Python/ORM/" itemprop="url" rel="index"><span itemprop="name">ORM</span></a>
                 </span>
             </span>
 
@@ -646,8 +643,8 @@
       </span>
       <span class="post-meta-item-text">Disqus：</span>
     
-    <a title="disqus" href="/2022/10/08/Codewars-RGB-Use-Swift/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2022/10/08/Codewars-RGB-Use-Swift/" itemprop="commentCount"></span>
+    <a title="disqus" href="/2022/09/05/PythonSqlalchemy1/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2022/09/05/PythonSqlalchemy1/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -662,11 +659,13 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>這篇單純記錄我遇到一些不熟悉的地方而已</p>
-<p><a target="_blank" rel="noopener" href="https://www.codewars.com/kata/513e08acc600c94f01000001">我們先來看題目 - RGB To Hex Conversion</a></p>
+          <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>第一次嘗試寫blog，怕不寫下來兩個星期以後都忘記了，現在還很菜，鞭小力一點。</p>
+<p>這次的主題是python上熱門的ORM工具 — <strong>sqlalchemy</strong>。</p>
+<p>起初在寫一個有關於成績分析的sideproject，因為使用到資料庫做為儲存資料的方式，所以免不了的需要對資料庫的表格進行一些操作，原本的想法是使用 python 的 module 去做，但寫到一半發現，要是一個一個用 SQL 的語法寫下去，後面維護起來肯定是直接送急診。</p>
+<p>於是乎就開始思考，有沒有什麼方式可以解決我的困擾。<br>剛好工作的關係，接觸到了一種可以方便使用者對資料庫執行操作的方式 — <strong>ORM</strong>。</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2022/10/08/Codewars-RGB-Use-Swift/#more" rel="contents">
+              <a class="btn" href="/2022/09/05/PythonSqlalchemy1/#more" rel="contents">
                 閱讀全文 &raquo;
               </a>
             </div>
@@ -689,7 +688,7 @@
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一頁"></i></a>
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="上一頁"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
   </nav>
 
 
