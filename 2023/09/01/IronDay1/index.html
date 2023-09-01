@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.2">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"kenhuangtw.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"enable":null,"type":null,"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
+
+  <meta name="description" content="文章同步於it邦 為什麼會要寫這個主題自己身為菜鳥時，寫Code常常被前輩噴爛，說你的一些習慣不太好。直到我接觸了Clean Code這本書還有去了其他團隊，我才知道軟體的維護是非常重要的，這些後續會繼續說明。 再來講另一個故事 約莫6月底時，公司希望我評估某個超大型專案的時程，因為那個專案爛尾了，想要接回來做。 當我一打開Code的時候，我整個眼睛真的快瞎了，我實在無法想像這個東西是資深工程師寫">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【Day-1】前言">
+<meta property="og:url" content="https://kenhuangtw.github.io/2023/09/01/IronDay1/index.html">
+<meta property="og:site_name" content="窩不知道">
+<meta property="og:description" content="文章同步於it邦 為什麼會要寫這個主題自己身為菜鳥時，寫Code常常被前輩噴爛，說你的一些習慣不太好。直到我接觸了Clean Code這本書還有去了其他團隊，我才知道軟體的維護是非常重要的，這些後續會繼續說明。 再來講另一個故事 約莫6月底時，公司希望我評估某個超大型專案的時程，因為那個專案爛尾了，想要接回來做。 當我一打開Code的時候，我整個眼睛真的快瞎了，我實在無法想像這個東西是資深工程師寫">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2023-09-01T11:33:56.000Z">
+<meta property="article:modified_time" content="2023-09-01T11:47:35.390Z">
+<meta property="article:author" content="KenHuang">
+<meta property="article:tag" content="Software Development">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://kenhuangtw.github.io/2023/09/01/IronDay1/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-TW'
+  };
+</script>
+
+  <title>【Day-1】前言 | 窩不知道</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">窩不知道</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>關於</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分類</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜尋
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜尋..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://kenhuangtw.github.io/2023/09/01/IronDay1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="KenHuang">
+      <meta itemprop="description" content="技能樹很歪的工程師的筆記<br>主要寫Python<br>工作用Go、PHP<br>偶爾寫寫Swift">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="窩不知道">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          【Day-1】前言
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+              
+
+              <time title="創建時間：2023-09-01 19:33:56 / 修改時間：19:47:35" itemprop="dateCreated datePublished" datetime="2023-09-01T19:33:56+08:00">2023-09-01</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/2023%E9%90%B5%E4%BA%BA%E8%B3%BD/" itemprop="url" rel="index"><span itemprop="name">2023鐵人賽</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2023/09/01/IronDay1/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2023/09/01/IronDay1/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>文章同步於<a target="_blank" rel="noopener" href="https://ithelp.ithome.com.tw/articles/10314325">it邦</a></p>
+<h1 id="為什麼會要寫這個主題"><a href="#為什麼會要寫這個主題" class="headerlink" title="為什麼會要寫這個主題"></a>為什麼會要寫這個主題</h1><p>自己身為菜鳥時，寫Code常常被前輩噴爛，說你的一些習慣不太好。直到我接觸了Clean Code這本書還有去了其他團隊，我才知道軟體的維護是非常重要的，這些後續會繼續說明。</p>
+<p>再來講另一個故事</p>
+<p>約莫6月底時，公司希望我評估某個超大型專案的時程，因為那個專案爛尾了，想要接回來做。</p>
+<p>當我一打開Code的時候，我整個眼睛真的快瞎了，我實在無法想像這個東西是資深工程師寫出來的。舉個他寫的髒扣:</p>
+<ul>
+<li>路徑命名為<code>path</code>，看起來沒什麼問題，但我看不出是哪家的path</li>
+<li>全部黏在一起不空格</li>
+<li>物件直接命名為<code>Neko</code> ，我沒找到<code>mewo()</code>這個方法我就把你變成<code>Neko</code></li>
+<li>最屌的，變數命名<code>a</code> ~ <code>z</code>都有</li>
+</ul>
+<p>身為一個不喜歡看到髒扣的人，就決定來寫這篇。</p>
+<p>這次的教學主要會以後端的角度來看軟體開發這件事<br>這個月會講講一些軟體設計的原則還有一些後端在設計API以及架構會需要注意的地方<br>會用到Python、PHP、Golang，不過都只會用來做一些說明，只有PHP會拿來寫Laravel框架的重構</p>
+<p>講解的是概念，其實也不用擔心看不懂</p>
+<span id="more"></span>
+
+<h1 id="髒扣造成的影響"><a href="#髒扣造成的影響" class="headerlink" title="髒扣造成的影響"></a>髒扣造成的影響</h1><p>隨著時間時間增長，可能會有新增加的功能，或是配合市場要調整的部分，此時架構或是Code如果不夠乾淨，那維護的時間將是隨著指數增長</p>
+<p>我們引用Clean Architecture這本書中的資料</p>
+<blockquote>
+<p>「當對程式碼的整潔程度或設計的結構沒有多少想法時，那你就會跟這條曲線一樣走到最終悲慘的結局」<br>取自: Clean Architecture (p.6)</p>
+</blockquote>
+<p>再舉一個極端的例子</p>
+<blockquote>
+<p>「我知道有一間公司在 80 年代後期開發了一個殺手級應用，但後來發行的週期開始拖長，程式裡的錯誤也無法在下次發行之前修復，程式載入的時間與崩潰機率也愈來愈長和高。不久，這家公司就倒閉了。我問他當時發生了什麼…」<br>「急於將產品上市，導致他們的程式碼變得一團糟，當他們加入愈來愈多的產品特點時，程式碼就變得愈來愈糟糕，一直到他們再也無法管理這團混亂。劣質的程式碼導致了這家公司的倒閉」<br>取自: Clean Code (p.3)</p>
+</blockquote>
+<p>如果你問我說，「我的主管要求我一定要在三天內產出這個專案，那我該怎麼辦?」<br>我建議你先去看一下<strong>Clean Coder</strong>，上面有很多身為一個專業人士該做的事情和應對方式。<br>如果主管還是不合理的要求你，那我只好搬出那句話，<strong>程式跟人只要有一個能跑就好</strong>。</p>
+<blockquote>
+<p>隨時準備好可以跳槽的準備。</p>
+</blockquote>
+<h1 id="如何不寫髒扣"><a href="#如何不寫髒扣" class="headerlink" title="如何不寫髒扣"></a>如何不寫髒扣</h1><h2 id="語言規範"><a href="#語言規範" class="headerlink" title="語言規範"></a>語言規範</h2><p>我們可以先參考每個程式語言的規範文件，例如Python的<a target="_blank" rel="noopener" href="https://peps.python.org/pep-0008/">PEP8</a>為例子</p>
+<ul>
+<li>import 時不該把不相關的擠在一行</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Wrong</span></span><br><span class="line"><span class="keyword">import</span> sys, os</span><br><span class="line"></span><br><span class="line"><span class="comment"># Correct</span></span><br><span class="line"><span class="keyword">from</span> subprocess <span class="keyword">import</span> Popen, PIPE</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> sys</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>使用 <code>is not</code> 而不是 <code>not … is</code></li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Wrong</span></span><br><span class="line"><span class="keyword">if</span> <span class="keyword">not</span> foo <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line"></span><br><span class="line"><span class="comment"># Correct</span></span><br><span class="line"><span class="keyword">if</span> foo <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span>:</span><br></pre></td></tr></table></figure>
+
+<p>還有很多就不一一舉例了，在新手時期可以先照著語言的規範來做，這樣對於往後撰寫的習慣會比較好</p>
+<h2 id="賦予有意義的名稱"><a href="#賦予有意義的名稱" class="headerlink" title="賦予有意義的名稱"></a>賦予有意義的名稱</h2><p>這個應該是很多人講到爛掉了，之後會用Clean Code再做更詳細的說明</p>
+<p>假設我今天有一個function是從資料庫取得所有的<code>User email</code></p>
+<p>我們可以將取出來的資料直接清楚的命名為<code>userEmailGroup</code>或是<code>allUserEmailFromDB</code> 之類的</p>
+<p>不要用什麼data(<strong>不夠清楚</strong>)、dbData(<strong>什麼的Data</strong>)甚至是abc這種根本沒意義的</p>
+<p>如果是示範用那也就算了，在專案上拜託不要這樣寫，這麼做只會讓別人需要花心思去猜你在想什麼</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> typing <span class="keyword">import</span> <span class="type">List</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">get_user_email_group_from_DB</span>()-&gt; <span class="type">List</span>[<span class="built_in">str</span>]:</span><br><span class="line">    <span class="string">&quot;&quot;&quot;示範用，取得資料庫所有user的email&quot;&quot;&quot;</span></span><br><span class="line">    <span class="keyword">return</span> some_DB_drive.get_some_data(<span class="string">&quot;users&quot;</span>, <span class="string">&quot;email&quot;</span>).<span class="built_in">all</span>()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 好的命名方式</span></span><br><span class="line">user_email_group = get_user_email_group_from_DB()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 不好的命名方式</span></span><br><span class="line">data = get_user_email_group_from_DB()  <span class="comment"># 不夠清楚，我知道是資料，但我還要額外花時間看是誰的資料</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><p>其他還有非常多的方法，像是在Python裡面你可以寫<code>Type Hint</code> 讓其他人更了解這個function的參數以及回傳值的型別，舉個例子</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">add_two_number</span>(<span class="params">summand: <span class="built_in">int</span>, addend: <span class="built_in">int</span></span>) -&gt; <span class="built_in">int</span>:</span><br><span class="line">	<span class="keyword">return</span> summand + addend</span><br></pre></td></tr></table></figure>
+
+<p>在Python裡面，不少型別都可以使用<code>+</code>這個運算子，例如:string, list</p>
+<p>你說function有命名阿</p>
+<p>確實有命名可是，多寫這些沒有壞處；忘了我不用再往旁邊看(貼貼❤)，而且假設我以後真的要驗證參數的型別，我就可以直接拿function裡面的type hint來用，不需要再額外定義。        </p>
+<h1 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h1><p>今天簡單介紹一下，這星期會先寫Coding Style、Clean Code以及 SOLID原則</p>
+<p>明天見。</p>
+<h1 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h1><ul>
+<li><a target="_blank" rel="noopener" href="https://peps.python.org/pep-0008/">Python PEP8</a></li>
+<li><a target="_blank" rel="noopener" href="https://ithelp.ithome.com.tw/articles/10264853">Day 01: 【序】– 架構與設計、代碼、工程師</a></li>
+</ul>
+<div>
+    <script type="text/javascript">
+    document.write(
+        "<iframe scrolling='no' frameborder='0' sandbox='allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox allow-storage-access-by-user-activation' style='height: 212px; width: 100%;' src='https://button.like.co/in/embed/wtf81905/button?referrer=" +
+        encodeURIComponent(location.href.split("?")[0].split("#")[0]) + "'></iframe>");
+    </script>
+</div>
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Software-Development/" rel="tag"># Software Development</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/07/30/RaceCondition/" rel="prev" title="Race Condition">
+      <i class="fa fa-chevron-left"></i> Race Condition
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%82%BA%E4%BB%80%E9%BA%BC%E6%9C%83%E8%A6%81%E5%AF%AB%E9%80%99%E5%80%8B%E4%B8%BB%E9%A1%8C"><span class="nav-number">1.</span> <span class="nav-text">為什麼會要寫這個主題</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%AB%92%E6%89%A3%E9%80%A0%E6%88%90%E7%9A%84%E5%BD%B1%E9%9F%BF"><span class="nav-number">2.</span> <span class="nav-text">髒扣造成的影響</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E4%B8%8D%E5%AF%AB%E9%AB%92%E6%89%A3"><span class="nav-number">3.</span> <span class="nav-text">如何不寫髒扣</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AA%9E%E8%A8%80%E8%A6%8F%E7%AF%84"><span class="nav-number">3.1.</span> <span class="nav-text">語言規範</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B3%A6%E4%BA%88%E6%9C%89%E6%84%8F%E7%BE%A9%E7%9A%84%E5%90%8D%E7%A8%B1"><span class="nav-number">3.2.</span> <span class="nav-text">賦予有意義的名稱</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B6%E4%BB%96"><span class="nav-number">3.3.</span> <span class="nav-text">其他</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%B8%BD%E7%B5%90"><span class="nav-number">4.</span> <span class="nav-text">總結</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="nav-number">5.</span> <span class="nav-text">參考資料</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">KenHuang</p>
+  <div class="site-description" itemprop="description">技能樹很歪的工程師的筆記<br>主要寫Python<br>工作用Go、PHP<br>偶爾寫寫Swift</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">11</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/KenHuangTW" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;KenHuangTW" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">KenHuang</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://KenH-TW.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  var disqus_config = function() {
+    this.page.url = "https://kenhuangtw.github.io/2023/09/01/IronDay1/";
+    this.page.identifier = "2023/09/01/IronDay1/";
+    this.page.title = "【Day-1】前言";
+    this.language = "zh_TW";
+    };
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://KenH-TW.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  });
+</script>
+
+</body>
+</html>
