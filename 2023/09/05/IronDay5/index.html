@@ -20,24 +20,24 @@
     var CONFIG = {"hostname":"kenhuangtw.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"enable":null,"type":null,"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
   </script>
 
-  <meta name="description" content="前言現在也是個工作第二年的後端了，是時候該學一些系統設計的知識 系統設計顧名思義是指設計軟體系統的過程，例如說我們要設計一個大型社交網站那我們可能就會需要非常非常多的技術，包含：用什麼語言去寫Server、使用什麼樣的Database、如果說系統Loading太大該怎麼辦等等，族繁不及備載。 要考量的點實在太多了，而且也沒有所謂的正確答案，端看能不能有效解決問題能夠利用手上會的知識，去整合並且設計">
+  <meta name="description" content="文章同步於it邦 前言終於到最後一個Clean Code的文章….大概吧只能說這本書真的太多完全沒辦法幾天之內介紹完真的介紹完我也要壓縮一大堆所以就直接帶到最後我預定介紹的主題 - 程式碼的氣味與啟發">
 <meta property="og:type" content="article">
-<meta property="og:title" content="什麼是 Load Balancer">
-<meta property="og:url" content="https://kenhuangtw.github.io/2023/05/27/WhatIsLoadBalancer/index.html">
+<meta property="og:title" content="【Day-5】Clean Code(下)">
+<meta property="og:url" content="https://kenhuangtw.github.io/2023/09/05/IronDay5/index.html">
 <meta property="og:site_name" content="窩不知道">
-<meta property="og:description" content="前言現在也是個工作第二年的後端了，是時候該學一些系統設計的知識 系統設計顧名思義是指設計軟體系統的過程，例如說我們要設計一個大型社交網站那我們可能就會需要非常非常多的技術，包含：用什麼語言去寫Server、使用什麼樣的Database、如果說系統Loading太大該怎麼辦等等，族繁不及備載。 要考量的點實在太多了，而且也沒有所謂的正確答案，端看能不能有效解決問題能夠利用手上會的知識，去整合並且設計">
+<meta property="og:description" content="文章同步於it邦 前言終於到最後一個Clean Code的文章….大概吧只能說這本書真的太多完全沒辦法幾天之內介紹完真的介紹完我也要壓縮一大堆所以就直接帶到最後我預定介紹的主題 - 程式碼的氣味與啟發">
 <meta property="og:locale" content="zh_TW">
-<meta property="og:image" content="https://kenhuangtw.github.io/2023/05/27/WhatIsLoadBalancer/LoadBalancer.jpg">
-<meta property="og:image" content="https://kenhuangtw.github.io/2023/05/27/WhatIsLoadBalancer/LeastResponseTimeMethod.png">
-<meta property="article:published_time" content="2023-05-27T08:46:59.000Z">
-<meta property="article:modified_time" content="2023-05-27T11:19:07.847Z">
+<meta property="og:image" content="https://i.imgur.com/XTMnSwG.png">
+<meta property="og:image" content="https://i.imgur.com/oEbO8AQ.png">
+<meta property="article:published_time" content="2023-09-04T16:54:25.000Z">
+<meta property="article:modified_time" content="2023-09-04T17:01:02.315Z">
 <meta property="article:author" content="KenHuang">
-<meta property="article:tag" content="Load Balancer">
-<meta property="article:tag" content="note">
+<meta property="article:tag" content="Software Development">
+<meta property="article:tag" content="Clean Code">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://kenhuangtw.github.io/2023/05/27/WhatIsLoadBalancer/LoadBalancer.jpg">
+<meta name="twitter:image" content="https://i.imgur.com/XTMnSwG.png">
 
-<link rel="canonical" href="https://kenhuangtw.github.io/2023/05/27/WhatIsLoadBalancer/">
+<link rel="canonical" href="https://kenhuangtw.github.io/2023/09/05/IronDay5/">
 
 
 <script id="page-configurations">
@@ -50,7 +50,7 @@
   };
 </script>
 
-  <title>什麼是 Load Balancer | 窩不知道</title>
+  <title>【Day-5】Clean Code(下) | 窩不知道</title>
   
 
 
@@ -200,7 +200,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="https://kenhuangtw.github.io/2023/05/27/WhatIsLoadBalancer/">
+    <link itemprop="mainEntityOfPage" href="https://kenhuangtw.github.io/2023/09/05/IronDay5/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -213,7 +213,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          什麼是 Load Balancer
+          【Day-5】Clean Code(下)
         </h1>
 
         <div class="post-meta">
@@ -224,7 +224,7 @@
               <span class="post-meta-item-text">發表於</span>
               
 
-              <time title="創建時間：2023-05-27 16:46:59 / 修改時間：19:19:07" itemprop="dateCreated datePublished" datetime="2023-05-27T16:46:59+08:00">2023-05-27</time>
+              <time title="創建時間：2023-09-05 00:54:25 / 修改時間：01:01:02" itemprop="dateCreated datePublished" datetime="2023-09-05T00:54:25+08:00">2023-09-05</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -232,7 +232,7 @@
               </span>
               <span class="post-meta-item-text">分類於</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/System-Design/" itemprop="url" rel="index"><span itemprop="name">System Design</span></a>
+                  <a href="/categories/2023%E9%90%B5%E4%BA%BA%E8%B3%BD/" itemprop="url" rel="index"><span itemprop="name">2023鐵人賽</span></a>
                 </span>
             </span>
 
@@ -245,8 +245,8 @@
       </span>
       <span class="post-meta-item-text">Disqus：</span>
     
-    <a title="disqus" href="/2023/05/27/WhatIsLoadBalancer/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2023/05/27/WhatIsLoadBalancer/" itemprop="commentCount"></span>
+    <a title="disqus" href="/2023/09/05/IronDay5/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2023/09/05/IronDay5/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -261,37 +261,24 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>現在也是個工作第二年的後端了，是時候該學一些系統設計的知識</p>
-<p>系統設計顧名思義是指設計軟體系統的過程，例如說我們要設計一個大型社交網站<br>那我們可能就會需要非常非常多的技術，包含：用什麼語言去寫Server、使用什麼樣的Database、如果說系統Loading太大該怎麼辦等等，族繁不及備載。</p>
-<p>要考量的點實在太多了，而且也沒有所謂的正確答案，端看能不能有效解決問題<br>能夠利用手上會的知識，去整合並且設計系統</p>
-<p>另外面試的時候不會要你真的設計一個超級完整的系統，每個細節都要做到<br>不會，因為時間不夠，而且要你在臨場想出來也是強人所難，別人花了好幾次會議好幾個月甚至好幾年才構思出來的系統，要你在45~60分鐘內想出來，屬實過分。<br>所以我們在面試的時候必須持續溝通，詢問面試官說，這邊的需求，你想怎麼做等等。</p>
-<p>系統設計面試都是開放式的問題，沒有標準答案，所以要慢慢限縮問題的範圍，而且實際面對需求或客戶，本來也就是這樣，每個人的認知都不同，你的大跟我的大應該是不同的。這時候如果沒有釐清需求，直接給他做下去，相信我87%痛苦的都是自己。</p>
-<p>好了，我們先來介紹什麼是Load Balancer吧</p>
+        <p>文章同步於<a target="_blank" rel="noopener" href="https://ithelp.ithome.com.tw/articles/10314942">it邦</a></p>
+<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>終於到最後一個Clean Code的文章….大概吧<br>只能說這本書真的太多<br>完全沒辦法幾天之內介紹完<br>真的介紹完我也要壓縮一大堆<br>所以就直接帶到最後我預定介紹的主題 - <strong>程式碼的氣味與啟發</strong></p>
 <span id="more"></span>
 
-<h1 id="什麼是Load-Balancer"><a href="#什麼是Load-Balancer" class="headerlink" title="什麼是Load Balancer"></a>什麼是Load Balancer</h1><p>負責分散每個 Server 或是 Service 的壓力，就是 Load Balancer 的工作<br><img src="/2023/05/27/WhatIsLoadBalancer/LoadBalancer.jpg"></p>
-<p>假設今天我們有三台 Server(A, B, C)， Load Balancer 的工作就必須要把流量平均分布到各個Server上<br>避免流量過度集中在某個 Server 而過度爆掉</p>
-<p>你可以想像，Server 是員工，Load Balancer就像是我們的主管一樣，負責把每個任務每個任務平均分配到每個人手上(如果你的主管沒有，那我也沒辦法🌚)</p>
-<h1 id="常見的-Public-Rule"><a href="#常見的-Public-Rule" class="headerlink" title="常見的 Public Rule"></a>常見的 Public Rule</h1><ul>
-<li><p>Least Connection Method: 就是我們剛剛說的平均分配每個流量給不同的Server的方式</p>
-</li>
-<li><p>Least Response Time Method: 分配給沒有那麼多用戶端連結的Server，並且那個Server的回應時間是最短的</p>
-<details>
-<summary>圖片</summary>
-<img src="LeastResponseTimeMethod.png" id="image" class="collapsed">
-</details>
-</li>
-<li><p>Least Bandwidth Method: 把流量分到目前每秒頻寬(MB)最小的Server</p>
-</li>
-<li><p>Round Robin Method: 按照順序分，如果 Server 掛了就跳過，適用於硬體配備相差不多的 Server 上</p>
-<ul>
-<li>IP Hash: 按照使用者的 IP 去分</li>
-</ul>
-</li>
-</ul>
-<h1 id="Redundant-Load-Balancer"><a href="#Redundant-Load-Balancer" class="headerlink" title="Redundant Load Balancer"></a>Redundant Load Balancer</h1><p>防止 Load Balancer 掛了還有另一個 Load Balancer 可以用</p>
-<h1 id="聲明"><a href="#聲明" class="headerlink" title="聲明"></a>聲明</h1><p>本人只是將學習 Load Balancer 的過程記錄下來，並且整合成一篇筆記<br>如有侵權煩請告知<br>This writings just record the swift install process. If infringement, please be informed.</p>
-<h1 id="資料來源"><a href="#資料來源" class="headerlink" title="資料來源"></a>資料來源</h1><p><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=32946vRu4RA&amp;ab_channel=%E4%BB%8A%E5%A4%A9%E6%AF%94%E6%98%A8%E5%A4%A9%E5%8E%B2%E5%AE%B3">https://www.youtube.com/watch?v=32946vRu4RA&amp;ab_channel=%E4%BB%8A%E5%A4%A9%E6%AF%94%E6%98%A8%E5%A4%A9%E5%8E%B2%E5%AE%B3</a></p>
+<h1 id="註解-Comments"><a href="#註解-Comments" class="headerlink" title="註解(Comments)"></a>註解(Comments)</h1><p>對我們又要來講註解了，對於Clean Code來說，程式碼就是最好的註解<br>所以他才會提到那麼多次</p>
+<p>我們講個我們之前沒說過的 - <strong>被註解掉的程式碼</strong></p>
+<p>現代有非常多工具可以儲存我們的程式碼的歷史紀錄，一定都有用過的就是<strong>Git</strong><br>當上面有過多的被註解掉的程式碼，到最後就不太會有人知道這些事幹嘛的<br>你說寫註解說這是幹嘛的，不就好了<br>但，不是每個人的開發習慣都一樣，有些變數或函式是會依賴其他部分的，而且更不用說可能還呼叫到已經被刪除掉的部分。</p>
+<p>所以，當你想要把程式碼註解掉的時候，請記得，你還有<strong>Git</strong><br><img src="https://i.imgur.com/XTMnSwG.png" alt="Image"></p>
+<h1 id="開發環境-Environment"><a href="#開發環境-Environment" class="headerlink" title="開發環境(Environment)"></a>開發環境(Environment)</h1><p>相信一定很多人有遇過那種，要一大堆步驟才可以建立整個專案的狀況<br>這其實完全不應該發生<br>最好的狀況就是，只用一個指令就可以取出整個程式系統，再用一個指令就能建立好專案</p>
+<p>這個容我分享一個鬼故事<br>曾經我遇過某位仁兄<br>他老兄給我把PHP檔案的開頭用簡寫，讓我們找了兩天才發現這件事<br>他才說要把php的設定改成可以用short_tag</p>
+<p>拜託各位不要當這種人…</p>
+<p>扯遠了</p>
+<p>現在我們有<strong>Docker</strong>可以Run起整個專案，簡單的一個<code>docker-compose up</code>即可架起整個專案<br><img src="https://i.imgur.com/oEbO8AQ.png" alt="Docker"></p>
+<h1 id="同分原始檔存在多種語言"><a href="#同分原始檔存在多種語言" class="headerlink" title="同分原始檔存在多種語言"></a>同分原始檔存在多種語言</h1><p>現在軟體開發是很有機會做到這件事的，像是php、html等等<br>不過這種做法只會讓人覺得困惑<br>對於日後接手這個專案的人來說，他根本不懂這些邏輯</p>
+<p>所以最理想的狀態就是指使用一種語言，如果真的要使用別種語言，請將其他種語言的範圍降至最低。</p>
+<h1 id="結語"><a href="#結語" class="headerlink" title="結語"></a>結語</h1><p>Clean Code終於介紹告一個段落<br>緊接著要講SOLID原則</p>
+<p>我們明天見吧</p>
+<h1 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h1><p>Clean Code(程式碼的氣味與啟發)</p>
 <div>
     <script type="text/javascript">
     document.write(
@@ -307,8 +294,8 @@
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/Load-Balancer/" rel="tag"># Load Balancer</a>
-              <a href="/tags/note/" rel="tag"># note</a>
+              <a href="/tags/Software-Development/" rel="tag"># Software Development</a>
+              <a href="/tags/Clean-Code/" rel="tag"># Clean Code</a>
           </div>
 
         
@@ -317,13 +304,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2023/01/28/leetcode997/" rel="prev" title="Leetcode - 997 with Python and Golang">
-      <i class="fa fa-chevron-left"></i> Leetcode - 997 with Python and Golang
+    <a href="/2023/09/04/IronDay4/" rel="prev" title="【Day-4】Clean Code(中)">
+      <i class="fa fa-chevron-left"></i> 【Day-4】Clean Code(中)
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2023/07/29/RefactorMVC/" rel="next" title="MVC與MTV框架的重構">
-      MVC與MTV框架的重構 <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -389,7 +373,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BB%80%E9%BA%BC%E6%98%AFLoad-Balancer"><span class="nav-number">2.</span> <span class="nav-text">什麼是Load Balancer</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B8%B8%E8%A6%8B%E7%9A%84-Public-Rule"><span class="nav-number">3.</span> <span class="nav-text">常見的 Public Rule</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Redundant-Load-Balancer"><span class="nav-number">4.</span> <span class="nav-text">Redundant Load Balancer</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%81%B2%E6%98%8E"><span class="nav-number">5.</span> <span class="nav-text">聲明</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%B3%87%E6%96%99%E4%BE%86%E6%BA%90"><span class="nav-number">6.</span> <span class="nav-text">資料來源</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%A8%BB%E8%A7%A3-Comments"><span class="nav-number">2.</span> <span class="nav-text">註解(Comments)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%96%8B%E7%99%BC%E7%92%B0%E5%A2%83-Environment"><span class="nav-number">3.</span> <span class="nav-text">開發環境(Environment)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%90%8C%E5%88%86%E5%8E%9F%E5%A7%8B%E6%AA%94%E5%AD%98%E5%9C%A8%E5%A4%9A%E7%A8%AE%E8%AA%9E%E8%A8%80"><span class="nav-number">4.</span> <span class="nav-text">同分原始檔存在多種語言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%B5%90%E8%AA%9E"><span class="nav-number">5.</span> <span class="nav-text">結語</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="nav-number">6.</span> <span class="nav-text">參考資料</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -524,9 +508,9 @@
 </script>
 <script>
   var disqus_config = function() {
-    this.page.url = "https://kenhuangtw.github.io/2023/05/27/WhatIsLoadBalancer/";
-    this.page.identifier = "2023/05/27/WhatIsLoadBalancer/";
-    this.page.title = "什麼是 Load Balancer";
+    this.page.url = "https://kenhuangtw.github.io/2023/09/05/IronDay5/";
+    this.page.identifier = "2023/09/05/IronDay5/";
+    this.page.title = "【Day-5】Clean Code(下)";
     this.language = "zh_TW";
     };
   NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
