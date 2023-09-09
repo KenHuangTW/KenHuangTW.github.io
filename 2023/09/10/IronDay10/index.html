@@ -20,15 +20,15 @@
     var CONFIG = {"hostname":"kenhuangtw.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"enable":null,"type":null,"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
   </script>
 
-  <meta name="description" content="文章同步於it邦 介紹這次介紹的是里式替換原則（LSP, Liskov Substitution Principle）里式替換原則的核心思想是：如果類別B是類別A的子類別，那麼在不影響程式的正確性的前提下，可以將類別A的對象替換成類別B的對象。 換句話說，子類別應該能夠替換父類別而不會破壞程式的預期行為。 (謎之音:半夜上文章好累…">
+  <meta name="description" content="介紹今天要介紹依賴反向原則(DIP, Dependency Inversion Principle)  最靈活的系統是『原始碼的依賴關係指涉及抽象不涉及具體』-Clean Architecture(P.75)  上述這段話的意思就是，我們應該將我的模組依賴於抽象概念但這段話其實不切實際，特別像是Python這些大量依賴第三方套件的語言基本上我們要做的功能已經有人幫我們做好了甚至我們連依賴list.">
 <meta property="og:type" content="article">
-<meta property="og:title" content="【Day-8】SOLID - 里式替換原則(LSP)">
-<meta property="og:url" content="https://kenhuangtw.github.io/2023/09/08/IronDay8/index.html">
+<meta property="og:title" content="IronDay10">
+<meta property="og:url" content="https://kenhuangtw.github.io/2023/09/10/IronDay10/index.html">
 <meta property="og:site_name" content="窩不知道">
-<meta property="og:description" content="文章同步於it邦 介紹這次介紹的是里式替換原則（LSP, Liskov Substitution Principle）里式替換原則的核心思想是：如果類別B是類別A的子類別，那麼在不影響程式的正確性的前提下，可以將類別A的對象替換成類別B的對象。 換句話說，子類別應該能夠替換父類別而不會破壞程式的預期行為。 (謎之音:半夜上文章好累…">
+<meta property="og:description" content="介紹今天要介紹依賴反向原則(DIP, Dependency Inversion Principle)  最靈活的系統是『原始碼的依賴關係指涉及抽象不涉及具體』-Clean Architecture(P.75)  上述這段話的意思就是，我們應該將我的模組依賴於抽象概念但這段話其實不切實際，特別像是Python這些大量依賴第三方套件的語言基本上我們要做的功能已經有人幫我們做好了甚至我們連依賴list.">
 <meta property="og:locale" content="zh_TW">
-<meta property="article:published_time" content="2023-09-07T17:19:08.000Z">
-<meta property="article:modified_time" content="2023-09-07T17:24:53.201Z">
+<meta property="article:published_time" content="2023-09-09T17:10:28.000Z">
+<meta property="article:modified_time" content="2023-09-09T17:16:51.126Z">
 <meta property="article:author" content="KenHuang">
 <meta property="article:tag" content="Software Development">
 <meta property="article:tag" content="Clean Architecture">
@@ -36,7 +36,7 @@
 <meta property="article:tag" content="LSP">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="https://kenhuangtw.github.io/2023/09/08/IronDay8/">
+<link rel="canonical" href="https://kenhuangtw.github.io/2023/09/10/IronDay10/">
 
 
 <script id="page-configurations">
@@ -49,7 +49,7 @@
   };
 </script>
 
-  <title>【Day-8】SOLID - 里式替換原則(LSP) | 窩不知道</title>
+  <title>IronDay10 | 窩不知道</title>
   
 
 
@@ -199,7 +199,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="https://kenhuangtw.github.io/2023/09/08/IronDay8/">
+    <link itemprop="mainEntityOfPage" href="https://kenhuangtw.github.io/2023/09/10/IronDay10/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -212,7 +212,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          【Day-8】SOLID - 里式替換原則(LSP)
+          IronDay10
         </h1>
 
         <div class="post-meta">
@@ -223,7 +223,7 @@
               <span class="post-meta-item-text">發表於</span>
               
 
-              <time title="創建時間：2023-09-08 01:19:08 / 修改時間：01:24:53" itemprop="dateCreated datePublished" datetime="2023-09-08T01:19:08+08:00">2023-09-08</time>
+              <time title="創建時間：2023-09-10 01:10:28 / 修改時間：01:16:51" itemprop="dateCreated datePublished" datetime="2023-09-10T01:10:28+08:00">2023-09-10</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -244,8 +244,8 @@
       </span>
       <span class="post-meta-item-text">Disqus：</span>
     
-    <a title="disqus" href="/2023/09/08/IronDay8/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2023/09/08/IronDay8/" itemprop="commentCount"></span>
+    <a title="disqus" href="/2023/09/10/IronDay10/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2023/09/10/IronDay10/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -260,20 +260,23 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>文章同步於<a target="_blank" rel="noopener" href="https://ithelp.ithome.com.tw/articles/10313739">it邦</a></p>
-<h1 id="介紹"><a href="#介紹" class="headerlink" title="介紹"></a>介紹</h1><p>這次介紹的是里式替換原則（LSP, Liskov Substitution Principle）<br>里式替換原則的核心思想是：如果類別B是類別A的子類別，那麼在不影響程式的正確性的前提下，可以將類別A的對象替換成類別B的對象。</p>
-<p>換句話說，子類別應該能夠替換父類別而不會破壞程式的預期行為。</p>
-<p>(謎之音:半夜上文章好累…</p>
+        <h1 id="介紹"><a href="#介紹" class="headerlink" title="介紹"></a>介紹</h1><p>今天要介紹依賴反向原則(DIP, Dependency Inversion Principle)</p>
+<blockquote>
+<p>最靈活的系統是『原始碼的依賴關係指涉及抽象不涉及具體』<br>-Clean Architecture(P.75)</p>
+</blockquote>
+<p>上述這段話的意思就是，我們應該將我的模組依賴於抽象概念<br>但這段話其實不切實際，特別像是Python這些大量依賴第三方套件的語言<br>基本上我們要做的功能已經有人幫我們做好了<br>甚至我們連依賴<code>list.count()</code>這種都屬於依賴具體物件的方法<br>這種情況我們不可也不該避免</p>
+<p>所以在應用DIP時，我們可以忽略作業系統的穩定背景，我們也可以信任他們不會改變。<br>要注意的是，系統中<strong>容易變化</strong>的具體元素。</p>
 <span id="more"></span>
 
-<h1 id="實作"><a href="#實作" class="headerlink" title="實作"></a>實作</h1><p>假設我今天我定義一個形狀 - 長方形<br>那我的遵守LSP的程式碼會長這樣</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Shape</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">calculateArea</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Rectangle</span>(<span class="title class_ inherited__">Shape</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, width, height</span>):</span><br><span class="line">        self.width = width</span><br><span class="line">        self.height = height</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">calculateArea</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> self.width * self.height</span><br></pre></td></tr></table></figure>
-<p>這個情況下長方形是一種形狀，那我一定有面積<br>我可以安全的替換掉父類別而不影響其他的實作</p>
-<p>但如果今天變成這樣</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Rectangle</span>():</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">calculateArea</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Square</span>(<span class="title class_ inherited__">Rectangle</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, width, height</span>):</span><br><span class="line">        self.width = width</span><br><span class="line">        self.height = height</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">calculateArea</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> self.width * self.height</span><br></pre></td></tr></table></figure>
-<p>這樣就會容易讓人混淆正方形的長寬一定相同，但長方形不是，這樣就不符合里式替換原則<br>再舉一個經典的例子</p>
-<p>所有鳥類都會飛嗎?<br>不，企鵝不會<br><del>所有的狗狗都很聰明嗎?<br>不，吉娃娃不是。</del><br>所以當我們實作一個鳥類的介面出來，給企鵝用，企鵝只會跟妳哭說我不會飛(預期之外的錯誤)</p>
-<h1 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h1><p>Clean Architecture(ch.9)<br><a target="_blank" rel="noopener" href="https://igouist.github.io/post/2020/11/oo-12-liskov-substitution-principle/">菜雞與物件導向 (12): 里氏替換原則</a></p>
+<h1 id="實作"><a href="#實作" class="headerlink" title="實作"></a>實作</h1><p>同樣以php為例子</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Dog</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">bark</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;汪!&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Cat</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">meow</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;喵~~&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">PetOwner</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="variable">$dog</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="variable">$cat</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="variable language_">$this</span>-&gt;dog = <span class="keyword">new</span> <span class="title class_">Dog</span>();</span><br><span class="line">        <span class="variable language_">$this</span>-&gt;cat = <span class="keyword">new</span> <span class="title class_">Cat</span>();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">playWithPets</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="variable">$dogSound</span> = <span class="variable language_">$this</span>-&gt;dog-&gt;<span class="title function_ invoke__">bark</span>();</span><br><span class="line">        <span class="variable">$catSound</span> = <span class="variable language_">$this</span>-&gt;cat-&gt;<span class="title function_ invoke__">meow</span>();</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;Dog: <span class="subst">$dogSound</span>, Cat: <span class="subst">$catSound</span>&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>我們可以看到<code>PetOwner</code>依賴於<code>Dog</code>和<code>Cat</code></p>
+<p>假設未來我要多領養幾隻寵物，我就必須一直持續在<code>petOwner</code>裡面一直新增<br>持續的對<code>petOwner</code>做修改<br>萬一上層的class要做修改，那更改的範圍就會更大</p>
+<p>換個方法</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">PetSound</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">makeSound</span>(<span class="params"></span>)</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Dog</span> <span class="keyword">implements</span> <span class="title">PetSound</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">makeSound</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;汪!&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Cat</span> <span class="keyword">implements</span> <span class="title">PetSound</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">makeSound</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;喵~~&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">PetOwner</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="variable">$pets</span> = [];</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">addPet</span>(<span class="params">PetSound <span class="variable">$pet</span></span>) </span>&#123;</span><br><span class="line">        <span class="variable language_">$this</span>-&gt;pets[] = <span class="variable">$pet</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">playWithPets</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="variable">$sounds</span> = [];</span><br><span class="line">        <span class="keyword">foreach</span> (<span class="variable language_">$this</span>-&gt;pets <span class="keyword">as</span> <span class="variable">$pet</span>) &#123;</span><br><span class="line">            <span class="variable">$sounds</span>[] = <span class="variable">$pet</span>-&gt;<span class="title function_ invoke__">makeSound</span>();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="title function_ invoke__">implode</span>(<span class="string">&quot;, &quot;</span>, <span class="variable">$sounds</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在這個例子中，我們引入了一個 <code>PetSound</code> 抽象介面，並讓 <code>Dog</code> 和 <code>Cat</code> 類實現這個介面<br><code>PetOwner</code> 類不再直接創建寵物的實例，而是通過 <code>addPet</code> 方法將寵物加入，並且在 <code>playWithPets</code> 方法中調用了抽象介面的方法。</p>
+<p>這種做法降低了耦合度，使得我們可以較容易地擴展或修改代碼，而不會影響其他部分。這符合 DIP 原則的理念。</p>
+<h1 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h1><p>Clean Architecture(ch.11)</p>
 <div>
     <script type="text/javascript">
     document.write(
@@ -301,13 +304,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2023/09/07/IronDay7/" rel="prev" title="【Day-7】SOLID - 開放封閉原則(OCP)">
-      <i class="fa fa-chevron-left"></i> 【Day-7】SOLID - 開放封閉原則(OCP)
+    <a href="/2023/09/09/IronDay9/" rel="prev" title="【Day-9】介面隔離原則(ISP)">
+      <i class="fa fa-chevron-left"></i> 【Day-9】介面隔離原則(ISP)
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2023/09/09/IronDay9/" rel="next" title="【Day-9】介面隔離原則(ISP)">
-      【Day-9】介面隔離原則(ISP) <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -508,9 +508,9 @@
 </script>
 <script>
   var disqus_config = function() {
-    this.page.url = "https://kenhuangtw.github.io/2023/09/08/IronDay8/";
-    this.page.identifier = "2023/09/08/IronDay8/";
-    this.page.title = "【Day-8】SOLID - 里式替換原則(LSP)";
+    this.page.url = "https://kenhuangtw.github.io/2023/09/10/IronDay10/";
+    this.page.identifier = "2023/09/10/IronDay10/";
+    this.page.title = "IronDay10";
     this.language = "zh_TW";
     };
   NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
