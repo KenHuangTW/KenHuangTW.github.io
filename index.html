@@ -218,7 +218,7 @@
               <span class="post-meta-item-text">發表於</span>
               
 
-              <time title="創建時間：2023-09-11 01:43:42 / 修改時間：01:46:58" itemprop="dateCreated datePublished" datetime="2023-09-11T01:43:42+08:00">2023-09-11</time>
+              <time title="創建時間：2023-09-11 01:43:42 / 修改時間：01:49:07" itemprop="dateCreated datePublished" datetime="2023-09-11T01:43:42+08:00">2023-09-11</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -257,27 +257,14 @@
       
           <p>文章同步於<a target="_blank" rel="noopener" href="https://ithelp.ithome.com.tw/articles/10316741">it邦</a></p>
 <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>今天我們來簡單介紹SOLID以外的兩個軟體開發原則<br>分別是DRY以及KISS</p>
-<h1 id="DRY"><a href="#DRY" class="headerlink" title="DRY"></a>DRY</h1><p>DRY，意旨Don’t Repeat Yourself，也就是不要重複你自己<br>這非常的簡單，也就是少做重複的部分<br>我們可以將重複的部分將他轉換為共用的function在來使用<br>但絕對絕對不是不可以有任何重複的部分<br>而是指在相同的邏輯上，不要去重複使用</p>
-<h1 id="KISS"><a href="#KISS" class="headerlink" title="KISS"></a>KISS</h1><p>KISS, 意旨Keep It Simple, Stupid<br>KISS 原則的目標是確保軟體設計和開發過程不會變得過於困難，並降低錯誤和問題的風險。<br>這核心的概念就是，我們要將程式碼的邏輯盡可能的保持其他人一看就懂<br>在濃縮一下就是 - <strong>大道至簡</strong></p>
-<blockquote>
-<p><em><strong>There should be one– and preferably only one –obvious way to do it.</strong></em></p>
-<ul>
-<li>The Zen of Python</li>
-</ul>
-</blockquote>
-<p>當你發現你的Code需要一而再再而三的向其他人解釋時，你最好還是重構比較好</p>
-<p>例如說今天我們要判斷email是不是符合格式<br>比起用一大堆條件判斷，倒不如直接寫個正規表達式一行把它結束掉</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> re</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">validate_email_with_regex</span>(<span class="params">email</span>):</span><br><span class="line">    pattern = <span class="string">r&#x27;^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.com$&#x27;</span></span><br><span class="line">    <span class="keyword">if</span> re.<span class="keyword">match</span>(pattern, email):</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line">    <span class="keyword">return</span> <span class="literal">False</span></span><br></pre></td></tr></table></figure>
-
-<p>不使用正規表達式，87%就會看到一大堆if-else在上面了…</p>
-<h1 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h1><p><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Don%27t_repeat_yourself">Wiki</a><br><a target="_blank" rel="noopener" href="https://ihower.tw/blog/archives/7181">Kent Beck 的四個簡單程式設計原則</a></p>
-<div>
-    <script type="text/javascript">
-    document.write(
-        "<iframe scrolling='no' frameborder='0' sandbox='allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox allow-storage-access-by-user-activation' style='height: 212px; width: 100%;' src='https://button.like.co/in/embed/wtf81905/button?referrer=" +
-        encodeURIComponent(location.href.split("?")[0].split("#")[0]) + "'></iframe>");
-    </script>
-</div>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2023/09/11/IronDay11/#more" rel="contents">
+                閱讀全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
