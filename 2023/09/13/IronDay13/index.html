@@ -20,21 +20,21 @@
     var CONFIG = {"hostname":"kenhuangtw.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"enable":null,"type":null,"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
   </script>
 
-  <meta name="description" content="文章同步於it邦 前言昨天介紹了一些比較有關程式碼部分都是跟Code比較有關的 今天會來介紹比較是設計面的問題也就是Clean Code的羽化">
+  <meta name="description" content="文章同步於it邦​ 前言這兩天會講一點架構面的部分，分別是伺服器端渲染(SSR)以及客戶端渲染(CSR)​這次會從維護以及開發的角度分享這兩個架構上的區別以及各個的好處還有我如何被SSR給弄瞎雙眼​ 介紹伺服器端渲染(SSR, Server Side Render)，顧名思義就是在伺服器端做渲染的架構有一個傳統的講法就是所謂的前後端不分離​這種作法通常會用於一個人開發的時候，或是極度要求SEO的場">
 <meta property="og:type" content="article">
-<meta property="og:title" content="【Day-4】Clean Code(中)">
-<meta property="og:url" content="https://kenhuangtw.github.io/2023/09/04/IronDay4/index.html">
+<meta property="og:title" content="【Day-13】伺服器端渲染(SSR)">
+<meta property="og:url" content="https://kenhuangtw.github.io/2023/09/13/IronDay13/index.html">
 <meta property="og:site_name" content="窩不知道">
-<meta property="og:description" content="文章同步於it邦 前言昨天介紹了一些比較有關程式碼部分都是跟Code比較有關的 今天會來介紹比較是設計面的問題也就是Clean Code的羽化">
+<meta property="og:description" content="文章同步於it邦​ 前言這兩天會講一點架構面的部分，分別是伺服器端渲染(SSR)以及客戶端渲染(CSR)​這次會從維護以及開發的角度分享這兩個架構上的區別以及各個的好處還有我如何被SSR給弄瞎雙眼​ 介紹伺服器端渲染(SSR, Server Side Render)，顧名思義就是在伺服器端做渲染的架構有一個傳統的講法就是所謂的前後端不分離​這種作法通常會用於一個人開發的時候，或是極度要求SEO的場">
 <meta property="og:locale" content="zh_TW">
-<meta property="article:published_time" content="2023-09-03T18:40:33.000Z">
-<meta property="article:modified_time" content="2023-09-03T18:47:03.438Z">
+<meta property="article:published_time" content="2023-09-12T17:38:42.000Z">
+<meta property="article:modified_time" content="2023-09-12T17:41:14.563Z">
 <meta property="article:author" content="KenHuang">
 <meta property="article:tag" content="Software Development">
-<meta property="article:tag" content="Clean Code">
+<meta property="article:tag" content="SSR">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="https://kenhuangtw.github.io/2023/09/04/IronDay4/">
+<link rel="canonical" href="https://kenhuangtw.github.io/2023/09/13/IronDay13/">
 
 
 <script id="page-configurations">
@@ -47,7 +47,7 @@
   };
 </script>
 
-  <title>【Day-4】Clean Code(中) | 窩不知道</title>
+  <title>【Day-13】伺服器端渲染(SSR) | 窩不知道</title>
   
 
 
@@ -197,7 +197,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="https://kenhuangtw.github.io/2023/09/04/IronDay4/">
+    <link itemprop="mainEntityOfPage" href="https://kenhuangtw.github.io/2023/09/13/IronDay13/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -210,7 +210,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          【Day-4】Clean Code(中)
+          【Day-13】伺服器端渲染(SSR)
         </h1>
 
         <div class="post-meta">
@@ -221,7 +221,7 @@
               <span class="post-meta-item-text">發表於</span>
               
 
-              <time title="創建時間：2023-09-04 02:40:33 / 修改時間：02:47:03" itemprop="dateCreated datePublished" datetime="2023-09-04T02:40:33+08:00">2023-09-04</time>
+              <time title="創建時間：2023-09-13 01:38:42 / 修改時間：01:41:14" itemprop="dateCreated datePublished" datetime="2023-09-13T01:38:42+08:00">2023-09-13</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -242,8 +242,8 @@
       </span>
       <span class="post-meta-item-text">Disqus：</span>
     
-    <a title="disqus" href="/2023/09/04/IronDay4/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2023/09/04/IronDay4/" itemprop="commentCount"></span>
+    <a title="disqus" href="/2023/09/13/IronDay13/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2023/09/13/IronDay13/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -258,50 +258,25 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>文章同步於<a target="_blank" rel="noopener" href="https://ithelp.ithome.com.tw/articles/10314866">it邦</a></p>
-<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>昨天介紹了一些比較有關程式碼部分<br>都是跟Code比較有關的</p>
-<p>今天會來介紹比較是設計面的問題<br>也就是Clean Code的<strong>羽化</strong></p>
+        <p>文章同步於<a target="_blank" rel="noopener" href="https://ithelp.ithome.com.tw/articles/10317476">it邦</a><br>​</p>
+<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>這兩天會講一點架構面的部分，分別是伺服器端渲染(SSR)以及客戶端渲染(CSR)<br>​<br>這次會從維護以及開發的角度分享這兩個架構上的區別以及各個的好處<br>還有我如何被SSR給<del>弄瞎雙眼</del><br>​</p>
+<h1 id="介紹"><a href="#介紹" class="headerlink" title="介紹"></a>介紹</h1><p>伺服器端渲染(SSR, Server Side Render)，顧名思義就是在伺服器端做渲染的架構<br>有一個傳統的講法就是所謂的<strong>前後端不分離</strong><br>​<br>這種作法通常會用於一個人開發的時候，或是<strong>極度要求SEO</strong>的場合<br>還有就是老專案非常常見這種作法</p>
 <span id="more"></span>
-
-<h1 id="羽化"><a href="#羽化" class="headerlink" title="羽化"></a>羽化</h1><p>開頭我們先引用書中的說法</p>
-<blockquote>
-<p>根據Kent的說法，若遵循下列守則，一個設計就可以說是「簡單的」</p>
-<ul>
-<li>執行完所有測試</li>
-<li>沒有重複的部分</li>
-<li>表達程式設計師的本意</li>
-<li>最小化類別和方法的數量</li>
-</ul>
-<p>這些守則，根據重要性來排序<br>-Clean Code P.190</p>
-</blockquote>
-<h2 id="簡單設計守則-1-執行完所有測試"><a href="#簡單設計守則-1-執行完所有測試" class="headerlink" title="簡單設計守則 1 : 執行完所有測試"></a>簡單設計守則 1 : 執行完所有測試</h2><p>當我們的系統設計得再好，如果沒有辦法驗證系統是否能夠如預期般運作，那一切都是紙上談兵。</p>
-<p>所以必須全面的執行測試，並且能夠在<strong>所有的時間</strong>通過<strong>所有的測試</strong><br>這段話看似簡單，但如果我們沒有辦法測試，那又如何證明這些能夠運作</p>
-<p>緊密耦合的程式碼，只會造成測試撰寫的困難。<br>當我們在撰寫測試時，我們就會用越多<strong>依賴反轉的原則(DIP)<strong>也會用更多</strong>相依注入(Dependency injection)<strong>、</strong>介面(interface)<strong>、</strong>抽象概念</strong>之類的工具，來降低耦合度</p>
-<p>舉個例子</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">create_user</span>(<span class="params">user_name: <span class="built_in">str</span>, user_password: <span class="built_in">str</span></span>) -&gt; <span class="built_in">bool</span>:</span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">len</span>(user_name) &lt; <span class="number">6</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">    <span class="keyword">elif</span> <span class="built_in">len</span>(user_password) &lt; <span class="number">8</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">    </span><br><span class="line">    user_group = some_user_model.get_all_user()</span><br><span class="line">    <span class="keyword">for</span> user <span class="keyword">in</span> user_group:</span><br><span class="line">        <span class="keyword">if</span> user.user_name == user_name:</span><br><span class="line">            <span class="keyword">return</span> false</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> <span class="literal">True</span></span><br></pre></td></tr></table></figure>
-<p>這個案例我們可以看到，這些已經都把所有建立使用者的邏輯放在<code>create_user</code>這個function上<br>這會有幾個問題</p>
-<ul>
-<li>無法<strong>獨立測試</strong>驗證、確認使用者是否存在的邏輯是否正確，這會導致debug時間太長</li>
-<li>當我的驗證邏輯改變的時候，我就要在我的主流程變更程式碼，這會導致如果有複數個相通邏輯的地方都要一併變更</li>
-</ul>
-<p>這個function的耦合度就太高了，所以我們可以把它拆解為各種不同的function以符合單一職責原則(SRP)</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">create_user</span>(<span class="params">user_name: <span class="built_in">str</span>, user_password: <span class="built_in">str</span></span>) -&gt; <span class="built_in">bool</span>:</span><br><span class="line">    is_verification_successful = some_validate_model.is_validate_user_data_successful(user_name, user_password)</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> is_verification_successful:</span><br><span class="line">        <span class="keyword">return</span> false</span><br><span class="line">    </span><br><span class="line">    has_user = some_user_model.get_user(user_name, user_password)</span><br><span class="line">    <span class="keyword">if</span> has_user:</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> <span class="literal">True</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="簡單設計守則-2-4-程式重構"><a href="#簡單設計守則-2-4-程式重構" class="headerlink" title="簡單設計守則 2~4 : 程式重構"></a>簡單設計守則 2~4 : 程式重構</h2><p>也就是對應最後三點</p>
-<ul>
-<li>沒有重複的部分</li>
-<li>表達程式設計師的本意</li>
-<li>最小化類別和方法的數量</li>
-</ul>
-<h3 id="沒有重複的部分"><a href="#沒有重複的部分" class="headerlink" title="沒有重複的部分"></a>沒有重複的部分</h3><p>延續上面寫的，如果我們今天不只有使用者(user)需要建立，我們也需要建立管理員(admin)<br>如果說他們都使用同一個驗證邏輯<br>那我們就更不該把驗證邏輯寫在create的function底下<br>更應該拆成一個獨立的function提供測試以及使用</p>
-<h3 id="表達程式設計師的本意"><a href="#表達程式設計師的本意" class="headerlink" title="表達程式設計師的本意"></a>表達程式設計師的本意</h3><p>很多方法都可以達到這點，像是良好的命名習慣、讓function以及class簡短、寫單元測試等等<br>這些都可以達到<br>但是最重要最重要的事情就是<strong>嘗試</strong><br>有可能下一個看code的就是我們自己，總不能看不懂我們自己寫的東西吧<br>所以就更不能只能讓程式停留在只要能跑就好的階段<br>而是<strong>大家都要看的懂</strong></p>
-<blockquote>
-<p><em><strong>Explicit is better than implicit.</strong></em><br><em><strong>Simple is better than complex.</strong></em><br><em><strong>Complex is better than complicated.</strong></em><br>-The Zen Of Python</p>
-</blockquote>
-<h3 id="最小化類別和方法的數量"><a href="#最小化類別和方法的數量" class="headerlink" title="最小化類別和方法的數量"></a>最小化類別和方法的數量</h3><p>這應該是我覺得最困難達到的，這個很容易在過度設計跟保有彈性之間取得平衡<br>幸好這條守則比起其他的手則相對不重要，應該優先遵守其他的守則。</p>
-<p>這條守則我認為和第一條有些相關，當我們沒有什麼重複的部分，自然類別和方法也會減少一些。</p>
-<h1 id="結語"><a href="#結語" class="headerlink" title="結語"></a>結語</h1><p>我原本還想講平行化的，但我發現我已經寫太多了，再寫下去就太滿了<br>平行化就交給你們去看吧<br>我們明天見</p>
-<h1 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h1><p>Clean Code(ch.12)</p>
+<p>​</p>
+<h2 id="優點"><a href="#優點" class="headerlink" title="優點"></a>優點</h2><ol>
+<li>在第一次讀取頁面的速度會比起CSR來的快</li>
+<li>SEO分數比較高，因為不需要載入過多的JavaScript或是CSS，但這點必須先說明，<strong>現在的Google爬蟲是可以解析JavaScript的，請不要覺得Google爬蟲完全沒辦法解析，這個已經是過時資訊了</strong><br>​</li>
+</ol>
+<h2 id="缺點"><a href="#缺點" class="headerlink" title="缺點"></a>缺點</h2><ol>
+<li>第一次以外讀取的畫面的速度都比較慢，因為每次都需要重複載入</li>
+<li>Server Loading比起CSR來的重，畢竟渲染都在 Server</li>
+<li><strong>難以維護</strong></li>
+<li><strong>難以維護</strong></li>
+<li><strong>難!以!維!護!</strong><br>​</li>
+</ol>
+<h3 id="為什麼難以維護，冷靜點好嗎"><a href="#為什麼難以維護，冷靜點好嗎" class="headerlink" title="為什麼難以維護，冷靜點好嗎"></a>為什麼難以維護，冷靜點好嗎</h3><p>請聽我娓娓道來<br>SSR會將前端邏輯(顯示)以及後端邏輯(資料處理)全部混在一起<br>這會導致維護時需要確認的部分變得更多<br>​<br>再來，當這些程式緊密耦合時，連單元測試撰寫都會有困難，變成無法及早知道錯誤以及後人會不能夠確定function是否正常運作<br>​<br>然後要加一個新功能，更改的範圍也會比較大，因為你的程式碼緊密耦合在一起，根本不知道改了什麼會影響什麼<br>還有諸多問題我就不列出來了(<del>三天三夜也講不完</del>)<br>​</p>
+<h1 id="結語"><a href="#結語" class="headerlink" title="結語"></a>結語</h1><p>當然當今越來越重視敏捷以及前端技術日新月異的狀況下，聽起來SSR能應用的場合其實真的不多<br>最常見的還是在一個人開發，且熟悉前後端邏輯的場合下，或許時間上比較省<br>​<br>明天要來講另一個渲染技術CSR，明天見<br>​<br>​</p>
+<h1 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h1><p><a target="_blank" rel="noopener" href="https://www.shubo.io/rendering-patterns/">教學 SSR 與 CSR 深度解析：從渲染方式到效能優化</a><br><a target="_blank" rel="noopener" href="https://ithelp.ithome.com.tw/articles/10267547">[面試][前端]如何判斷專案要使用 CSR 還是 SSR？</a><br><a target="_blank" rel="noopener" href="https://developers.google.com/search/docs/crawling-indexing/javascript/javascript-seo-basics?hl=zh-tw">瞭解 JavaScript 搜尋引擎最佳化 (SEO) 基礎知識</a></p>
 <div>
     <script type="text/javascript">
     document.write(
@@ -318,7 +293,7 @@
       <footer class="post-footer">
           <div class="post-tags">
               <a href="/tags/Software-Development/" rel="tag"># Software Development</a>
-              <a href="/tags/Clean-Code/" rel="tag"># Clean Code</a>
+              <a href="/tags/SSR/" rel="tag"># SSR</a>
           </div>
 
         
@@ -327,13 +302,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2023/09/03/IronDay3/" rel="prev" title="【Day-3】Clean Code(上)">
-      <i class="fa fa-chevron-left"></i> 【Day-3】Clean Code(上)
+    <a href="/2023/09/12/IronDay12/" rel="prev" title="【Day-12】單元測試">
+      <i class="fa fa-chevron-left"></i> 【Day-12】單元測試
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2023/09/05/IronDay5/" rel="next" title="【Day-5】Clean Code(下)">
-      【Day-5】Clean Code(下) <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -399,7 +371,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BE%BD%E5%8C%96"><span class="nav-number">2.</span> <span class="nav-text">羽化</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B0%A1%E5%96%AE%E8%A8%AD%E8%A8%88%E5%AE%88%E5%89%87-1-%E5%9F%B7%E8%A1%8C%E5%AE%8C%E6%89%80%E6%9C%89%E6%B8%AC%E8%A9%A6"><span class="nav-number">2.1.</span> <span class="nav-text">簡單設計守則 1 : 執行完所有測試</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B0%A1%E5%96%AE%E8%A8%AD%E8%A8%88%E5%AE%88%E5%89%87-2-4-%E7%A8%8B%E5%BC%8F%E9%87%8D%E6%A7%8B"><span class="nav-number">2.2.</span> <span class="nav-text">簡單設計守則 2~4 : 程式重構</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B2%92%E6%9C%89%E9%87%8D%E8%A4%87%E7%9A%84%E9%83%A8%E5%88%86"><span class="nav-number">2.2.1.</span> <span class="nav-text">沒有重複的部分</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A1%A8%E9%81%94%E7%A8%8B%E5%BC%8F%E8%A8%AD%E8%A8%88%E5%B8%AB%E7%9A%84%E6%9C%AC%E6%84%8F"><span class="nav-number">2.2.2.</span> <span class="nav-text">表達程式設計師的本意</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%80%E5%B0%8F%E5%8C%96%E9%A1%9E%E5%88%A5%E5%92%8C%E6%96%B9%E6%B3%95%E7%9A%84%E6%95%B8%E9%87%8F"><span class="nav-number">2.2.3.</span> <span class="nav-text">最小化類別和方法的數量</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%B5%90%E8%AA%9E"><span class="nav-number">3.</span> <span class="nav-text">結語</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="nav-number">4.</span> <span class="nav-text">參考資料</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BB%8B%E7%B4%B9"><span class="nav-number">2.</span> <span class="nav-text">介紹</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%84%AA%E9%BB%9E"><span class="nav-number">2.1.</span> <span class="nav-text">優點</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BC%BA%E9%BB%9E"><span class="nav-number">2.2.</span> <span class="nav-text">缺點</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%82%BA%E4%BB%80%E9%BA%BC%E9%9B%A3%E4%BB%A5%E7%B6%AD%E8%AD%B7%EF%BC%8C%E5%86%B7%E9%9D%9C%E9%BB%9E%E5%A5%BD%E5%97%8E"><span class="nav-number">2.2.1.</span> <span class="nav-text">為什麼難以維護，冷靜點好嗎</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%B5%90%E8%AA%9E"><span class="nav-number">3.</span> <span class="nav-text">結語</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="nav-number">4.</span> <span class="nav-text">參考資料</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -534,9 +506,9 @@
 </script>
 <script>
   var disqus_config = function() {
-    this.page.url = "https://kenhuangtw.github.io/2023/09/04/IronDay4/";
-    this.page.identifier = "2023/09/04/IronDay4/";
-    this.page.title = "【Day-4】Clean Code(中)";
+    this.page.url = "https://kenhuangtw.github.io/2023/09/13/IronDay13/";
+    this.page.identifier = "2023/09/13/IronDay13/";
+    this.page.title = "【Day-13】伺服器端渲染(SSR)";
     this.language = "zh_TW";
     };
   NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
