@@ -20,25 +20,21 @@
     var CONFIG = {"hostname":"kenhuangtw.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"enable":null,"type":null,"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
   </script>
 
-  <meta name="description" content="文章同步於it邦 介紹今天來說說開放封閉原則(OCP, Open-Close Principle)  一個軟體的製品應該對於擴展是開放的，但對於修改是封閉的-Clean Architecture(P.59)  我們多少都遇過某些老專案會有加一個新功能就要改很多地方或是很難改的狀況那麼參與設計這個軟體的架構的工程師，就是參與了一次極大的失敗。 OCP其實也是直接指導我們類別和模組化的原則。">
+  <meta name="description" content="文章同步於it邦 前言這兩天會來介紹一本書叫做Clean Coder這本書主要是在介紹身為一個專業人員，我們應該要有甚麼樣的態度這篇文章會比之前來的更新手向，可以斟酌觀看 我們通常都會遇到一個狀況就是，在預算、時間不足的情況之下，客戶要求了一個非常困難的要求假設經過評估後完全做不到基本上這個時候人比較好的就會說，我嘗試看看 相信我，講出這句話問題可大了問題大在哪，我們往下慢慢講下去 今天會介紹裡面">
 <meta property="og:type" content="article">
-<meta property="og:title" content="【Day-7】SOLID - 開放封閉原則(OCP)">
-<meta property="og:url" content="https://kenhuangtw.github.io/2023/09/07/IronDay7/index.html">
+<meta property="og:title" content="【Day-15】番外篇 - Clean Coder(上)">
+<meta property="og:url" content="https://kenhuangtw.github.io/2023/09/15/IronDay15/index.html">
 <meta property="og:site_name" content="窩不知道">
-<meta property="og:description" content="文章同步於it邦 介紹今天來說說開放封閉原則(OCP, Open-Close Principle)  一個軟體的製品應該對於擴展是開放的，但對於修改是封閉的-Clean Architecture(P.59)  我們多少都遇過某些老專案會有加一個新功能就要改很多地方或是很難改的狀況那麼參與設計這個軟體的架構的工程師，就是參與了一次極大的失敗。 OCP其實也是直接指導我們類別和模組化的原則。">
+<meta property="og:description" content="文章同步於it邦 前言這兩天會來介紹一本書叫做Clean Coder這本書主要是在介紹身為一個專業人員，我們應該要有甚麼樣的態度這篇文章會比之前來的更新手向，可以斟酌觀看 我們通常都會遇到一個狀況就是，在預算、時間不足的情況之下，客戶要求了一個非常困難的要求假設經過評估後完全做不到基本上這個時候人比較好的就會說，我嘗試看看 相信我，講出這句話問題可大了問題大在哪，我們往下慢慢講下去 今天會介紹裡面">
 <meta property="og:locale" content="zh_TW">
-<meta property="og:image" content="https://i.imgur.com/PEUN670.png">
-<meta property="article:published_time" content="2023-09-07T12:51:14.000Z">
-<meta property="article:modified_time" content="2023-09-07T12:54:02.036Z">
+<meta property="article:published_time" content="2023-09-15T11:04:08.000Z">
+<meta property="article:modified_time" content="2023-09-15T11:05:53.734Z">
 <meta property="article:author" content="KenHuang">
 <meta property="article:tag" content="Software Development">
-<meta property="article:tag" content="Clean Architecture">
-<meta property="article:tag" content="SOLID">
-<meta property="article:tag" content="OCP">
+<meta property="article:tag" content="Clean Coder">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://i.imgur.com/PEUN670.png">
 
-<link rel="canonical" href="https://kenhuangtw.github.io/2023/09/07/IronDay7/">
+<link rel="canonical" href="https://kenhuangtw.github.io/2023/09/15/IronDay15/">
 
 
 <script id="page-configurations">
@@ -51,7 +47,7 @@
   };
 </script>
 
-  <title>【Day-7】SOLID - 開放封閉原則(OCP) | 窩不知道</title>
+  <title>【Day-15】番外篇 - Clean Coder(上) | 窩不知道</title>
   
 
 
@@ -201,7 +197,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="https://kenhuangtw.github.io/2023/09/07/IronDay7/">
+    <link itemprop="mainEntityOfPage" href="https://kenhuangtw.github.io/2023/09/15/IronDay15/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -214,7 +210,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          【Day-7】SOLID - 開放封閉原則(OCP)
+          【Day-15】番外篇 - Clean Coder(上)
         </h1>
 
         <div class="post-meta">
@@ -225,7 +221,7 @@
               <span class="post-meta-item-text">發表於</span>
               
 
-              <time title="創建時間：2023-09-07 20:51:14 / 修改時間：20:54:02" itemprop="dateCreated datePublished" datetime="2023-09-07T20:51:14+08:00">2023-09-07</time>
+              <time title="創建時間：2023-09-15 19:04:08 / 修改時間：19:05:53" itemprop="dateCreated datePublished" datetime="2023-09-15T19:04:08+08:00">2023-09-15</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -246,8 +242,8 @@
       </span>
       <span class="post-meta-item-text">Disqus：</span>
     
-    <a title="disqus" href="/2023/09/07/IronDay7/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2023/09/07/IronDay7/" itemprop="commentCount"></span>
+    <a title="disqus" href="/2023/09/15/IronDay15/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2023/09/15/IronDay15/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -262,21 +258,40 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>文章同步於<a target="_blank" rel="noopener" href="https://ithelp.ithome.com.tw/articles/10315745">it邦</a></p>
-<h1 id="介紹"><a href="#介紹" class="headerlink" title="介紹"></a>介紹</h1><p>今天來說說<strong>開放封閉原則(OCP, Open-Close Principle)</strong></p>
-<blockquote>
-<p>一個軟體的製品應該對於擴展是開放的，但對於修改是封閉的<br>-Clean Architecture(P.59)</p>
-</blockquote>
-<p>我們多少都遇過某些老專案會有加一個新功能就要改很多地方或是很難改的狀況<br>那麼參與設計這個軟體的架構的工程師，就是參與了一次極大的失敗。</p>
-<p>OCP其實也是直接指導我們類別和模組化的原則。</p>
+        <p>文章同步於<a target="_blank" rel="noopener" href="https://ithelp.ithome.com.tw/articles/10318714">it邦</a></p>
+<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>這兩天會來介紹一本書叫做Clean Coder<br>這本書主要是在介紹身為一個專業人員，我們應該要有甚麼樣的態度<br>這篇文章會比之前來的更新手向，可以斟酌觀看</p>
+<p>我們通常都會遇到一個狀況就是，在預算、時間不足的情況之下，客戶要求了一個非常困難的要求<br>假設經過評估後完全做不到<br>基本上這個時候人比較好的就會說，我嘗試看看</p>
+<p>相信我，講出這句話問題可大了<br>問題大在哪，我們往下慢慢講下去</p>
+<p>今天會介紹裡面的第二和第三章節<br>分別是說『不』還有說『是』</p>
 <span id="more"></span>
 
-<h1 id="實務"><a href="#實務" class="headerlink" title="實務"></a>實務</h1><p>其實說起來他會有點像是單一職責的延伸<br>舉個我們以前會很常看到的架構 - 伺服器端渲染(SSR, server side render)<br>這就是非常典型高耦合的架構設計<br>當然我不是指所有的SSR都不好，但相較於CSR的耦合度就差非常多</p>
-<p>在這個架構中我們會很常看到將前後端的Code混再一起<br>以PHP為例，滿常看到將PHP和HTML甚至CSS, JavaScript寫在一起的狀況<br>那當要修改一個小地方的時候我就必須連同前端後端的邏輯一並修正<br>這就會導致我們說的大量修改的狀況</p>
-<p>那即便我們使用了其他方式<br>也必須確保這些元件的依賴是單向的</p>
-<p><img src="https://i.imgur.com/PEUN670.png" alt="依賴關係"></p>
-<p>這樣是為了確保<strong>下層的改動的改動不會影響到上層的邏輯</strong></p>
-<h1 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h1><p>Clean Architecture(ch.8)</p>
+<h1 id="CH-2-說『不』"><a href="#CH-2-說『不』" class="headerlink" title="CH.2 說『不』"></a>CH.2 說『不』</h1><p>這本書強調一個概念，就是<strong>專業人員應該把公司的利益視同自己的利益</strong><br>所以在這個概念下，我們要如何應對不合理的要求</p>
+<p>我們看個範例<br>A: 明天我需要一個某公司的後臺管理系統，用在管理對方公司所有人，要有畫面有打卡紀錄之類的，我把全部的功能都Line給你了，功能都不能少<br>B: 嗯…我嘗試看看<br>A: 好，明天等你的好消息</p>
+<p>發現問題了嗎，<strong>B的嘗試看看對於A來說是: 我一定做得到</strong><br>但對於B來說只是嘗試這件事<br>這之間就有了<strong>認知上的差異</strong></p>
+<p>而且這些功能一天內就要做完，本身就難度極高，也不可能<br>再者，你確定寫出來之後都沒問題嗎？</p>
+<p>在這個情況下，就應該直接說: 不，我做不到！</p>
+<p>你會說，對方是上級阿<br>那我問你，這種狀況交出去的產品有人會想要嗎？一個連品質管理都沒有的產品，你會想用？</p>
+<p>如果在你說不之後對方仍強烈要求且堅決不退讓的話，我還是搬出那句話</p>
+<blockquote>
+<p>程式跟人只要有一個能跑就好<br>-我不知道是誰，但今天講的人是我(2023&#x2F;9&#x2F;11)</p>
+</blockquote>
+<p>這種時候一定是我跑</p>
+<h1 id="CH-3-說『是』"><a href="#CH-3-說『是』" class="headerlink" title="CH.3 說『是』"></a>CH.3 說『是』</h1><p>說出了『是』，就代表一種承諾<br>而承諾就要說到做到</p>
+<p>作者認為，很少人會認真對待自己說過的話，而且說到做到，更多的是做出承諾後，連履行都不會。<br>這邊有分享幾個缺乏承諾的徵兆，再來比較真正的承諾會是怎樣</p>
+<p><strong>缺乏承諾</strong></p>
+<ul>
+<li>我們應該 &#x2F; 需要…</li>
+<li>我 希望 可以…</li>
+<li>讓我們(Let’s)…</li>
+</ul>
+<p><strong>真正的承諾</strong></p>
+<ul>
+<li>我會在 某些時間點 之前 做完某個任務</li>
+</ul>
+<p>看得出差別嗎，這之中的差別就是，前者是懷疑，後者是肯定</p>
+<h2 id="真的做不完怎麼辦"><a href="#真的做不完怎麼辦" class="headerlink" title="真的做不完怎麼辦"></a>真的做不完怎麼辦</h2><p>我們一定會遇到臨時有插件、突然出了問題之類的狀況而導致專案延後<br>這個時候至少我們要做到<strong>提早告知</strong></p>
+<p>至少讓其他人有心理準備<br>甚至知道問題之後來幫助你來解決</p>
+<h1 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h1><p>Clean Coder(ch.2 ~ 3)</p>
 <div>
     <script type="text/javascript">
     document.write(
@@ -293,9 +308,7 @@
       <footer class="post-footer">
           <div class="post-tags">
               <a href="/tags/Software-Development/" rel="tag"># Software Development</a>
-              <a href="/tags/Clean-Architecture/" rel="tag"># Clean Architecture</a>
-              <a href="/tags/SOLID/" rel="tag"># SOLID</a>
-              <a href="/tags/OCP/" rel="tag"># OCP</a>
+              <a href="/tags/Clean-Coder/" rel="tag"># Clean Coder</a>
           </div>
 
         
@@ -304,13 +317,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2023/09/06/IronDay6/" rel="prev" title="【Day-6】SOLID - 單一職責原則(SRP)">
-      <i class="fa fa-chevron-left"></i> 【Day-6】SOLID - 單一職責原則(SRP)
+    <a href="/2023/09/14/IronDay14/" rel="prev" title="【Day-14】客戶端渲染(CSR)">
+      <i class="fa fa-chevron-left"></i> 【Day-14】客戶端渲染(CSR)
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2023/09/08/IronDay8/" rel="next" title="【Day-8】SOLID - 里式替換原則(LSP)">
-      【Day-8】SOLID - 里式替換原則(LSP) <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -376,7 +386,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BB%8B%E7%B4%B9"><span class="nav-number">1.</span> <span class="nav-text">介紹</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AF%A6%E5%8B%99"><span class="nav-number">2.</span> <span class="nav-text">實務</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="nav-number">3.</span> <span class="nav-text">參考資料</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#CH-2-%E8%AA%AA%E3%80%8E%E4%B8%8D%E3%80%8F"><span class="nav-number">2.</span> <span class="nav-text">CH.2 說『不』</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#CH-3-%E8%AA%AA%E3%80%8E%E6%98%AF%E3%80%8F"><span class="nav-number">3.</span> <span class="nav-text">CH.3 說『是』</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9C%9F%E7%9A%84%E5%81%9A%E4%B8%8D%E5%AE%8C%E6%80%8E%E9%BA%BC%E8%BE%A6"><span class="nav-number">3.1.</span> <span class="nav-text">真的做不完怎麼辦</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="nav-number">4.</span> <span class="nav-text">參考資料</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -511,9 +521,9 @@
 </script>
 <script>
   var disqus_config = function() {
-    this.page.url = "https://kenhuangtw.github.io/2023/09/07/IronDay7/";
-    this.page.identifier = "2023/09/07/IronDay7/";
-    this.page.title = "【Day-7】SOLID - 開放封閉原則(OCP)";
+    this.page.url = "https://kenhuangtw.github.io/2023/09/15/IronDay15/";
+    this.page.identifier = "2023/09/15/IronDay15/";
+    this.page.title = "【Day-15】番外篇 - Clean Coder(上)";
     this.language = "zh_TW";
     };
   NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
