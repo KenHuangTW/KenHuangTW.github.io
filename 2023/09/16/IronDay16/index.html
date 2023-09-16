@@ -20,15 +20,15 @@
     var CONFIG = {"hostname":"kenhuangtw.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"enable":null,"type":null,"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
   </script>
 
-  <meta name="description" content="文章同步於blog 前言今天我們就講一個章節但這個應該是許多新手或比較沒有經驗的人都不太會的 - 預估 預估時間對於軟體工程師來說，很簡單但也很困難這件事情其實會直接影響到公司商譽 假設我今天估計某個系統大概要花上1個月的時間，但我卻花了3個月才交付這會對於公司來說，無疑是一個非常大的損失 什麼是預估對於業務方來說，這是種『承諾』，但對於開發方認為，那只是個『猜測』 前者是一個說到一定要做到的保證">
+  <meta name="description" content="文章同步於blog 前言今天我們就講一個章節但這個應該是許多新手或比較沒有經驗的人都不太會的 - 預估 預估時間對於軟體工程師來說，很簡單但也很困難這件事情其實會直接影響到公司商譽 假設我今天估計某個系統大概要花上1個月的時間，但我卻花了3個月才交付這會對於公司來說，無疑是一個非常大的損失">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【Day-16】番外篇 - Clean Coder(下)">
 <meta property="og:url" content="https://kenhuangtw.github.io/2023/09/16/IronDay16/index.html">
 <meta property="og:site_name" content="窩不知道">
-<meta property="og:description" content="文章同步於blog 前言今天我們就講一個章節但這個應該是許多新手或比較沒有經驗的人都不太會的 - 預估 預估時間對於軟體工程師來說，很簡單但也很困難這件事情其實會直接影響到公司商譽 假設我今天估計某個系統大概要花上1個月的時間，但我卻花了3個月才交付這會對於公司來說，無疑是一個非常大的損失 什麼是預估對於業務方來說，這是種『承諾』，但對於開發方認為，那只是個『猜測』 前者是一個說到一定要做到的保證">
+<meta property="og:description" content="文章同步於blog 前言今天我們就講一個章節但這個應該是許多新手或比較沒有經驗的人都不太會的 - 預估 預估時間對於軟體工程師來說，很簡單但也很困難這件事情其實會直接影響到公司商譽 假設我今天估計某個系統大概要花上1個月的時間，但我卻花了3個月才交付這會對於公司來說，無疑是一個非常大的損失">
 <meta property="og:locale" content="zh_TW">
 <meta property="article:published_time" content="2023-09-16T05:42:23.000Z">
-<meta property="article:modified_time" content="2023-09-16T05:52:39.970Z">
+<meta property="article:modified_time" content="2023-09-16T05:54:19.231Z">
 <meta property="article:author" content="KenHuang">
 <meta property="article:tag" content="Software Development">
 <meta property="article:tag" content="Clean Coder">
@@ -221,7 +221,7 @@
               <span class="post-meta-item-text">發表於</span>
               
 
-              <time title="創建時間：2023-09-16 13:42:23 / 修改時間：13:52:39" itemprop="dateCreated datePublished" datetime="2023-09-16T13:42:23+08:00">2023-09-16</time>
+              <time title="創建時間：2023-09-16 13:42:23 / 修改時間：13:54:19" itemprop="dateCreated datePublished" datetime="2023-09-16T13:42:23+08:00">2023-09-16</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -262,6 +262,8 @@
 <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>今天我們就講一個章節<br>但這個應該是許多新手或比較沒有經驗的人都不太會的 - <strong>預估</strong></p>
 <p>預估時間對於軟體工程師來說，很簡單但也很困難<br>這件事情其實會直接影響到<strong>公司商譽</strong></p>
 <p>假設我今天估計某個系統大概要花上1個月的時間，但我卻花了3個月才交付<br>這會對於公司來說，無疑是一個非常大的損失</p>
+<span id="more"></span>
+
 <h1 id="什麼是預估"><a href="#什麼是預估" class="headerlink" title="什麼是預估"></a>什麼是預估</h1><p>對於業務方來說，這是種『承諾』，但對於開發方認為，那只是個『猜測』</p>
 <p>前者是一個說到一定要做到的<strong>保證</strong>，對此全部與這個專案有關的人都會為此擬訂計畫<br>後者是一個則不帶保證</p>
 <p>但對於大多數的開發者而言，預估通常無法準確且不擅長<br>你說有訣竅嗎，不幸的，沒有</p>
