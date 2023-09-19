@@ -20,25 +20,21 @@
     var CONFIG = {"hostname":"kenhuangtw.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"enable":null,"type":null,"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
   </script>
 
-  <meta name="description" content="文章同步於it邦 介紹今天來說說開放封閉原則(OCP, Open-Close Principle)  一個軟體的製品應該對於擴展是開放的，但對於修改是封閉的-Clean Architecture(P.59)  我們多少都遇過某些老專案會有加一個新功能就要改很多地方或是很難改的狀況那麼參與設計這個軟體的架構的工程師，就是參與了一次極大的失敗。 OCP其實也是直接指導我們類別和模組化的原則。">
+  <meta name="description" content="文章同步於it邦 前言這次要來介紹的是MVC架構，以及在實作上MVC架構需要特別注意的地方還有甚麼情況下適合用MVC架構 而這些會更傾向以實務上的角度來做說明">
 <meta property="og:type" content="article">
-<meta property="og:title" content="【Day-7】SOLID - 開放封閉原則(OCP)">
-<meta property="og:url" content="https://kenhuangtw.github.io/2023/09/07/IronDay7/index.html">
+<meta property="og:title" content="【Day-19】MVC架構、實作與選擇">
+<meta property="og:url" content="https://kenhuangtw.github.io/2023/09/19/IronDay19/index.html">
 <meta property="og:site_name" content="窩不知道">
-<meta property="og:description" content="文章同步於it邦 介紹今天來說說開放封閉原則(OCP, Open-Close Principle)  一個軟體的製品應該對於擴展是開放的，但對於修改是封閉的-Clean Architecture(P.59)  我們多少都遇過某些老專案會有加一個新功能就要改很多地方或是很難改的狀況那麼參與設計這個軟體的架構的工程師，就是參與了一次極大的失敗。 OCP其實也是直接指導我們類別和模組化的原則。">
+<meta property="og:description" content="文章同步於it邦 前言這次要來介紹的是MVC架構，以及在實作上MVC架構需要特別注意的地方還有甚麼情況下適合用MVC架構 而這些會更傾向以實務上的角度來做說明">
 <meta property="og:locale" content="zh_TW">
-<meta property="og:image" content="https://i.imgur.com/PEUN670.png">
-<meta property="article:published_time" content="2023-09-07T12:51:14.000Z">
-<meta property="article:modified_time" content="2023-09-07T12:54:02.036Z">
+<meta property="article:published_time" content="2023-09-19T11:27:51.000Z">
+<meta property="article:modified_time" content="2023-09-19T11:29:02.720Z">
 <meta property="article:author" content="KenHuang">
 <meta property="article:tag" content="Software Development">
-<meta property="article:tag" content="Clean Architecture">
-<meta property="article:tag" content="SOLID">
-<meta property="article:tag" content="OCP">
+<meta property="article:tag" content="MVC">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://i.imgur.com/PEUN670.png">
 
-<link rel="canonical" href="https://kenhuangtw.github.io/2023/09/07/IronDay7/">
+<link rel="canonical" href="https://kenhuangtw.github.io/2023/09/19/IronDay19/">
 
 
 <script id="page-configurations">
@@ -51,7 +47,7 @@
   };
 </script>
 
-  <title>【Day-7】SOLID - 開放封閉原則(OCP) | 窩不知道</title>
+  <title>【Day-19】MVC架構、實作與選擇 | 窩不知道</title>
   
 
 
@@ -201,7 +197,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="https://kenhuangtw.github.io/2023/09/07/IronDay7/">
+    <link itemprop="mainEntityOfPage" href="https://kenhuangtw.github.io/2023/09/19/IronDay19/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -214,7 +210,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          【Day-7】SOLID - 開放封閉原則(OCP)
+          【Day-19】MVC架構、實作與選擇
         </h1>
 
         <div class="post-meta">
@@ -225,7 +221,7 @@
               <span class="post-meta-item-text">發表於</span>
               
 
-              <time title="創建時間：2023-09-07 20:51:14 / 修改時間：20:54:02" itemprop="dateCreated datePublished" datetime="2023-09-07T20:51:14+08:00">2023-09-07</time>
+              <time title="創建時間：2023-09-19 19:27:51 / 修改時間：19:29:02" itemprop="dateCreated datePublished" datetime="2023-09-19T19:27:51+08:00">2023-09-19</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -246,8 +242,8 @@
       </span>
       <span class="post-meta-item-text">Disqus：</span>
     
-    <a title="disqus" href="/2023/09/07/IronDay7/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2023/09/07/IronDay7/" itemprop="commentCount"></span>
+    <a title="disqus" href="/2023/09/19/IronDay19/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2023/09/19/IronDay19/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -262,21 +258,28 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>文章同步於<a target="_blank" rel="noopener" href="https://ithelp.ithome.com.tw/articles/10315745">it邦</a></p>
-<h1 id="介紹"><a href="#介紹" class="headerlink" title="介紹"></a>介紹</h1><p>今天來說說<strong>開放封閉原則(OCP, Open-Close Principle)</strong></p>
-<blockquote>
-<p>一個軟體的製品應該對於擴展是開放的，但對於修改是封閉的<br>-Clean Architecture(P.59)</p>
-</blockquote>
-<p>我們多少都遇過某些老專案會有加一個新功能就要改很多地方或是很難改的狀況<br>那麼參與設計這個軟體的架構的工程師，就是參與了一次極大的失敗。</p>
-<p>OCP其實也是直接指導我們類別和模組化的原則。</p>
+        <p>文章同步於<a target="_blank" rel="noopener" href="https://ithelp.ithome.com.tw/articles/10322612">it邦</a></p>
+<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>這次要來介紹的是MVC架構，以及在實作上MVC架構需要特別注意的地方<br>還有甚麼情況下適合用MVC架構</p>
+<p>而這些會更傾向以實務上的角度來做說明</p>
 <span id="more"></span>
 
-<h1 id="實務"><a href="#實務" class="headerlink" title="實務"></a>實務</h1><p>其實說起來他會有點像是單一職責的延伸<br>舉個我們以前會很常看到的架構 - 伺服器端渲染(SSR, server side render)<br>這就是非常典型高耦合的架構設計<br>當然我不是指所有的SSR都不好，但相較於CSR的耦合度就差非常多</p>
-<p>在這個架構中我們會很常看到將前後端的Code混再一起<br>以PHP為例，滿常看到將PHP和HTML甚至CSS, JavaScript寫在一起的狀況<br>那當要修改一個小地方的時候我就必須連同前端後端的邏輯一並修正<br>這就會導致我們說的大量修改的狀況</p>
-<p>那即便我們使用了其他方式<br>也必須確保這些元件的依賴是單向的</p>
-<p><img src="https://i.imgur.com/PEUN670.png" alt="依賴關係"></p>
-<p>這樣是為了確保<strong>下層的改動的改動不會影響到上層的邏輯</strong></p>
-<h1 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h1><p>Clean Architecture(ch.8)</p>
+<h1 id="介紹"><a href="#介紹" class="headerlink" title="介紹"></a>介紹</h1><p>MVC架構是一種相對於大雜燴的方式，更加將<strong>職責分離</strong>的一種設計模式<br>這種設計模式，提供了良好的**可測試性(Testability)**，這使得我們可以更好的撰寫單元測試</p>
+<p>而MVC三個字母各代表不同意思</p>
+<h2 id="M-Model"><a href="#M-Model" class="headerlink" title="M - Model"></a>M - Model</h2><p>M代表Model，通常負責與資料存取有關的操作，通常會和ORM做搭配<br>以Laravel為例子: </p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">use</span> <span class="title">App</span>\<span class="title">Models</span>\<span class="title">User</span>;  </span><br><span class="line"></span><br><span class="line"><span class="variable">$user_group</span> = <span class="title class_">User</span>::<span class="title function_ invoke__">get</span>();</span><br></pre></td></tr></table></figure>
+<p>我使用我定義好的model + ORM 去取得所有 User 的資料<br>我甚至可以在model裡面定義各種回傳格式，而不需要透過ORM，例如:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line"></span><br><span class="line">namespace App;</span><br><span class="line"></span><br><span class="line">use Illuminate\Database\Eloquent\Model;</span><br><span class="line"></span><br><span class="line">class User extends Model</span><br><span class="line">&#123;</span><br><span class="line">    protected $fillable = [&#x27;name&#x27;, &#x27;email&#x27;, &#x27;password&#x27;];</span><br><span class="line">    </span><br><span class="line">    protected $hidden = [&#x27;password&#x27;];</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>透過<code>$fillable</code>來決定誰可以被更改以及使用<code>$hidden</code>來決定什麼欄位自動隱藏，而不需要每次都額外撰寫Select()</p>
+<h2 id="V-View"><a href="#V-View" class="headerlink" title="V - View"></a>V - View</h2><p>V代表View，指的是畫面上的顯示，Controller將包好的資料交給view顯示</p>
+<p>但我想這個放到現在是對於後端來說最不重要的，因為view對於MVC來說已經不是必須了，目前在前後端分離的趨勢下，後端更只會負責Model和Controller的部分</p>
+<h2 id="C-Controller"><a href="#C-Controller" class="headerlink" title="C - Controller"></a>C - Controller</h2><p>C代表Controller，也就是控制應用程式的流程，這通常是<strong>最雜亂的一層</strong><br>當我們把所有Controller全部擠在一起，就會導致整個Controller難以測試<br>例如：登入的流程需要，驗證、更改使用者狀態、核發access token、包裝API所需要的回傳格式<br>上方就有<strong>至少4個層面</strong>需要撰寫，光是簡單的一個登入就這樣，如果還把它寫成一包<br>我想以後應該會直接吐血</p>
+<p>在第一間公司的時候，當時年少懵懂無知，我還處於一個只會把Controller變成大雜燴不寫單元測試的小荷包蛋(知道我要講甚麼就自己轉換XD)<br>當時我們光一個Controller就寫了快1000多行，混雜著各種邏輯，當年其實就在想，這樣寫以後要怎麼改阿。<br>直到我接觸了clean code等著作，我才明白，以前的我都在創造<del>職缺</del>麻煩，雖然前輩也是寫在一起的?!</p>
+<p>在幾天之後，講完clean architecture，就會使用Laravel來講解如何將Controller拆解成我們所需要的部分就好<br>今天先賣個關子</p>
+<h1 id="專案適合用MVC嗎"><a href="#專案適合用MVC嗎" class="headerlink" title="專案適合用MVC嗎"></a>專案適合用MVC嗎</h1><p>基本上到了現代，MVC框架基本上適用於全部大小的專案開發了，小型的也無所謂<br>現代的MVC專案基本上都可以快速建立、產出、交付<br>以我自身的經驗來說，目前有幾個小型專案用MVC都可以用MVC框架來實現</p>
+<p><strong>不過!!!<strong>，還是要看</strong>框架本身對於需求是否符合</strong>，如果是大型專案又要團隊協作要使用Laravel我反而不建議，PHP本身對於團隊協作比較沒有嚴謹的規範。</p>
+<p>這個問題基本上MVC框架一定適合各種大中小型專案開發。</p>
+<h1 id="結語"><a href="#結語" class="headerlink" title="結語"></a>結語</h1><p>竟然都講到架構面的部分了，明天就要來講講clean architecture這本書了</p>
+<h1 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h1><p><a target="_blank" rel="noopener" href="https://zh.wikipedia.org/zh-tw/MVC">MVC WIKI</a></p>
 <div>
     <script type="text/javascript">
     document.write(
@@ -293,9 +296,7 @@
       <footer class="post-footer">
           <div class="post-tags">
               <a href="/tags/Software-Development/" rel="tag"># Software Development</a>
-              <a href="/tags/Clean-Architecture/" rel="tag"># Clean Architecture</a>
-              <a href="/tags/SOLID/" rel="tag"># SOLID</a>
-              <a href="/tags/OCP/" rel="tag"># OCP</a>
+              <a href="/tags/MVC/" rel="tag"># MVC</a>
           </div>
 
         
@@ -304,13 +305,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2023/09/06/IronDay6/" rel="prev" title="【Day-6】SOLID - 單一職責原則(SRP)">
-      <i class="fa fa-chevron-left"></i> 【Day-6】SOLID - 單一職責原則(SRP)
+    <a href="/2023/09/18/IronDay18/" rel="prev" title="【Day-18】HTTP Status Code與統一200的設計">
+      <i class="fa fa-chevron-left"></i> 【Day-18】HTTP Status Code與統一200的設計
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2023/09/08/IronDay8/" rel="next" title="【Day-8】SOLID - 里式替換原則(LSP)">
-      【Day-8】SOLID - 里式替換原則(LSP) <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -376,7 +374,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BB%8B%E7%B4%B9"><span class="nav-number">1.</span> <span class="nav-text">介紹</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AF%A6%E5%8B%99"><span class="nav-number">2.</span> <span class="nav-text">實務</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="nav-number">3.</span> <span class="nav-text">參考資料</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BB%8B%E7%B4%B9"><span class="nav-number">2.</span> <span class="nav-text">介紹</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#M-Model"><span class="nav-number">2.1.</span> <span class="nav-text">M - Model</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#V-View"><span class="nav-number">2.2.</span> <span class="nav-text">V - View</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#C-Controller"><span class="nav-number">2.3.</span> <span class="nav-text">C - Controller</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B0%88%E6%A1%88%E9%81%A9%E5%90%88%E7%94%A8MVC%E5%97%8E"><span class="nav-number">3.</span> <span class="nav-text">專案適合用MVC嗎</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%B5%90%E8%AA%9E"><span class="nav-number">4.</span> <span class="nav-text">結語</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="nav-number">5.</span> <span class="nav-text">參考資料</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -511,9 +509,9 @@
 </script>
 <script>
   var disqus_config = function() {
-    this.page.url = "https://kenhuangtw.github.io/2023/09/07/IronDay7/";
-    this.page.identifier = "2023/09/07/IronDay7/";
-    this.page.title = "【Day-7】SOLID - 開放封閉原則(OCP)";
+    this.page.url = "https://kenhuangtw.github.io/2023/09/19/IronDay19/";
+    this.page.identifier = "2023/09/19/IronDay19/";
+    this.page.title = "【Day-19】MVC架構、實作與選擇";
     this.language = "zh_TW";
     };
   NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
