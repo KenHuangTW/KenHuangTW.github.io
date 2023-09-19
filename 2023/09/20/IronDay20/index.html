@@ -20,21 +20,21 @@
     var CONFIG = {"hostname":"kenhuangtw.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"enable":null,"type":null,"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
   </script>
 
-  <meta name="description" content="文章同步於it邦 前言這次要來介紹的是MVC架構，以及在實作上MVC架構需要特別注意的地方還有甚麼情況下適合用MVC架構 而這些會更傾向以實務上的角度來做說明">
+  <meta name="description" content="文章同步於it邦 前言今天要來講整個系列的重頭戲之一了 - Clean Architecture 這個主題一樣不太好寫，主要是時間不多，以及要用有限的篇幅來說明整本書其實非常困難我推薦工程師們可以來看看這本書 我還是那句話，程式隨便找個人來寫都可以，但要寫好就不是那麼容易要寫到不太需要解釋一看就懂更不容易但一個產品的Code太爛是有機會使整個公司倒閉的 前幾週可以看到我分享了各種架構與設計面的例子">
 <meta property="og:type" content="article">
-<meta property="og:title" content="【Day-19】MVC架構、實作與選擇">
-<meta property="og:url" content="https://kenhuangtw.github.io/2023/09/19/IronDay19/index.html">
+<meta property="og:title" content="【Day-20】Clean Architecture(上)">
+<meta property="og:url" content="https://kenhuangtw.github.io/2023/09/20/IronDay20/index.html">
 <meta property="og:site_name" content="窩不知道">
-<meta property="og:description" content="文章同步於it邦 前言這次要來介紹的是MVC架構，以及在實作上MVC架構需要特別注意的地方還有甚麼情況下適合用MVC架構 而這些會更傾向以實務上的角度來做說明">
+<meta property="og:description" content="文章同步於it邦 前言今天要來講整個系列的重頭戲之一了 - Clean Architecture 這個主題一樣不太好寫，主要是時間不多，以及要用有限的篇幅來說明整本書其實非常困難我推薦工程師們可以來看看這本書 我還是那句話，程式隨便找個人來寫都可以，但要寫好就不是那麼容易要寫到不太需要解釋一看就懂更不容易但一個產品的Code太爛是有機會使整個公司倒閉的 前幾週可以看到我分享了各種架構與設計面的例子">
 <meta property="og:locale" content="zh_TW">
-<meta property="article:published_time" content="2023-09-19T11:27:51.000Z">
-<meta property="article:modified_time" content="2023-09-19T11:29:02.720Z">
+<meta property="article:published_time" content="2023-09-19T16:38:19.000Z">
+<meta property="article:modified_time" content="2023-09-19T16:39:19.475Z">
 <meta property="article:author" content="KenHuang">
 <meta property="article:tag" content="Software Development">
-<meta property="article:tag" content="MVC">
+<meta property="article:tag" content="Clean Architecture">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="https://kenhuangtw.github.io/2023/09/19/IronDay19/">
+<link rel="canonical" href="https://kenhuangtw.github.io/2023/09/20/IronDay20/">
 
 
 <script id="page-configurations">
@@ -47,7 +47,7 @@
   };
 </script>
 
-  <title>【Day-19】MVC架構、實作與選擇 | 窩不知道</title>
+  <title>【Day-20】Clean Architecture(上) | 窩不知道</title>
   
 
 
@@ -197,7 +197,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="https://kenhuangtw.github.io/2023/09/19/IronDay19/">
+    <link itemprop="mainEntityOfPage" href="https://kenhuangtw.github.io/2023/09/20/IronDay20/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -210,7 +210,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          【Day-19】MVC架構、實作與選擇
+          【Day-20】Clean Architecture(上)
         </h1>
 
         <div class="post-meta">
@@ -221,7 +221,7 @@
               <span class="post-meta-item-text">發表於</span>
               
 
-              <time title="創建時間：2023-09-19 19:27:51 / 修改時間：19:29:02" itemprop="dateCreated datePublished" datetime="2023-09-19T19:27:51+08:00">2023-09-19</time>
+              <time title="創建時間：2023-09-20 00:38:19 / 修改時間：00:39:19" itemprop="dateCreated datePublished" datetime="2023-09-20T00:38:19+08:00">2023-09-20</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -242,8 +242,8 @@
       </span>
       <span class="post-meta-item-text">Disqus：</span>
     
-    <a title="disqus" href="/2023/09/19/IronDay19/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2023/09/19/IronDay19/" itemprop="commentCount"></span>
+    <a title="disqus" href="/2023/09/20/IronDay20/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2023/09/20/IronDay20/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -258,28 +258,36 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>文章同步於<a target="_blank" rel="noopener" href="https://ithelp.ithome.com.tw/articles/10322612">it邦</a></p>
-<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>這次要來介紹的是MVC架構，以及在實作上MVC架構需要特別注意的地方<br>還有甚麼情況下適合用MVC架構</p>
-<p>而這些會更傾向以實務上的角度來做說明</p>
-<span id="more"></span>
-
-<h1 id="介紹"><a href="#介紹" class="headerlink" title="介紹"></a>介紹</h1><p>MVC架構是一種相對於大雜燴的方式，更加將<strong>職責分離</strong>的一種設計模式<br>這種設計模式，提供了良好的**可測試性(Testability)**，這使得我們可以更好的撰寫單元測試</p>
-<p>而MVC三個字母各代表不同意思</p>
-<h2 id="M-Model"><a href="#M-Model" class="headerlink" title="M - Model"></a>M - Model</h2><p>M代表Model，通常負責與資料存取有關的操作，通常會和ORM做搭配<br>以Laravel為例子: </p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">use</span> <span class="title">App</span>\<span class="title">Models</span>\<span class="title">User</span>;  </span><br><span class="line"></span><br><span class="line"><span class="variable">$user_group</span> = <span class="title class_">User</span>::<span class="title function_ invoke__">get</span>();</span><br></pre></td></tr></table></figure>
-<p>我使用我定義好的model + ORM 去取得所有 User 的資料<br>我甚至可以在model裡面定義各種回傳格式，而不需要透過ORM，例如:</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line"></span><br><span class="line">namespace App;</span><br><span class="line"></span><br><span class="line">use Illuminate\Database\Eloquent\Model;</span><br><span class="line"></span><br><span class="line">class User extends Model</span><br><span class="line">&#123;</span><br><span class="line">    protected $fillable = [&#x27;name&#x27;, &#x27;email&#x27;, &#x27;password&#x27;];</span><br><span class="line">    </span><br><span class="line">    protected $hidden = [&#x27;password&#x27;];</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>透過<code>$fillable</code>來決定誰可以被更改以及使用<code>$hidden</code>來決定什麼欄位自動隱藏，而不需要每次都額外撰寫Select()</p>
-<h2 id="V-View"><a href="#V-View" class="headerlink" title="V - View"></a>V - View</h2><p>V代表View，指的是畫面上的顯示，Controller將包好的資料交給view顯示</p>
-<p>但我想這個放到現在是對於後端來說最不重要的，因為view對於MVC來說已經不是必須了，目前在前後端分離的趨勢下，後端更只會負責Model和Controller的部分</p>
-<h2 id="C-Controller"><a href="#C-Controller" class="headerlink" title="C - Controller"></a>C - Controller</h2><p>C代表Controller，也就是控制應用程式的流程，這通常是<strong>最雜亂的一層</strong><br>當我們把所有Controller全部擠在一起，就會導致整個Controller難以測試<br>例如：登入的流程需要，驗證、更改使用者狀態、核發access token、包裝API所需要的回傳格式<br>上方就有<strong>至少4個層面</strong>需要撰寫，光是簡單的一個登入就這樣，如果還把它寫成一包<br>我想以後應該會直接吐血</p>
-<p>在第一間公司的時候，當時年少懵懂無知，我還處於一個只會把Controller變成大雜燴不寫單元測試的小荷包蛋(知道我要講甚麼就自己轉換XD)<br>當時我們光一個Controller就寫了快1000多行，混雜著各種邏輯，當年其實就在想，這樣寫以後要怎麼改阿。<br>直到我接觸了clean code等著作，我才明白，以前的我都在創造<del>職缺</del>麻煩，雖然前輩也是寫在一起的?!</p>
-<p>在幾天之後，講完clean architecture，就會使用Laravel來講解如何將Controller拆解成我們所需要的部分就好<br>今天先賣個關子</p>
-<h1 id="專案適合用MVC嗎"><a href="#專案適合用MVC嗎" class="headerlink" title="專案適合用MVC嗎"></a>專案適合用MVC嗎</h1><p>基本上到了現代，MVC框架基本上適用於全部大小的專案開發了，小型的也無所謂<br>現代的MVC專案基本上都可以快速建立、產出、交付<br>以我自身的經驗來說，目前有幾個小型專案用MVC都可以用MVC框架來實現</p>
-<p><strong>不過!!!<strong>，還是要看</strong>框架本身對於需求是否符合</strong>，如果是大型專案又要團隊協作要使用Laravel我反而不建議，PHP本身對於團隊協作比較沒有嚴謹的規範。</p>
-<p>這個問題基本上MVC框架一定適合各種大中小型專案開發。</p>
-<h1 id="結語"><a href="#結語" class="headerlink" title="結語"></a>結語</h1><p>竟然都講到架構面的部分了，明天就要來講講clean architecture這本書了</p>
-<h1 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h1><p><a target="_blank" rel="noopener" href="https://zh.wikipedia.org/zh-tw/MVC">MVC WIKI</a></p>
+        <p>文章同步於<a target="_blank" rel="noopener" href="https://ithelp.ithome.com.tw/articles/10320837">it邦</a></p>
+<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>今天要來講整個系列的重頭戲之一了 - <strong>Clean Architecture</strong></p>
+<p>這個主題一樣不太好寫，主要是時間不多，以及要用有限的篇幅來說明整本書其實非常困難<br>我推薦工程師們可以來看看這本書</p>
+<p>我還是那句話，程式隨便找個人來寫都可以，但要寫好就不是那麼容易<br>要寫到不太需要解釋一看就懂更不容易<br>但一個產品的Code太爛是有機會使整個公司倒閉的</p>
+<p>前幾週可以看到我分享了各種架構與設計面的例子<br>那我們回到根本的問題，到底什麼是設計？什麼是架構？兩者又有何區別？</p>
+<h1 id="CH-1-什麼是設計與架構"><a href="#CH-1-什麼是設計與架構" class="headerlink" title="CH.1 什麼是設計與架構"></a>CH.1 什麼是設計與架構</h1><p>舉個例子，一棟房子的架構就相當於它的形狀、外觀、房間格局等等。那我的房子該怎麼裝潢就是設計，房間布局、插座位置、這個開關控制什麼等等。</p>
+<p>換到程式面上來說，用我前幾週的文章舉例：<br>我使用CSR + MVC框架作為我後端程式的架構，內部的程式設計參考SOLID的各種原則。<br>用更實際一點的就是，前端：Vue3(CSR，把view拆開)，後端：PHP Laravel(MVC)，Code都要盡可能地符合 SOLID</p>
+<h2 id="目標"><a href="#目標" class="headerlink" title="目標"></a>目標</h2><p>這一切的目標就是</p>
+<blockquote>
+<p><em><strong>軟體架構的目標是最小化建置和維護『需求系統』所需要的人力資源</strong></em><br>-Clean Architecture (P.4)</p>
+</blockquote>
+<p>也就是說品質的標準就是看你每次滿足客戶需求時所花的精力。當隨著版本更新，所花費的精力變多的時候，就代表這個設計不好。</p>
+<p>用一句我的話來說就是，<strong>你的設計不夠彈性！</strong></p>
+<h2 id="公司倒閉，是出了什麼錯"><a href="#公司倒閉，是出了什麼錯" class="headerlink" title="公司倒閉，是出了什麼錯"></a>公司倒閉，是出了什麼錯</h2><p>引用書中的例子，書中舉出<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/zh-tw/%E9%BE%9C%E5%85%94%E8%B3%BD%E8%B7%91">龜兔賽跑</a>的案例</p>
+<blockquote>
+<p>踏實和穩定持續是贏得比賽的關鍵。<br>這場比賽不是比迅速，也不是比誰強壯。<br>越快的，反而速度越慢。<br>-Clean Architecture (P.8)</p>
+</blockquote>
+<p>部分開發者容易陷入，<strong>我晚點再來整理這些Code，只能先上市</strong><br>進入市場後你只會發現，這些Code你不會清，且一堆競爭對手，你只能永遠跑在最前面。</p>
+<p>然後為了保持產品的開發速度以及版本迭代，就會一直高速產出爛扣，但他們堅信這些只是短期會更好的做法，長期才會有影響。實際上是，<strong>產出紊亂的開發速度絕對比保持整潔的開發速度慢</strong>。</p>
+<p>曾有人做過一個實驗，他每天都完成一個程式，將整數轉換成羅馬數字。當預定地驗收測試通過時，工作就完成。<br>每一天的任務花不到30分鐘，第一天、第三天、第五天使用了測試驅動開發(TDD, test-driven development)的著名簡潔原則，在另外三天則不遵守原則。</p>
+<p>結果顯示，<strong>使用TDD的時間比起非TDD快速，時間省了接近10%</strong></p>
+<p>所以，一言以蔽之就是</p>
+<blockquote>
+<p><strong>想要走到快，唯一的方式就是走的好。</strong><br>-Clean Architecture (P.10)</p>
+</blockquote>
+<p>所以阿，那些還在說單元測試不重要的，其實就是你沒有去了解跟嘗試而已<br><strong>現在，就，開始，寫測試。</strong></p>
+<h1 id="讀後感"><a href="#讀後感" class="headerlink" title="讀後感"></a>讀後感</h1><p>其實這可以呼應到Clean Coder中 Uncle Bob對於進入心流區(心理學中稱為 flow)的反對<br>Uncle Bob認為這會雖然使開發效率上升，但實際上你只會容易寫出一堆難改的Code而已</p>
+<p>這些技巧其實會再導入<strong>敏捷開發</strong>時更為有效，當我們將需求的粒度切小，就有機會一直將產品快速的產出以及交付。此時，在這個情況下，就必須將程式碼調整得更加彈性，不然改不動的狀況就會很快出現。</p>
+<p>關於敏捷開發，會在最後的期間才會講到，請到大家稍等。</p>
+<h1 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h1><p>Clean Architecture ch.1<br><a target="_blank" rel="noopener" href="https://zh.wikipedia.org/zh-tw/%E9%BE%9C%E5%85%94%E8%B3%BD%E8%B7%91">龜兔賽跑</a><br>以前修心理學的印象</p>
 <div>
     <script type="text/javascript">
     document.write(
@@ -296,7 +304,7 @@
       <footer class="post-footer">
           <div class="post-tags">
               <a href="/tags/Software-Development/" rel="tag"># Software Development</a>
-              <a href="/tags/MVC/" rel="tag"># MVC</a>
+              <a href="/tags/Clean-Architecture/" rel="tag"># Clean Architecture</a>
           </div>
 
         
@@ -305,13 +313,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2023/09/18/IronDay18/" rel="prev" title="【Day-18】HTTP Status Code與統一200的設計">
-      <i class="fa fa-chevron-left"></i> 【Day-18】HTTP Status Code與統一200的設計
+    <a href="/2023/09/19/IronDay19/" rel="prev" title="【Day-19】MVC架構、實作與選擇">
+      <i class="fa fa-chevron-left"></i> 【Day-19】MVC架構、實作與選擇
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2023/09/20/IronDay20/" rel="next" title="【Day-20】Clean Architecture(上)">
-      【Day-20】Clean Architecture(上) <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -377,7 +382,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BB%8B%E7%B4%B9"><span class="nav-number">2.</span> <span class="nav-text">介紹</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#M-Model"><span class="nav-number">2.1.</span> <span class="nav-text">M - Model</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#V-View"><span class="nav-number">2.2.</span> <span class="nav-text">V - View</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#C-Controller"><span class="nav-number">2.3.</span> <span class="nav-text">C - Controller</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B0%88%E6%A1%88%E9%81%A9%E5%90%88%E7%94%A8MVC%E5%97%8E"><span class="nav-number">3.</span> <span class="nav-text">專案適合用MVC嗎</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%B5%90%E8%AA%9E"><span class="nav-number">4.</span> <span class="nav-text">結語</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="nav-number">5.</span> <span class="nav-text">參考資料</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#CH-1-%E4%BB%80%E9%BA%BC%E6%98%AF%E8%A8%AD%E8%A8%88%E8%88%87%E6%9E%B6%E6%A7%8B"><span class="nav-number">2.</span> <span class="nav-text">CH.1 什麼是設計與架構</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9B%AE%E6%A8%99"><span class="nav-number">2.1.</span> <span class="nav-text">目標</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AC%E5%8F%B8%E5%80%92%E9%96%89%EF%BC%8C%E6%98%AF%E5%87%BA%E4%BA%86%E4%BB%80%E9%BA%BC%E9%8C%AF"><span class="nav-number">2.2.</span> <span class="nav-text">公司倒閉，是出了什麼錯</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%AE%80%E5%BE%8C%E6%84%9F"><span class="nav-number">3.</span> <span class="nav-text">讀後感</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="nav-number">4.</span> <span class="nav-text">參考資料</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -512,9 +517,9 @@
 </script>
 <script>
   var disqus_config = function() {
-    this.page.url = "https://kenhuangtw.github.io/2023/09/19/IronDay19/";
-    this.page.identifier = "2023/09/19/IronDay19/";
-    this.page.title = "【Day-19】MVC架構、實作與選擇";
+    this.page.url = "https://kenhuangtw.github.io/2023/09/20/IronDay20/";
+    this.page.identifier = "2023/09/20/IronDay20/";
+    this.page.title = "【Day-20】Clean Architecture(上)";
     this.language = "zh_TW";
     };
   NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
