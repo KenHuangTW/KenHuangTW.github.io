@@ -20,24 +20,21 @@
     var CONFIG = {"hostname":"kenhuangtw.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"enable":null,"type":null,"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
   </script>
 
-  <meta name="description" content="前言目前接下的 SideProject 也告一個段落了，用了兩個月的時間寫出一個小系統，這其中最困難的地方莫過於幾乎全部是我通靈出來的 如果有下次，我希望能夠和我好好討論一些細節，不用讓我那麼痛苦。 好了廢話說到這 接下來是正題，我們繼續看下去">
+  <meta name="description" content="文章同步於it邦 前言終於來到Clean Architecture的最後一天了，這本書要全部講完基本上一個鐵人賽可能就不見了我後面還需要留篇幅講解其他的部分，所以容我只分享Clean Architecture的一部分內容這本書真心推薦大家擁有一本，不論是你在做自有產品還是接案公司 最後我們來講講書中的會尖叫的架構順便分享一下我實際的案例還有我過去實作的經驗">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Python Tkinter 之你該仔細想想是否要用Tk">
-<meta property="og:url" content="https://kenhuangtw.github.io/2022/10/08/fucktk/index.html">
+<meta property="og:title" content="IronDay22">
+<meta property="og:url" content="https://kenhuangtw.github.io/2023/09/22/IronDay22/index.html">
 <meta property="og:site_name" content="窩不知道">
-<meta property="og:description" content="前言目前接下的 SideProject 也告一個段落了，用了兩個月的時間寫出一個小系統，這其中最困難的地方莫過於幾乎全部是我通靈出來的 如果有下次，我希望能夠和我好好討論一些細節，不用讓我那麼痛苦。 好了廢話說到這 接下來是正題，我們繼續看下去">
+<meta property="og:description" content="文章同步於it邦 前言終於來到Clean Architecture的最後一天了，這本書要全部講完基本上一個鐵人賽可能就不見了我後面還需要留篇幅講解其他的部分，所以容我只分享Clean Architecture的一部分內容這本書真心推薦大家擁有一本，不論是你在做自有產品還是接案公司 最後我們來講講書中的會尖叫的架構順便分享一下我實際的案例還有我過去實作的經驗">
 <meta property="og:locale" content="zh_TW">
-<meta property="og:image" content="https://kenhuangtw.github.io/MacTk.png">
-<meta property="og:image" content="https://kenhuangtw.github.io/MacOSMessageBox.png">
-<meta property="article:published_time" content="2022-10-07T17:24:40.000Z">
-<meta property="article:modified_time" content="2022-10-07T18:18:22.000Z">
+<meta property="article:published_time" content="2023-09-21T17:54:09.000Z">
+<meta property="article:modified_time" content="2023-09-21T17:56:40.406Z">
 <meta property="article:author" content="KenHuang">
-<meta property="article:tag" content="Python">
-<meta property="article:tag" content="Tkinter">
+<meta property="article:tag" content="Software Development">
+<meta property="article:tag" content="Clean Architecture">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://kenhuangtw.github.io/MacTk.png">
 
-<link rel="canonical" href="https://kenhuangtw.github.io/2022/10/08/fucktk/">
+<link rel="canonical" href="https://kenhuangtw.github.io/2023/09/22/IronDay22/">
 
 
 <script id="page-configurations">
@@ -50,7 +47,7 @@
   };
 </script>
 
-  <title>Python Tkinter 之你該仔細想想是否要用Tk | 窩不知道</title>
+  <title>IronDay22 | 窩不知道</title>
   
 
 
@@ -200,7 +197,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="https://kenhuangtw.github.io/2022/10/08/fucktk/">
+    <link itemprop="mainEntityOfPage" href="https://kenhuangtw.github.io/2023/09/22/IronDay22/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -213,7 +210,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Python Tkinter 之你該仔細想想是否要用Tk
+          IronDay22
         </h1>
 
         <div class="post-meta">
@@ -224,7 +221,7 @@
               <span class="post-meta-item-text">發表於</span>
               
 
-              <time title="創建時間：2022-10-08 01:24:40 / 修改時間：02:18:22" itemprop="dateCreated datePublished" datetime="2022-10-08T01:24:40+08:00">2022-10-08</time>
+              <time title="創建時間：2023-09-22 01:54:09 / 修改時間：01:56:40" itemprop="dateCreated datePublished" datetime="2023-09-22T01:54:09+08:00">2023-09-22</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -232,11 +229,7 @@
               </span>
               <span class="post-meta-item-text">分類於</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Python/" itemprop="url" rel="index"><span itemprop="name">Python</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Python/GUI/" itemprop="url" rel="index"><span itemprop="name">GUI</span></a>
+                  <a href="/categories/2023%E9%90%B5%E4%BA%BA%E8%B3%BD/" itemprop="url" rel="index"><span itemprop="name">2023鐵人賽</span></a>
                 </span>
             </span>
 
@@ -249,8 +242,8 @@
       </span>
       <span class="post-meta-item-text">Disqus：</span>
     
-    <a title="disqus" href="/2022/10/08/fucktk/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2022/10/08/fucktk/" itemprop="commentCount"></span>
+    <a title="disqus" href="/2023/09/22/IronDay22/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2023/09/22/IronDay22/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -265,58 +258,25 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>目前接下的 SideProject 也告一個段落了，用了兩個月的時間寫出一個小系統，這其中最困難的地方莫過於<strong>幾乎全部是我通靈出來的</strong></p>
-<p>如果有下次，我希望能夠和我好好討論一些細節，不用讓我那麼痛苦。</p>
-<p>好了廢話說到這</p>
-<p>接下來是正題，我們繼續看下去</p>
+        <p>文章同步於<a target="_blank" rel="noopener" href="https://ithelp.ithome.com.tw/articles/10324745">it邦</a></p>
+<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>終於來到Clean Architecture的最後一天了，這本書要全部講完基本上一個鐵人賽可能就不見了<br>我後面還需要留篇幅講解其他的部分，所以容我只分享Clean Architecture的一部分內容<br>這本書真心推薦大家擁有一本，不論是你在做自有產品還是接案公司</p>
+<p>最後我們來講講書中的會尖叫的架構<br>順便分享一下我實際的案例還有我過去實作的經驗</p>
 <span id="more"></span>
 
-<h1 id="tk的優勢"><a href="#tk的優勢" class="headerlink" title="tk的優勢"></a>tk的優勢</h1><p>我們先來說說tk的優勢好了，<del>不然等等應該是說不到了</del></p>
-<p>假設你是個新手，剛接觸Python，想做點東西來證明自己<br>想要做一個<strong>簡單的功能</strong>並且帶有介面<br>或是你超級愛tk的<br>那恭喜tk非常適合你們使用</p>
-<p>其他人就建議考慮看看別的吧(pyqt之類的)</p>
-<p>tk入門其實非常簡單，基本上效果簡單功能簡單<br>而且還內建在Python裡面</p>
-<p>好了，接下來就是滿滿的問題了</p>
-<h1 id="本人的狀況"><a href="#本人的狀況" class="headerlink" title="本人的狀況"></a>本人的狀況</h1><p>其實會寫這篇也是因為有個比較特殊的狀況，之前的文章有提過，我的桌機是使用Windows系統，但筆電是使用MacOS</p>
-<p>這邊就衍伸出一個問題，Python 的 tk 在兩個系統上同樣一段 Code 表現就會差非常多</p>
-<p>這就導致，<strong>在Windows上寫的，沒辦法完全照搬到MacOS上</strong></p>
-<p>這對我來說其實非常痛苦</p>
-<p>舉個例子<br>MacOS上，tk其實不太需要額外多做美化就還不錯了，滿簡約的<br><img src="/MacTk.png"></p>
-<p>但在Windows上，就是那個醜醜的灰色windows98風格介面</p>
-<h1 id="更多的差異"><a href="#更多的差異" class="headerlink" title="更多的差異"></a>更多的差異</h1><p>那這也就算了，大不了我事先做個系統判斷吧，先判斷的我的系統是什麼，我再來決定我要走哪個方法</p>
-<p>但事情當然沒那麼簡單</p>
-<p>隨著專案越寫越大，越寫越多，需要考量的情況越來越多，可能需要先鎖住主視窗不給使用者用</p>
-<p>恭喜，MacOS的tk不能使用<code>-disabled</code> 這個參數，因為根本沒有遇到就報錯</p>
-<p>你說一樣啊我繼續多加幾個條件判斷就好了</p>
-<p>是也沒錯，總共多判斷個幾十幾百次就好</p>
-<p>最後一個比較令人崩潰的是MessageBox的介面完全不一樣</p>
-<p>在MacOS上，MessageBox長這樣(以<strong>Showerror</strong>為例)</p>
-<p><img src="/MacOSMessageBox.png"></p>
-<p>有沒有發現Title跟圖示都怪怪的？？</p>
-<p>對我而言這其實已經到不能接受了，Showerror是為了顯示錯誤訊息，Title不見就算了，連警告標誌都沒有是哪招？？</p>
-<h1 id="排版"><a href="#排版" class="headerlink" title="排版"></a>排版</h1><p>我覺得tk最不友善的地方就是這裡 - <strong>排版</strong></p>
-<p>tk的排版大致上可分為三種</p>
-<blockquote>
-<p>pack<br>grid<br>place</p>
-</blockquote>
-<p>這三種各有優缺點</p>
-<blockquote>
-<p>pack最簡單，但元件一多擺起來最醜也最難排<br>grid應該是三者中評價最好的，最推薦學這個，但如果你要擺到你想要的位置，你要多放很多沒有用的元件來達成這件事，這也是我覺得最反邏輯的地方<br>place可以放到任何你想要的地方，且可以搭配上述兩者其中一種使用，但只要你的視窗大小改變，你的元件沒有特別運算的話，一定位置跑掉</p>
-</blockquote>
-<p>而且為了要做好看的排版，你就必須反覆測試這樣好不好看<br>這都還沒算上你需要幫元件美化跟設計長寬高來符合排版<br>寫起來完全沒有比較簡單，反而還非常複雜且麻煩</p>
-<h1 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h1><p>tk本身功能其實也算是偏陽春的<br>包含很多實用的元件都必須從ttk導入<br>甚至是額外安裝，像是 Calendar(選擇日期)</p>
-<p>如果你要做出可搜尋的複選下拉式選單你甚至要自己從其他元件生出來</p>
-<h1 id="小結"><a href="#小結" class="headerlink" title="小結"></a>小結</h1><p>這篇文章主要都是個人的看法<br>我也看過用tk就寫得嚇嚇叫的人<br>但每個開發者都有自己偏好的套件甚至語言<br>不用去說服別人說這個優點很好啊怎樣怎樣<br><strong>你習慣別人不見得習慣</strong><br><strong>你覺得是優點的東西或許別人不以為意</strong><br><strong>你覺得tk好用那就好用，恭喜你找到自己適合的工具</strong></p>
-<style>
-hr.style-one {
-    border: 0;
-    height: 5px;
-    background: #333;
-    background-image: linear-gradient(to right, #ccc, #333, #ccc);
-}
-</style>
-<hr class="style-one" />
-
-<p>如果有錯誤的部份，歡迎指正，謝謝。<br>如果你喜歡這篇文章，請幫我拍手<br>只需要註冊會員就可以囉，完全不用花費任何一毛錢就可以用來鼓裡創作者囉</p>
+<h1 id="架構的目的"><a href="#架構的目的" class="headerlink" title="架構的目的"></a>架構的目的</h1><p>良好的架構會以UseCase為中心，也就是說要圍繞著使用者要做的事情為中心開始打造一個我們所需要的架構。<br>例如說我今天要做的是一個店商網站的客戶行為分析系統，那我們就會從這個主軸來做設計，設計我們要的資料庫、資料庫欄位、所需要的程式語言、框架、API格式等等。</p>
+<p>一個好的架構是讓專案可以到後期都可以不需要去決定我要的框架(Rails, Django, Laravel…)、資料庫等等，也就是說他保有<strong>彈性的空間</strong>，且可以讓別人一看就知道<strong>這是在做甚麼</strong></p>
+<h2 id="真實案例"><a href="#真實案例" class="headerlink" title="真實案例"></a>真實案例</h2><p>在我還是個小菜逼時，我就曾經遇過架構和程式碼沒有彈性所造成的問題。<br>當時公司有使用<code>A</code>和<code>B</code>兩種資料庫，而我們的框架當時對於<code>B</code>資料庫是不太支援的</p>
+<p>有一天我們接到一個問題說，某筆資料存不進去<br>於是我就開始找問題到底在哪<br>大概用了半天的時間，我還是找不到問題到底在哪，明明都可以運作，為什麼就是存不進去</p>
+<p>直到我靈機一動想到，我們還有 B 資料庫<br>於是我又把環境改成B資料庫<br>結果發現，*，這個資料庫存Null的方式還有Boolean的方式怎麼那麼牛掰(ORM的關係)</p>
+<p>最終就導致我們的程式碼必須在額外判斷資料庫是哪一個才可以存進去(當年的作法，不要噴我QQ)</p>
+<p>事後再來思考，我認為有幾個問題</p>
+<ul>
+<li>我們沒有審慎的決定要用什麼樣的框架</li>
+<li>沒有單元測式</li>
+<li><code>B</code>資料庫其實很特別，所以比較麻煩(應該知道我在說哪個了…</li>
+<li>沒有留意到<code>B</code>資料庫在這個架構下，支援度比較低</li>
+</ul>
+<h1 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h1><p>Clean Architecture(ch.21)</p>
 <div>
     <script type="text/javascript">
     document.write(
@@ -332,8 +292,8 @@ hr.style-one {
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/Python/" rel="tag"># Python</a>
-              <a href="/tags/Tkinter/" rel="tag"># Tkinter</a>
+              <a href="/tags/Software-Development/" rel="tag"># Software Development</a>
+              <a href="/tags/Clean-Architecture/" rel="tag"># Clean Architecture</a>
           </div>
 
         
@@ -342,13 +302,10 @@ hr.style-one {
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2022/09/06/HowToSetDisqus/" rel="prev" title="Hexo留言板 - Disqus(使用 Next 主題)">
-      <i class="fa fa-chevron-left"></i> Hexo留言板 - Disqus(使用 Next 主題)
+    <a href="/2023/09/21/IronDay21/" rel="prev" title="【Day-21】Clean Architecture(中)">
+      <i class="fa fa-chevron-left"></i> 【Day-21】Clean Architecture(中)
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2022/10/08/Codewars-RGB-Use-Swift/" rel="next" title="Codewars - RGB To Hex Conversion (Use Swift)">
-      Codewars - RGB To Hex Conversion (Use Swift) <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -414,7 +371,7 @@ hr.style-one {
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#tk%E7%9A%84%E5%84%AA%E5%8B%A2"><span class="nav-number">2.</span> <span class="nav-text">tk的優勢</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9C%AC%E4%BA%BA%E7%9A%84%E7%8B%80%E6%B3%81"><span class="nav-number">3.</span> <span class="nav-text">本人的狀況</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9B%B4%E5%A4%9A%E7%9A%84%E5%B7%AE%E7%95%B0"><span class="nav-number">4.</span> <span class="nav-text">更多的差異</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%8E%92%E7%89%88"><span class="nav-number">5.</span> <span class="nav-text">排版</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%B6%E4%BB%96"><span class="nav-number">6.</span> <span class="nav-text">其他</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B0%8F%E7%B5%90"><span class="nav-number">7.</span> <span class="nav-text">小結</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9E%B6%E6%A7%8B%E7%9A%84%E7%9B%AE%E7%9A%84"><span class="nav-number">2.</span> <span class="nav-text">架構的目的</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9C%9F%E5%AF%A6%E6%A1%88%E4%BE%8B"><span class="nav-number">2.1.</span> <span class="nav-text">真實案例</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="nav-number">3.</span> <span class="nav-text">參考資料</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -549,9 +506,9 @@ hr.style-one {
 </script>
 <script>
   var disqus_config = function() {
-    this.page.url = "https://kenhuangtw.github.io/2022/10/08/fucktk/";
-    this.page.identifier = "2022/10/08/fucktk/";
-    this.page.title = "Python Tkinter 之你該仔細想想是否要用Tk";
+    this.page.url = "https://kenhuangtw.github.io/2023/09/22/IronDay22/";
+    this.page.identifier = "2023/09/22/IronDay22/";
+    this.page.title = "IronDay22";
     this.language = "zh_TW";
     };
   NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
