@@ -193,6 +193,124 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://kenhuangtw.github.io/2023/09/21/IronDay21/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="KenHuang">
+      <meta itemprop="description" content="技能樹很歪的工程師的筆記<br>主要寫Python<br>工作用Go、PHP<br>偶爾寫寫Swift">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="窩不知道">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/09/21/IronDay21/" class="post-title-link" itemprop="url">【Day-21】Clean Architecture(中)</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+              
+
+              <time title="創建時間：2023-09-21 20:22:59 / 修改時間：20:24:31" itemprop="dateCreated datePublished" datetime="2023-09-21T20:22:59+08:00">2023-09-21</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/2023%E9%90%B5%E4%BA%BA%E8%B3%BD/" itemprop="url" rel="index"><span itemprop="name">2023鐵人賽</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2023/09/21/IronDay21/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2023/09/21/IronDay21/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>文章同步於<a target="_blank" rel="noopener" href="https://ithelp.ithome.com.tw/articles/10322673">it邦</a></p>
+<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>今天我們要來說說，元件、元件內聚性以及元件耦合性</p>
+<p>大家一定聽過所謂的<strong>高內聚低耦合</strong><br>所以內聚是甚麼，耦合是什麼<br>高耦合不好嗎</p>
+<p>今天就來介紹</p>
+<h1 id="元件是什麼"><a href="#元件是什麼" class="headerlink" title="元件是什麼"></a>元件是什麼</h1><p>元件(Component)是部屬(deployment)的單位。根據不同的語言有所不同，在Java中是jar檔。在Ruby中，他們是gem檔。在直譯語言中，他們是原始檔的集合。</p>
+<h1 id="元件內聚性"><a href="#元件內聚性" class="headerlink" title="元件內聚性"></a>元件內聚性</h1><blockquote>
+<p>哪個類別該屬於哪個元件，其實非常的重要，而這有賴於良好的工程原則來指引。不幸的是，多年來，這個決定卻幾乎完全只是依據現場情境而臨時做出的決定。<br>-Clean Architeucture (P89)</p>
+</blockquote>
+<h2 id="再使用性-發佈等價原則-REP"><a href="#再使用性-發佈等價原則-REP" class="headerlink" title="再使用性 - 發佈等價原則(REP)"></a>再使用性 - 發佈等價原則(REP)</h2><p>這邊其實有點難懂，我把它翻譯成我的話來解釋。<br>當我們在使用模組的時候，有時候我們會直接不指定版本來做更新並且上Git做版控<br>那此時就會有個問題，我們<strong>通常不會</strong>把整包依賴的模組(ex: PHP compose的vender，Python各種模組)全部丟上遠端倉庫，如果真的要改也會繼承出來去做修改，而不去更動source code</p>
+<p>但在Clean Architecture的要求是，這邊希望把模組和類別一起被發佈出去。這其實是為了說，往後我們依賴的模組被更新時，我們可以選擇我們需要的版本，而不是無腦進版。</p>
+<p>這邊分享一下我們的做法，通常我會指定版本，而我如果需要更改Source Code 我會先確定能不能繼承出來改，如果不行我才會直接上傳整包模組和套件。</p>
+<p>這邊的重點就是，<strong>管理好我們所使用的模組和套件以及他的版本</strong>。</p>
+<h2 id="共同封閉原則-CCP"><a href="#共同封閉原則-CCP" class="headerlink" title="共同封閉原則(CCP)"></a>共同封閉原則(CCP)</h2><p>如果說單一職責原則(SRP)規範了一個類別不該負責多個角色，那 <strong>CCP 規定了一個元件不該包含多個引起變化的原因。</strong></p>
+<p><strong>在大多數的程式中，可維護性的重要性是超過可重用性的。如果Code必須被更改，那麼我寧願只修改一個地方，而不是到處修改</strong></p>
+<p>CCP 鼓勵我們把可能基於相同原因而更改的所有類別共同聚集到一個地方。如果兩個類別之間有很緊密的關係，那麼他們應該屬於同一元件。</p>
+<p>舉個例子:<br>假設我們在撰寫一個計算學生成績的API，而我需要固定將各種科目做加權，那此時我們就可以把這個加權的數值訂為一個<strong>常數</strong><br>那有幾個科目就有幾個常數(不要跟我說兩個科目可以共用，不要這樣)，那我們就可以把這些常數在順便放到同一元件底下去做統一管理</p>
+<blockquote>
+<p><strong>把那些在同一時間和相同的原因改變的東西聚集在一起。把那些在不同的時間或不同的原因改變的東西分離開來</strong><br>-Clean Architeucture (P92)</p>
+</blockquote>
+<h2 id="共同重複使用原則-CRP"><a href="#共同重複使用原則-CRP" class="headerlink" title="共同重複使用原則(CRP)"></a>共同重複使用原則(CRP)</h2><blockquote>
+<p><strong>不要強迫元件的使用者依賴他們不需要的東西</strong><br>-Clean Architeucture (P92)</p>
+</blockquote>
+<p>是不是覺得這段話那裡聽過，沒錯就是<strong>ISP</strong><br>所以我必須很殘酷地告訴你，對他基本上就是ISP的架構版</p>
+<p>把這兩個合成一個建議就是</p>
+<blockquote>
+<p><strong>不要依賴你不需要的東西</strong><br>-Clean Architeucture (P93)</p>
+</blockquote>
+<h2 id="元件耦合的張力圖"><a href="#元件耦合的張力圖" class="headerlink" title="元件耦合的張力圖"></a>元件耦合的張力圖</h2><p><img src="https://i.imgur.com/qXpJqzQ.png" alt="張力圖"><br>我們可以看到這張圖，它說明了這三個原則如何互相拉鋸<br>因為前兩個原則是將架構變大，最後則是縮小</p>
+<p>所以我們要如何規劃這個架構就成了很重要的課題<br>通常在專案初期，我們會選擇犧牲重用，直到後期我們才會慢慢地往元件的重用性來移動。</p>
+<p>我想這個對於有讀過Clean Architecture的人來說會特別有感<br>當你開始做 CCP 的時候，你通常會覺得，恩這些可以寫一起吧，好像都是相同邏輯。<br>但我個人認為，初期把一些職責切清楚會比較好。就像某些人會建議，如果說真的重複的地方有超過多少個，我們再把它做在一起。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2023/09/21/IronDay21/#more" rel="contents">
+                閱讀全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
     <link itemprop="mainEntityOfPage" href="https://kenhuangtw.github.io/2023/09/20/IronDay20/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -561,108 +679,10 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="https://kenhuangtw.github.io/2023/09/16/IronDay16/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="KenHuang">
-      <meta itemprop="description" content="技能樹很歪的工程師的筆記<br>主要寫Python<br>工作用Go、PHP<br>偶爾寫寫Swift">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="窩不知道">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2023/09/16/IronDay16/" class="post-title-link" itemprop="url">【Day-16】番外篇 - Clean Coder(下)</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">發表於</span>
-
-              <time title="創建時間：2023-09-16 13:42:23" itemprop="dateCreated datePublished" datetime="2023-09-16T13:42:23+08:00">2023-09-16</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新於</span>
-                <time title="修改時間：2023-09-17 00:44:33" itemprop="dateModified" datetime="2023-09-17T00:44:33+08:00">2023-09-17</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分類於</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/2023%E9%90%B5%E4%BA%BA%E8%B3%BD/" itemprop="url" rel="index"><span itemprop="name">2023鐵人賽</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/2023/09/16/IronDay16/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2023/09/16/IronDay16/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>文章同步於<a target="_blank" rel="noopener" href="https://ithelp.ithome.com.tw/articles/10319434">it邦</a></p>
-<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>今天我們就講一個章節<br>但這個應該是許多新手或比較沒有經驗的人都不太會的 - <strong>預估</strong></p>
-<p>預估時間對於軟體工程師來說，很簡單但也很困難<br>這件事情其實會直接影響到<strong>公司商譽</strong></p>
-<p>假設我今天估計某個系統大概要花上1個月的時間，但我卻花了3個月才交付<br>這會對於公司來說，無疑是一個非常大的損失</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2023/09/16/IronDay16/#more" rel="contents">
-                閱讀全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一頁"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一頁"></i></a>
   </nav>
 
 
@@ -728,7 +748,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">30</span>
+          <span class="site-state-item-count">31</span>
           <span class="site-state-item-name">文章</span>
         </a>
       </div>

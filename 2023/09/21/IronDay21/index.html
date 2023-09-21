@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.2">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"kenhuangtw.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"enable":null,"type":null,"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
+
+  <meta name="description" content="文章同步於it邦 前言今天我們要來說說，元件、元件內聚性以及元件耦合性 大家一定聽過所謂的高內聚低耦合所以內聚是甚麼，耦合是什麼高耦合不好嗎 今天就來介紹 元件是什麼元件(Component)是部屬(deployment)的單位。根據不同的語言有所不同，在Java中是jar檔。在Ruby中，他們是gem檔。在直譯語言中，他們是原始檔的集合。 元件內聚性 哪個類別該屬於哪個元件，其實非常的重要，而這">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【Day-21】Clean Architecture(中)">
+<meta property="og:url" content="https://kenhuangtw.github.io/2023/09/21/IronDay21/index.html">
+<meta property="og:site_name" content="窩不知道">
+<meta property="og:description" content="文章同步於it邦 前言今天我們要來說說，元件、元件內聚性以及元件耦合性 大家一定聽過所謂的高內聚低耦合所以內聚是甚麼，耦合是什麼高耦合不好嗎 今天就來介紹 元件是什麼元件(Component)是部屬(deployment)的單位。根據不同的語言有所不同，在Java中是jar檔。在Ruby中，他們是gem檔。在直譯語言中，他們是原始檔的集合。 元件內聚性 哪個類別該屬於哪個元件，其實非常的重要，而這">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://i.imgur.com/qXpJqzQ.png">
+<meta property="article:published_time" content="2023-09-21T12:22:59.000Z">
+<meta property="article:modified_time" content="2023-09-21T12:24:31.535Z">
+<meta property="article:author" content="KenHuang">
+<meta property="article:tag" content="Software Development">
+<meta property="article:tag" content="Clean Architecture">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.imgur.com/qXpJqzQ.png">
+
+<link rel="canonical" href="https://kenhuangtw.github.io/2023/09/21/IronDay21/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-TW'
+  };
+</script>
+
+  <title>【Day-21】Clean Architecture(中) | 窩不知道</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">窩不知道</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>關於</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分類</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜尋
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜尋..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://kenhuangtw.github.io/2023/09/21/IronDay21/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="KenHuang">
+      <meta itemprop="description" content="技能樹很歪的工程師的筆記<br>主要寫Python<br>工作用Go、PHP<br>偶爾寫寫Swift">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="窩不知道">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          【Day-21】Clean Architecture(中)
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+              
+
+              <time title="創建時間：2023-09-21 20:22:59 / 修改時間：20:24:31" itemprop="dateCreated datePublished" datetime="2023-09-21T20:22:59+08:00">2023-09-21</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/2023%E9%90%B5%E4%BA%BA%E8%B3%BD/" itemprop="url" rel="index"><span itemprop="name">2023鐵人賽</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2023/09/21/IronDay21/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2023/09/21/IronDay21/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>文章同步於<a target="_blank" rel="noopener" href="https://ithelp.ithome.com.tw/articles/10322673">it邦</a></p>
+<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>今天我們要來說說，元件、元件內聚性以及元件耦合性</p>
+<p>大家一定聽過所謂的<strong>高內聚低耦合</strong><br>所以內聚是甚麼，耦合是什麼<br>高耦合不好嗎</p>
+<p>今天就來介紹</p>
+<h1 id="元件是什麼"><a href="#元件是什麼" class="headerlink" title="元件是什麼"></a>元件是什麼</h1><p>元件(Component)是部屬(deployment)的單位。根據不同的語言有所不同，在Java中是jar檔。在Ruby中，他們是gem檔。在直譯語言中，他們是原始檔的集合。</p>
+<h1 id="元件內聚性"><a href="#元件內聚性" class="headerlink" title="元件內聚性"></a>元件內聚性</h1><blockquote>
+<p>哪個類別該屬於哪個元件，其實非常的重要，而這有賴於良好的工程原則來指引。不幸的是，多年來，這個決定卻幾乎完全只是依據現場情境而臨時做出的決定。<br>-Clean Architeucture (P89)</p>
+</blockquote>
+<h2 id="再使用性-發佈等價原則-REP"><a href="#再使用性-發佈等價原則-REP" class="headerlink" title="再使用性 - 發佈等價原則(REP)"></a>再使用性 - 發佈等價原則(REP)</h2><p>這邊其實有點難懂，我把它翻譯成我的話來解釋。<br>當我們在使用模組的時候，有時候我們會直接不指定版本來做更新並且上Git做版控<br>那此時就會有個問題，我們<strong>通常不會</strong>把整包依賴的模組(ex: PHP compose的vender，Python各種模組)全部丟上遠端倉庫，如果真的要改也會繼承出來去做修改，而不去更動source code</p>
+<p>但在Clean Architecture的要求是，這邊希望把模組和類別一起被發佈出去。這其實是為了說，往後我們依賴的模組被更新時，我們可以選擇我們需要的版本，而不是無腦進版。</p>
+<p>這邊分享一下我們的做法，通常我會指定版本，而我如果需要更改Source Code 我會先確定能不能繼承出來改，如果不行我才會直接上傳整包模組和套件。</p>
+<p>這邊的重點就是，<strong>管理好我們所使用的模組和套件以及他的版本</strong>。</p>
+<h2 id="共同封閉原則-CCP"><a href="#共同封閉原則-CCP" class="headerlink" title="共同封閉原則(CCP)"></a>共同封閉原則(CCP)</h2><p>如果說單一職責原則(SRP)規範了一個類別不該負責多個角色，那 <strong>CCP 規定了一個元件不該包含多個引起變化的原因。</strong></p>
+<p><strong>在大多數的程式中，可維護性的重要性是超過可重用性的。如果Code必須被更改，那麼我寧願只修改一個地方，而不是到處修改</strong></p>
+<p>CCP 鼓勵我們把可能基於相同原因而更改的所有類別共同聚集到一個地方。如果兩個類別之間有很緊密的關係，那麼他們應該屬於同一元件。</p>
+<p>舉個例子:<br>假設我們在撰寫一個計算學生成績的API，而我需要固定將各種科目做加權，那此時我們就可以把這個加權的數值訂為一個<strong>常數</strong><br>那有幾個科目就有幾個常數(不要跟我說兩個科目可以共用，不要這樣)，那我們就可以把這些常數在順便放到同一元件底下去做統一管理</p>
+<blockquote>
+<p><strong>把那些在同一時間和相同的原因改變的東西聚集在一起。把那些在不同的時間或不同的原因改變的東西分離開來</strong><br>-Clean Architeucture (P92)</p>
+</blockquote>
+<h2 id="共同重複使用原則-CRP"><a href="#共同重複使用原則-CRP" class="headerlink" title="共同重複使用原則(CRP)"></a>共同重複使用原則(CRP)</h2><blockquote>
+<p><strong>不要強迫元件的使用者依賴他們不需要的東西</strong><br>-Clean Architeucture (P92)</p>
+</blockquote>
+<p>是不是覺得這段話那裡聽過，沒錯就是<strong>ISP</strong><br>所以我必須很殘酷地告訴你，對他基本上就是ISP的架構版</p>
+<p>把這兩個合成一個建議就是</p>
+<blockquote>
+<p><strong>不要依賴你不需要的東西</strong><br>-Clean Architeucture (P93)</p>
+</blockquote>
+<h2 id="元件耦合的張力圖"><a href="#元件耦合的張力圖" class="headerlink" title="元件耦合的張力圖"></a>元件耦合的張力圖</h2><p><img src="https://i.imgur.com/qXpJqzQ.png" alt="張力圖"><br>我們可以看到這張圖，它說明了這三個原則如何互相拉鋸<br>因為前兩個原則是將架構變大，最後則是縮小</p>
+<p>所以我們要如何規劃這個架構就成了很重要的課題<br>通常在專案初期，我們會選擇犧牲重用，直到後期我們才會慢慢地往元件的重用性來移動。</p>
+<p>我想這個對於有讀過Clean Architecture的人來說會特別有感<br>當你開始做 CCP 的時候，你通常會覺得，恩這些可以寫一起吧，好像都是相同邏輯。<br>但我個人認為，初期把一些職責切清楚會比較好。就像某些人會建議，如果說真的重複的地方有超過多少個，我們再把它做在一起。</p>
+<span id="more"></span>
+
+<h1 id="元件耦合性"><a href="#元件耦合性" class="headerlink" title="元件耦合性"></a>元件耦合性</h1><h2 id="無環依賴原則-ADP"><a href="#無環依賴原則-ADP" class="headerlink" title="無環依賴原則(ADP)"></a>無環依賴原則(ADP)</h2><p>不知道大家是不是遇過一個問題，前一天寫的Code，隔天早上來公司發現不能用，結果發現是因為你依賴的底層模組的那個作者(同事A)改了一些東西，而導致你的Code廢掉。然後因為你的Code廢掉，結果另一個同事(同事B)也跟著不能使用。再來同事B不能用，結果同事A也不能跟著改了。</p>
+<p>有發現一個問題嗎，現在的依賴是：你依賴同事A的元件，然後同事A依賴同事B，同事B在依賴你。<br>這形成了一個無限迴圈。</p>
+<p>這個原則講的就是，我們必須讓元件可以有方向性，且沒有環。也就是我們可以從任一元件開始然後都不會走到同一個地方或走過的地方。</p>
+<p>當環出現的時候，我們要先想辦法恢復成沒有環的狀態，也就是有方向但沒有環。</p>
+<h2 id="固定依賴原則-SDP"><a href="#固定依賴原則-SDP" class="headerlink" title="固定依賴原則(SDP)"></a>固定依賴原則(SDP)</h2><p><del>聖地牙哥教士</del><br>對於任何元件而言，如果預期他可能會有變化，就不要讓另一個更難改的元件去依賴他。</p>
+<p>而何謂穩定的元件，就是只說多個元件依賴此元件，但這個元件卻不依賴。這就是一個穩定的原件，反之則不穩定。<br>但你說一堆全部都是的穩定元件這樣好嗎。其實也不好，因為這樣你的系統就改不動了。</p>
+<p>所以一個理想的狀態是怎麼樣，也就是我們元件必須要<strong>往下層</strong>依賴，把不穩定的原件都放在頂部，而底部則放各種穩定元件。</p>
+<p>舉個例子:<br>當我的架構是包含了Database、UseCase、API這三層<br>那我就會希望依賴的順序是這樣 <strong>API -&gt; UseCase -&gt; Database</strong></p>
+<p>任何反向的箭頭都違反了SDP</p>
+<h2 id="穩定抽象原則-SAP"><a href="#穩定抽象原則-SAP" class="headerlink" title="穩定抽象原則(SAP)"></a>穩定抽象原則(SAP)</h2><p>一個穩定的元件他應該是<strong>抽象的</strong>，這樣他的穩定性就不會阻止他拓展。另外不穩定的元件應該是<strong>具體的</strong>，這使得內部具體的Code容易被修改。</p>
+<p>將SDP與SAP結合，就會變成<strong>依賴應該朝著抽象的方向進行</strong><br>那我們來修改一下架構就會變成，再將Database依賴到最底下的<strong>抽象層</strong>，也就是規定各層實作的方法以及介面會長怎麼樣。</p>
+<h1 id="結語"><a href="#結語" class="headerlink" title="結語"></a>結語</h1><p>我只能說，今天塞這些真的是非常非常多的內容，我只能將它簡化將重點擷取出來消化再翻譯給你們。<br>不然要整個講完我可能會先葛屁</p>
+<h1 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h1><p>Clean Architeucture(CH12)<br><a target="_blank" rel="noopener" href="https://www.techtarget.com/searchapparchitecture/tip/A-primer-on-the-clean-architecture-pattern-and-its-principles">A primer on the clean architecture pattern and its principles</a><br><a target="_blank" rel="noopener" href="https://www.jyt0532.com/2020/03/26/cohesion/">細談元件內聚性</a><br><a target="_blank" rel="noopener" href="https://www.jyt0532.com/2020/03/27/coupling/">細談元件耦合性</a></p>
+<div>
+    <script type="text/javascript">
+    document.write(
+        "<iframe scrolling='no' frameborder='0' sandbox='allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox allow-storage-access-by-user-activation' style='height: 212px; width: 100%;' src='https://button.like.co/in/embed/wtf81905/button?referrer=" +
+        encodeURIComponent(location.href.split("?")[0].split("#")[0]) + "'></iframe>");
+    </script>
+</div>
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Software-Development/" rel="tag"># Software Development</a>
+              <a href="/tags/Clean-Architecture/" rel="tag"># Clean Architecture</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/09/20/IronDay20/" rel="prev" title="【Day-20】Clean Architecture(上)">
+      <i class="fa fa-chevron-left"></i> 【Day-20】Clean Architecture(上)
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%83%E4%BB%B6%E6%98%AF%E4%BB%80%E9%BA%BC"><span class="nav-number">2.</span> <span class="nav-text">元件是什麼</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%83%E4%BB%B6%E5%85%A7%E8%81%9A%E6%80%A7"><span class="nav-number">3.</span> <span class="nav-text">元件內聚性</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%86%8D%E4%BD%BF%E7%94%A8%E6%80%A7-%E7%99%BC%E4%BD%88%E7%AD%89%E5%83%B9%E5%8E%9F%E5%89%87-REP"><span class="nav-number">3.1.</span> <span class="nav-text">再使用性 - 發佈等價原則(REP)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B1%E5%90%8C%E5%B0%81%E9%96%89%E5%8E%9F%E5%89%87-CCP"><span class="nav-number">3.2.</span> <span class="nav-text">共同封閉原則(CCP)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B1%E5%90%8C%E9%87%8D%E8%A4%87%E4%BD%BF%E7%94%A8%E5%8E%9F%E5%89%87-CRP"><span class="nav-number">3.3.</span> <span class="nav-text">共同重複使用原則(CRP)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%83%E4%BB%B6%E8%80%A6%E5%90%88%E7%9A%84%E5%BC%B5%E5%8A%9B%E5%9C%96"><span class="nav-number">3.4.</span> <span class="nav-text">元件耦合的張力圖</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%83%E4%BB%B6%E8%80%A6%E5%90%88%E6%80%A7"><span class="nav-number">4.</span> <span class="nav-text">元件耦合性</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%84%A1%E7%92%B0%E4%BE%9D%E8%B3%B4%E5%8E%9F%E5%89%87-ADP"><span class="nav-number">4.1.</span> <span class="nav-text">無環依賴原則(ADP)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%BA%E5%AE%9A%E4%BE%9D%E8%B3%B4%E5%8E%9F%E5%89%87-SDP"><span class="nav-number">4.2.</span> <span class="nav-text">固定依賴原則(SDP)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A9%A9%E5%AE%9A%E6%8A%BD%E8%B1%A1%E5%8E%9F%E5%89%87-SAP"><span class="nav-number">4.3.</span> <span class="nav-text">穩定抽象原則(SAP)</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%B5%90%E8%AA%9E"><span class="nav-number">5.</span> <span class="nav-text">結語</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="nav-number">6.</span> <span class="nav-text">參考資料</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">KenHuang</p>
+  <div class="site-description" itemprop="description">技能樹很歪的工程師的筆記<br>主要寫Python<br>工作用Go、PHP<br>偶爾寫寫Swift</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">31</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">31</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/KenHuangTW" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;KenHuangTW" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">KenHuang</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://KenH-TW.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  var disqus_config = function() {
+    this.page.url = "https://kenhuangtw.github.io/2023/09/21/IronDay21/";
+    this.page.identifier = "2023/09/21/IronDay21/";
+    this.page.title = "【Day-21】Clean Architecture(中)";
+    this.language = "zh_TW";
+    };
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://KenH-TW.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  });
+</script>
+
+</body>
+</html>
