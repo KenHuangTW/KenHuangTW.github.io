@@ -20,21 +20,23 @@
     var CONFIG = {"hostname":"kenhuangtw.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"enable":null,"type":null,"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
   </script>
 
-  <meta name="description" content="文章同步於it邦 前言今天要來講一個在開發階段很重要的概念 - 單元測試 前面我們講了不少軟體開發的原則那有沒有想過，我們在寫完這些程式之後，要怎麼確保他能夠正常使用 而這中間有一個很重要的一環就是單元測試">
+  <meta name="description" content="文章同步於it邦 前言今天要來講講改造MVC的Controller雖然沒有DDD這種架構如此乾淨，但依然是不少人使用的架構">
 <meta property="og:type" content="article">
-<meta property="og:title" content="【Day-12】單元測試">
-<meta property="og:url" content="https://kenhuangtw.github.io/2023/09/12/IronDay12/index.html">
+<meta property="og:title" content="【Day-23】改造MVC - Controller(概念篇)">
+<meta property="og:url" content="https://kenhuangtw.github.io/2023/09/23/IronDay23/index.html">
 <meta property="og:site_name" content="窩不知道">
-<meta property="og:description" content="文章同步於it邦 前言今天要來講一個在開發階段很重要的概念 - 單元測試 前面我們講了不少軟體開發的原則那有沒有想過，我們在寫完這些程式之後，要怎麼確保他能夠正常使用 而這中間有一個很重要的一環就是單元測試">
+<meta property="og:description" content="文章同步於it邦 前言今天要來講講改造MVC的Controller雖然沒有DDD這種架構如此乾淨，但依然是不少人使用的架構">
 <meta property="og:locale" content="zh_TW">
-<meta property="article:published_time" content="2023-09-11T17:33:37.000Z">
-<meta property="article:modified_time" content="2023-09-11T17:47:53.381Z">
+<meta property="og:image" content="https://i.imgur.com/abF1xDq.png">
+<meta property="article:published_time" content="2023-09-23T12:32:42.000Z">
+<meta property="article:modified_time" content="2023-09-23T12:34:56.263Z">
 <meta property="article:author" content="KenHuang">
 <meta property="article:tag" content="Software Development">
-<meta property="article:tag" content="單元測試">
+<meta property="article:tag" content="MVC 重構">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.imgur.com/abF1xDq.png">
 
-<link rel="canonical" href="https://kenhuangtw.github.io/2023/09/12/IronDay12/">
+<link rel="canonical" href="https://kenhuangtw.github.io/2023/09/23/IronDay23/">
 
 
 <script id="page-configurations">
@@ -47,7 +49,7 @@
   };
 </script>
 
-  <title>【Day-12】單元測試 | 窩不知道</title>
+  <title>【Day-23】改造MVC - Controller(概念篇) | 窩不知道</title>
   
 
 
@@ -197,7 +199,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="https://kenhuangtw.github.io/2023/09/12/IronDay12/">
+    <link itemprop="mainEntityOfPage" href="https://kenhuangtw.github.io/2023/09/23/IronDay23/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -210,7 +212,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          【Day-12】單元測試
+          【Day-23】改造MVC - Controller(概念篇)
         </h1>
 
         <div class="post-meta">
@@ -221,7 +223,7 @@
               <span class="post-meta-item-text">發表於</span>
               
 
-              <time title="創建時間：2023-09-12 01:33:37 / 修改時間：01:47:53" itemprop="dateCreated datePublished" datetime="2023-09-12T01:33:37+08:00">2023-09-12</time>
+              <time title="創建時間：2023-09-23 20:32:42 / 修改時間：20:34:56" itemprop="dateCreated datePublished" datetime="2023-09-23T20:32:42+08:00">2023-09-23</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -242,8 +244,8 @@
       </span>
       <span class="post-meta-item-text">Disqus：</span>
     
-    <a title="disqus" href="/2023/09/12/IronDay12/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2023/09/12/IronDay12/" itemprop="commentCount"></span>
+    <a title="disqus" href="/2023/09/23/IronDay23/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2023/09/23/IronDay23/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -258,39 +260,19 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>文章同步於<a target="_blank" rel="noopener" href="https://ithelp.ithome.com.tw/articles/10317102">it邦</a></p>
-<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>今天要來講一個在開發階段很重要的概念 - 單元測試</p>
-<p>前面我們講了不少軟體開發的原則<br>那有沒有想過，我們在寫完這些程式之後，要怎麼確保他能夠正常使用</p>
-<p>而這中間有一個很重要的一環就是<strong>單元測試</strong></p>
+        <p>文章同步於<a target="_blank" rel="noopener" href="https://ithelp.ithome.com.tw/articles/10326015">it邦</a></p>
+<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>今天要來講講改造MVC的Controller<br>雖然沒有DDD這種架構如此乾淨，但依然是不少人使用的架構</p>
 <span id="more"></span>
 
-<h1 id="介紹"><a href="#介紹" class="headerlink" title="介紹"></a>介紹</h1><p>單元測試(Unit Testing)，是軟體開發中的一個重要概念<br>它是軟體測試的一個階段，用於確保程式中的個別「單元」（通常是函數、方法、類別等）能夠按照預期的方式正確運作</p>
-<p>單元測試的主要目標是在開發過程中迅速發現和修復程式碼中的錯誤，以確保軟體的品質和穩定性。</p>
-<p>舉個例子<br>假設我今天在撰寫一隻Controller是用於取得學生的成績<br>那這個Controller中間有一個use case是要計算需要顯示的資料量</p>
-<p>那我們就會針對這個最小的單元(顯示的資料量的function)去撰寫單元測試</p>
-<h1 id="為什麼要撰寫單元測試"><a href="#為什麼要撰寫單元測試" class="headerlink" title="為什麼要撰寫單元測試"></a>為什麼要撰寫單元測試</h1><p>寫單元測試有幾個好處</p>
-<ol>
-<li>確保 debug 的時間不會太長，因為撰寫過單元測試，我可以知道說這個function在大部分情況下有沒有如預期般輸出開發者需要的資訊，也就是<strong>及早發現錯誤</strong>和<strong>確保功能正確性</strong></li>
-<li>讓閱讀code的人了解這個function應該要做什麼，輸入和輸出什麼樣的資訊</li>
-<li>在重構的時候，可以去了解說我是否有正確重構這個function</li>
-<li>在 CI 階段，確保沒有問題才會放上生產環境</li>
-</ol>
-<h1 id="注意事項"><a href="#注意事項" class="headerlink" title="注意事項"></a>注意事項</h1><p>有一點需要特別注意就是，不該去依賴使用中的資料庫的資料來做單元測試<br>有可能會因為資料庫中的資料有所改動而導致不必要的錯誤</p>
-<p>因此我們可以使用模擬（Mocking）或偽造（Stubbing）的方式來建立不影響現有環境且獨立的假資料來進行單元測試</p>
-<h2 id="F-I-R-S-T"><a href="#F-I-R-S-T" class="headerlink" title="F.I.R.S.T"></a>F.I.R.S.T</h2><p>根據 Clean Code這本書的描述，整潔的測試應該遵循這五個字母的法則</p>
-<ul>
-<li>Fast(快速): 測試應該要執行快速。</li>
-<li>Independent(獨立): 測試程式不可互相依賴。每個階段都是獨立的程式。</li>
-<li>Repeatable(可重複性): 可以在<strong>任何環境</strong>重複執行。我想這非常重要，通常我們的開發環境會和Server的環境不同，所以一定要有辦法在各種環境下重複執行。</li>
-<li>Self-Validating(自我驗證): 測試程式應該輸出 boolean</li>
-<li>Timely(及時): 及時撰寫單元測試。單元測試要在產品程式之前就寫好。</li>
-</ul>
-<h1 id="關於習慣這件事"><a href="#關於習慣這件事" class="headerlink" title="關於習慣這件事"></a>關於習慣這件事</h1><p>上面都看不懂沒關係，這個才是最重要的<br>很多人會說，我沒有時間寫單元測試</p>
-<p>但我必須說，這是習慣養成的問題，第一次寫一定比較慢<br>不過一回生二回熟，寫久了就知道每個框架要怎麼撰寫單元測試<br>上面說過，寫單元測試有兩個好處就是，<strong>及早發現錯誤</strong>和<strong>確保功能正確性</strong><br>當api出錯的時候，你總不會想要一個一個慢慢通靈出哪個地方有問題</p>
-<p>撰寫單元測試後，可以直接發現哪邊有問題<br>這邊有一個要點就是，必須<strong>盡可能的考慮到所有狀況</strong><br>當然不可能想到全部的可能性<br>不過在盡可能的嘗試之後，至少出錯的機率也會大幅將低許多</p>
-<h1 id="結語"><a href="#結語" class="headerlink" title="結語"></a>結語</h1><p>我只能說，測試真的是一個可以講很多東西的一個章節<br>我連TDD都沒有說明<br>要講下去鐵人賽可能要60天了XD</p>
-<p>明天要講一下架構面的部分，先從伺服器端渲染(SSR)開始</p>
-<h1 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h1><p>Clean Code(ch.9)</p>
+<h1 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h1><p>這就要先講講為甚麼要改造controller<br>前面介紹了那麼多軟體設計、架構的原則<br>我們可以清楚知道說將所有Code一拖拉庫往Controller塞，會造成沒有辦法撰寫單元測試<br>根據<strong>單一職責原則</strong>，我們就必須要把Controller職責過多的狀況改善</p>
+<h2 id="範例"><a href="#範例" class="headerlink" title="範例"></a>範例</h2><p>假設我今天有一個會員要註冊的API，我把驗證、登入邏輯全部寫再一起</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">class MemberController extends Controller</span><br><span class="line">&#123;</span><br><span class="line">    public function store(Request $request)</span><br><span class="line">    &#123;</span><br><span class="line">        // 驗證請求參數</span><br><span class="line">        $validatedData = $request-&gt;validate([</span><br><span class="line">            &#x27;member_name&#x27; =&gt; &#x27;required|string|min:1|max:60&#x27;,</span><br><span class="line">            &#x27;member_email&#x27; =&gt; &#x27;required|string|email|max:255|unique:members&#x27;, // 確保email在資料庫中唯一</span><br><span class="line">            &#x27;member_password&#x27; =&gt; &#x27;required|string|max:255&#x27;,</span><br><span class="line">        ]);</span><br><span class="line"></span><br><span class="line">        // 在資料庫中建立會員資料</span><br><span class="line">        try &#123;</span><br><span class="line">            $member = Member::create([</span><br><span class="line">                &#x27;member_name&#x27; =&gt; $validatedData[&#x27;member_name&#x27;],</span><br><span class="line">                &#x27;member_email&#x27; =&gt; $validatedData[&#x27;member_email&#x27;],</span><br><span class="line">                &#x27;member_password&#x27; =&gt; $validatedData[&#x27;member_password&#x27;],</span><br><span class="line">            ]);</span><br><span class="line"></span><br><span class="line">            // 成功建立資料，回傳201 Created狀態碼</span><br><span class="line">            return response()-&gt;json([&#x27;message&#x27; =&gt; &#x27;會員資料建立成功&#x27;], 201);</span><br><span class="line">        &#125; catch (\Exception $e) &#123;</span><br><span class="line">            // 發生錯誤，回傳錯誤訊息</span><br><span class="line">            return response()-&gt;json([&#x27;message&#x27; =&gt; &#x27;會員資料建立失敗&#x27;], 500);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>光只是兩個非常基礎的流程就搞到Controller如此大一包了，如果未來還要加入活動，什麼名字裡面有鮭魚就送鮭魚的這種判斷條件也寫進去，那真的是不得了</p>
+<p>而且這樣寫也沒有人知道驗證跟資料庫那一層是否正確</p>
+<h1 id="拆法"><a href="#拆法" class="headerlink" title="拆法"></a>拆法</h1><p>我們先重新定義Controller的職責，<strong>不管我的業務邏輯是甚麼，我始終只會讓Controller去取得需要的資訊最後傳給前端</strong><br>那為了這件是我是必要把責任分擔出去<br>根據上述的條件，我會如此的拆分我的Controller<br><img src="https://i.imgur.com/abF1xDq.png" alt="Controller依賴"></p>
+<p>也就是說，我的Controller是依賴其他層級的原件，那到時候要修改我就會直接把底下的部分抽換掉就好<br>在這個狀況下，我也可以針對每一個功能去進行單元測試，清楚的了解哪邊有問題</p>
+<h1 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h1><p><a target="_blank" rel="noopener" href="https://ithelp.ithome.com.tw/articles/10264853">Day 01: 【序】– 架構與設計、代碼、工程師</a><br><a target="_blank" rel="noopener" href="https://docs.google.com/presentation/d/1rOWNct6tu8u63Gss8hHwz8KncWkP3yI3BR8dsDs1-Sg/htmlpresent">打造 Laravel 優美架構</a><br><a target="_blank" rel="noopener" href="https://ithelp.ithome.com.tw/articles/10240228">DAY6 - 你的 Backend 可以更有彈性一點 - Clean Architecture 概念篇</a><br><a target="_blank" rel="noopener" href="https://github.com/bxcodec/go-clean-arch">go-clean-arch</a></p>
 <div>
     <script type="text/javascript">
     document.write(
@@ -307,7 +289,7 @@
       <footer class="post-footer">
           <div class="post-tags">
               <a href="/tags/Software-Development/" rel="tag"># Software Development</a>
-              <a href="/tags/%E5%96%AE%E5%85%83%E6%B8%AC%E8%A9%A6/" rel="tag"># 單元測試</a>
+              <a href="/tags/MVC-%E9%87%8D%E6%A7%8B/" rel="tag"># MVC 重構</a>
           </div>
 
         
@@ -316,13 +298,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2023/09/11/IronDay11/" rel="prev" title="【Day-11】其他軟體開發原則(簡介)">
-      <i class="fa fa-chevron-left"></i> 【Day-11】其他軟體開發原則(簡介)
+    <a href="/2023/09/22/IronDay22/" rel="prev" title="【Day-22】Clean Architecture(下)">
+      <i class="fa fa-chevron-left"></i> 【Day-22】Clean Architecture(下)
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2023/09/13/IronDay13/" rel="next" title="【Day-13】伺服器端渲染(SSR)">
-      【Day-13】伺服器端渲染(SSR) <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -388,7 +367,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BB%8B%E7%B4%B9"><span class="nav-number">2.</span> <span class="nav-text">介紹</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%82%BA%E4%BB%80%E9%BA%BC%E8%A6%81%E6%92%B0%E5%AF%AB%E5%96%AE%E5%85%83%E6%B8%AC%E8%A9%A6"><span class="nav-number">3.</span> <span class="nav-text">為什麼要撰寫單元測試</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A0%85"><span class="nav-number">4.</span> <span class="nav-text">注意事項</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#F-I-R-S-T"><span class="nav-number">4.1.</span> <span class="nav-text">F.I.R.S.T</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%97%9C%E6%96%BC%E7%BF%92%E6%85%A3%E9%80%99%E4%BB%B6%E4%BA%8B"><span class="nav-number">5.</span> <span class="nav-text">關於習慣這件事</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%B5%90%E8%AA%9E"><span class="nav-number">6.</span> <span class="nav-text">結語</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="nav-number">7.</span> <span class="nav-text">參考資料</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%B5%B7%E5%9B%A0"><span class="nav-number">2.</span> <span class="nav-text">起因</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AF%84%E4%BE%8B"><span class="nav-number">2.1.</span> <span class="nav-text">範例</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%8B%86%E6%B3%95"><span class="nav-number">3.</span> <span class="nav-text">拆法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="nav-number">4.</span> <span class="nav-text">參考資料</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -523,9 +502,9 @@
 </script>
 <script>
   var disqus_config = function() {
-    this.page.url = "https://kenhuangtw.github.io/2023/09/12/IronDay12/";
-    this.page.identifier = "2023/09/12/IronDay12/";
-    this.page.title = "【Day-12】單元測試";
+    this.page.url = "https://kenhuangtw.github.io/2023/09/23/IronDay23/";
+    this.page.identifier = "2023/09/23/IronDay23/";
+    this.page.title = "【Day-23】改造MVC - Controller(概念篇)";
     this.language = "zh_TW";
     };
   NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
