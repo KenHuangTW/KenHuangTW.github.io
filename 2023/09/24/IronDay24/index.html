@@ -20,21 +20,23 @@
     var CONFIG = {"hostname":"kenhuangtw.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"enable":null,"type":null,"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
   </script>
 
-  <meta name="description" content="文章同步於it邦 前言廢話不多說，今天直接來介紹客戶端渲染(CSR)">
+  <meta name="description" content="文章同步於it邦 前言那麼今天直接來實作改造Controller">
 <meta property="og:type" content="article">
-<meta property="og:title" content="【Day-14】客戶端渲染(CSR)">
-<meta property="og:url" content="https://kenhuangtw.github.io/2023/09/14/IronDay14/index.html">
+<meta property="og:title" content="【Day-24】改造MVC - Controller(實作篇)">
+<meta property="og:url" content="https://kenhuangtw.github.io/2023/09/24/IronDay24/index.html">
 <meta property="og:site_name" content="窩不知道">
-<meta property="og:description" content="文章同步於it邦 前言廢話不多說，今天直接來介紹客戶端渲染(CSR)">
+<meta property="og:description" content="文章同步於it邦 前言那麼今天直接來實作改造Controller">
 <meta property="og:locale" content="zh_TW">
-<meta property="article:published_time" content="2023-09-13T16:28:46.000Z">
-<meta property="article:modified_time" content="2023-09-13T16:31:55.401Z">
+<meta property="og:image" content="https://kenhuangtw.github.io/2023/07/29/RefactorMVC/newMVCSequence.png">
+<meta property="article:published_time" content="2023-09-24T08:16:19.000Z">
+<meta property="article:modified_time" content="2023-09-24T08:21:35.677Z">
 <meta property="article:author" content="KenHuang">
 <meta property="article:tag" content="Software Development">
-<meta property="article:tag" content="CSR">
+<meta property="article:tag" content="MVC 重構">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://kenhuangtw.github.io/2023/07/29/RefactorMVC/newMVCSequence.png">
 
-<link rel="canonical" href="https://kenhuangtw.github.io/2023/09/14/IronDay14/">
+<link rel="canonical" href="https://kenhuangtw.github.io/2023/09/24/IronDay24/">
 
 
 <script id="page-configurations">
@@ -47,7 +49,7 @@
   };
 </script>
 
-  <title>【Day-14】客戶端渲染(CSR) | 窩不知道</title>
+  <title>【Day-24】改造MVC - Controller(實作篇) | 窩不知道</title>
   
 
 
@@ -197,7 +199,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="https://kenhuangtw.github.io/2023/09/14/IronDay14/">
+    <link itemprop="mainEntityOfPage" href="https://kenhuangtw.github.io/2023/09/24/IronDay24/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -210,7 +212,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          【Day-14】客戶端渲染(CSR)
+          【Day-24】改造MVC - Controller(實作篇)
         </h1>
 
         <div class="post-meta">
@@ -221,7 +223,7 @@
               <span class="post-meta-item-text">發表於</span>
               
 
-              <time title="創建時間：2023-09-14 00:28:46 / 修改時間：00:31:55" itemprop="dateCreated datePublished" datetime="2023-09-14T00:28:46+08:00">2023-09-14</time>
+              <time title="創建時間：2023-09-24 16:16:19 / 修改時間：16:21:35" itemprop="dateCreated datePublished" datetime="2023-09-24T16:16:19+08:00">2023-09-24</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -242,8 +244,8 @@
       </span>
       <span class="post-meta-item-text">Disqus：</span>
     
-    <a title="disqus" href="/2023/09/14/IronDay14/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2023/09/14/IronDay14/" itemprop="commentCount"></span>
+    <a title="disqus" href="/2023/09/24/IronDay24/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2023/09/24/IronDay24/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -258,31 +260,27 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>文章同步於<a target="_blank" rel="noopener" href="https://ithelp.ithome.com.tw/articles/10317859">it邦</a></p>
-<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>廢話不多說，今天直接來介紹客戶端渲染(CSR)</p>
+        <p>文章同步於<a target="_blank" rel="noopener" href="https://ithelp.ithome.com.tw/articles/10326015">it邦</a></p>
+<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>那麼今天直接來實作改造Controller</p>
 <span id="more"></span>
 
-<h1 id="介紹"><a href="#介紹" class="headerlink" title="介紹"></a>介紹</h1><p>客戶端渲染(CSR, Client-Side Rendering)，顧名思義就是在瀏覽器端(客戶)去做網頁渲染的工作</p>
-<p>通常會和一個概念一起討論 - 前後端分離</p>
-<h2 id="優點"><a href="#優點" class="headerlink" title="優點"></a>優點</h2><ol>
-<li>不需要一直重新載入頁面</li>
-<li>可維護性比起SSR高出許多，通常都會導入前後端分離的方式，使各自的邏輯以及職責明確切割</li>
+<h1 id="狀況"><a href="#狀況" class="headerlink" title="狀況"></a>狀況</h1><p>假設我今天需要一個註冊會員的功能<br>我們需要驗證資料、儲存資料、金流和物流以及回傳資料</p>
+<p>今天我會先用DI(依賴注入)的方式來撰寫，這個下次有機會再來介紹</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MemberController</span> <span class="keyword">extends</span> <span class="title">Controller</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">protected</span> <span class="variable">$member_validator</span>;</span><br><span class="line">    <span class="keyword">protected</span> <span class="variable">$member_use_case</span>;</span><br><span class="line">    <span class="keyword">protected</span> <span class="variable">$member_repository</span>;</span><br><span class="line">    <span class="keyword">protected</span> <span class="variable">$member_formatter</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_ invoke__">__construct</span>(MemberValidator <span class="variable">$member_validator</span>, MemberUseCase <span class="variable">$member_use_case</span>, MemberRepository <span class="variable">$member_repository</span>, MemberFormatter <span class="variable">$member_formatter</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="variable language_">$this</span>-&gt;member_validator = <span class="variable">$member_validator</span>;</span><br><span class="line">        <span class="variable language_">$this</span>-&gt;member_use_case = <span class="variable">$member_use_case</span>;</span><br><span class="line">        <span class="variable language_">$this</span>-&gt;member_repository = <span class="variable">$member_repository</span>;</span><br><span class="line">        <span class="variable language_">$this</span>-&gt;member_formatter = <span class="variable">$member_formatter</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">registerMember</span>(<span class="params">Request <span class="variable">$request</span></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="variable">$request_data</span> = <span class="variable">$request</span>-&gt;data;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 驗證請求參數</span></span><br><span class="line">        <span class="variable">$error_key_group</span> = <span class="variable language_">$this</span>-&gt;member_validator-&gt;<span class="title function_ invoke__">getRegisterMemberErrorKeyGroup</span>(<span class="variable">$request</span>-&gt;data);</span><br><span class="line">        <span class="keyword">if</span> (<span class="title function_ invoke__">count</span>(error_key_group) != <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="variable">$validate_fail_response_data</span> = <span class="variable language_">$this</span>-&gt;<span class="variable">$member_formatter</span>-&gt;<span class="title function_ invoke__">getValidateFailResponseData</span>(<span class="variable">$error_key_group</span>)</span><br><span class="line">            <span class="keyword">return</span> <span class="title function_ invoke__">response</span>()-&gt;<span class="title function_ invoke__">json</span>(<span class="variable">$validate_fail_response_data</span>, <span class="number">400</span>)</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 金流和物流</span></span><br><span class="line">        <span class="keyword">if</span> (!<span class="variable language_">$this</span>-&gt;member_use_case-&gt;<span class="title function_ invoke__">isPaySuccessful</span>(<span class="variable">$request_data</span>)) &#123;</span><br><span class="line">            <span class="variable">$pay_fail_response_data</span> = <span class="variable language_">$this</span>-&gt;<span class="variable">$member_formatter</span>-&gt;<span class="title function_ invoke__">getPayFailResponseData</span>()</span><br><span class="line">            <span class="keyword">return</span> <span class="title function_ invoke__">response</span>()-&gt;<span class="title function_ invoke__">json</span>(<span class="variable">$pay_fail_response_data</span>, <span class="number">400</span>)</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (!<span class="variable language_">$this</span>-&gt;member_use_case-&gt;<span class="title function_ invoke__">isGiftSuccessful</span>(<span class="variable">$request_data</span>)) &#123;</span><br><span class="line">            <span class="variable">$gift_fail_response_data</span> = <span class="variable language_">$this</span>-&gt;<span class="variable">$member_formatter</span>-&gt;<span class="title function_ invoke__">getGiftFailResponseData</span>()</span><br><span class="line">            <span class="keyword">return</span> <span class="title function_ invoke__">response</span>()-&gt;<span class="title function_ invoke__">json</span>(<span class="variable">$gift_fail_response_data</span>, <span class="number">400</span>)</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 建立資料</span></span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="variable language_">$this</span>-&gt;member_repository-&gt;<span class="title function_ invoke__">createMember</span>(<span class="variable">$request_data</span>);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (\<span class="built_in">Exception</span> <span class="variable">$e</span>) &#123;</span><br><span class="line">            <span class="variable">$create_data_fail_response_data</span> = <span class="variable language_">$this</span>-&gt;<span class="variable">$member_formatter</span>-&gt;<span class="title function_ invoke__">getCreateDataFailResponseData</span>();</span><br><span class="line">            <span class="keyword">return</span> <span class="title function_ invoke__">response</span>()-&gt;<span class="title function_ invoke__">json</span>(<span class="variable">$create_data_fail_response_data</span>, <span class="number">400</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="variable">$success_response_data</span> = <span class="variable language_">$this</span>-&gt;<span class="variable">$member_formatter</span>-&gt;<span class="title function_ invoke__">getSuccessResponseData</span>();</span><br><span class="line">        <span class="keyword">return</span> <span class="title function_ invoke__">response</span>()-&gt;<span class="title function_ invoke__">json</span>(<span class="variable">$success_response_data</span>, <span class="number">201</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>我們可以得知這個順序是</p>
+<ol>
+<li>Request 進入 Controller</li>
+<li>Controller 向 Validator 驗證使用者的資料</li>
+<li>Controller 向 UseCase 傳遞資料(處理業務邏輯，像是金流物流)</li>
+<li>Controller 向 Repository 請求建立資料</li>
+<li>Repository 向 Model 請求建立資料</li>
+<li>Model 向 DB 建立資料</li>
+<li>Controller 向 Formatter 請求回傳資料</li>
+<li>Controller 給出 Response</li>
 </ol>
-<h2 id="缺點"><a href="#缺點" class="headerlink" title="缺點"></a>缺點</h2><ol>
-<li>SEO分數會比起SSR來的低一點，不過目前前端有<a target="_blank" rel="noopener" href="https://nuxt.com/">nuxt.js</a>來解決普遍SEO分數過低的狀況</li>
-<li>載入有時候會比較久，因為不論需不需要都會直接下載大量資源</li>
-</ol>
-<h1 id="從開發、維護以及商業的角度來看CSR以及前後端分離"><a href="#從開發、維護以及商業的角度來看CSR以及前後端分離" class="headerlink" title="從開發、維護以及商業的角度來看CSR以及前後端分離"></a>從開發、維護以及商業的角度來看CSR以及前後端分離</h1><p>一個軟體專案，通常花最久的時間地都不會是寫Code<br>而是<strong>前期的討論</strong>和<strong>維護</strong></p>
-<p>為什麼要寫這個主體 - 軟體不是會跑就好，因為有的公司會為了快速開發而放任工程師們有寫出東西就好<br>通常這種公司都會是所謂的一條龍，也就是同一個人負責前後端，所以那個人就會以自己方便為主來做開發<br>最終的下場就是專案難以維護，程式跟人通常人跑得比程式快，<del>還有創造富有挑戰性職缺</del></p>
-<p>但你永遠不知道客戶哪天會想要增加需求，而且人的慾望是無窮無盡的，當架構以及程式碼的品質不到位的時候，就很容易持續產出爛架構跟爛扣<br>此時維護的時間就會呈直指數成長，最嚴重可能導致無法產出</p>
-<p>你會說很多專案都不需要維護，交錢就了事了，當然你要以這個比較方便的角度來說，確實是如此<br>不過程式會寫會跑是一回事，寫得好又是另一回事</p>
-<p>舉個例子</p>
-<p>以<strong>台灣的交通</strong>來說，有駕照是一回事，看看一堆老人駕照都放了幾百年都沒去開，但她依然能夠有開車的權利，只是極度讓人不放心</p>
-<p>再來假設這個老人會開車，車子能跑不要出意外就會開車，不過他可能路上上演東京甩尾，轉個彎就要把你拋出去或是常常大腳油門起步就直接暴衝，搞得你沒看到正妹帥哥就暈，抱歉那是暈船</p>
-<p>開得好的話，它可以讓你舒舒服服地抵達目的地，而且也正確的遵守駕駛的禮儀(禮讓行人、不隨意變換車道等等)，這個上述的檔次就拉開來了吧</p>
-<p>最後以商業上來說，當我的架構是彈性的，我就可以比較容易且快速地應對各種需求，此時對於在客戶間的評價也會比較高。</p>
-<h1 id="結語"><a href="#結語" class="headerlink" title="結語"></a>結語</h1><p>第二週總算結束了，下星期會先講一下clean coder再接著說一些http協議的部分</p>
-<h1 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h1><p><a target="_blank" rel="noopener" href="https://www.shubo.io/rendering-patterns/">教學 SSR 與 CSR 深度解析：從渲染方式到效能優化</a><br><a target="_blank" rel="noopener" href="https://ithelp.ithome.com.tw/articles/10267547">[面試][前端]如何判斷專案要使用 CSR 還是 SSR？</a><br><a target="_blank" rel="noopener" href="https://developers.google.com/search/docs/crawling-indexing/javascript/javascript-seo-basics?hl=zh-tw">瞭解 JavaScript 搜尋引擎最佳化 (SEO) 基礎知識</a></p>
+<p>搭配圖大概長這樣<br><img src="https://kenhuangtw.github.io/2023/07/29/RefactorMVC/newMVCSequence.png" alt="時序圖"></p>
+<p>這樣我們就可以分別為每一層撰寫單元測試，明天我們再來談這一部分</p>
 <div>
     <script type="text/javascript">
     document.write(
@@ -299,7 +297,7 @@
       <footer class="post-footer">
           <div class="post-tags">
               <a href="/tags/Software-Development/" rel="tag"># Software Development</a>
-              <a href="/tags/CSR/" rel="tag"># CSR</a>
+              <a href="/tags/MVC-%E9%87%8D%E6%A7%8B/" rel="tag"># MVC 重構</a>
           </div>
 
         
@@ -308,13 +306,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2023/09/13/IronDay13/" rel="prev" title="【Day-13】伺服器端渲染(SSR)">
-      <i class="fa fa-chevron-left"></i> 【Day-13】伺服器端渲染(SSR)
+    <a href="/2023/09/23/IronDay23/" rel="prev" title="【Day-23】改造MVC - Controller(概念篇)">
+      <i class="fa fa-chevron-left"></i> 【Day-23】改造MVC - Controller(概念篇)
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2023/09/15/IronDay15/" rel="next" title="【Day-15】番外篇 - Clean Coder(上)">
-      【Day-15】番外篇 - Clean Coder(上) <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -380,7 +375,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BB%8B%E7%B4%B9"><span class="nav-number">2.</span> <span class="nav-text">介紹</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%84%AA%E9%BB%9E"><span class="nav-number">2.1.</span> <span class="nav-text">優點</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BC%BA%E9%BB%9E"><span class="nav-number">2.2.</span> <span class="nav-text">缺點</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BE%9E%E9%96%8B%E7%99%BC%E3%80%81%E7%B6%AD%E8%AD%B7%E4%BB%A5%E5%8F%8A%E5%95%86%E6%A5%AD%E7%9A%84%E8%A7%92%E5%BA%A6%E4%BE%86%E7%9C%8BCSR%E4%BB%A5%E5%8F%8A%E5%89%8D%E5%BE%8C%E7%AB%AF%E5%88%86%E9%9B%A2"><span class="nav-number">3.</span> <span class="nav-text">從開發、維護以及商業的角度來看CSR以及前後端分離</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%B5%90%E8%AA%9E"><span class="nav-number">4.</span> <span class="nav-text">結語</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="nav-number">5.</span> <span class="nav-text">參考資料</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%8B%80%E6%B3%81"><span class="nav-number">2.</span> <span class="nav-text">狀況</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -515,9 +510,9 @@
 </script>
 <script>
   var disqus_config = function() {
-    this.page.url = "https://kenhuangtw.github.io/2023/09/14/IronDay14/";
-    this.page.identifier = "2023/09/14/IronDay14/";
-    this.page.title = "【Day-14】客戶端渲染(CSR)";
+    this.page.url = "https://kenhuangtw.github.io/2023/09/24/IronDay24/";
+    this.page.identifier = "2023/09/24/IronDay24/";
+    this.page.title = "【Day-24】改造MVC - Controller(實作篇)";
     this.language = "zh_TW";
     };
   NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
