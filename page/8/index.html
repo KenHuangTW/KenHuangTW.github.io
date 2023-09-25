@@ -23,7 +23,7 @@
   <meta name="description" content="技能樹很歪的工程師的筆記主要寫Python工作用Go、PHP偶爾寫寫Swift">
 <meta property="og:type" content="website">
 <meta property="og:title" content="窩不知道">
-<meta property="og:url" content="https://kenhuangtw.github.io/tags/Unit-testing/index.html">
+<meta property="og:url" content="https://kenhuangtw.github.io/page/8/index.html">
 <meta property="og:site_name" content="窩不知道">
 <meta property="og:description" content="技能樹很歪的工程師的筆記主要寫Python工作用Go、PHP偶爾寫寫Swift">
 <meta property="og:locale" content="zh_TW">
@@ -31,20 +31,20 @@
 <meta property="article:tag" content="Python, Go, PHP, Swift, Note, Hexo">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="https://kenhuangtw.github.io/tags/Unit-testing/">
+<link rel="canonical" href="https://kenhuangtw.github.io/page/8/">
 
 
 <script id="page-configurations">
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome : false,
+    isHome : true,
     isPost : false,
     lang   : 'zh-TW'
   };
 </script>
 
-  <title>標籤: Unit testing | 窩不知道</title>
+  <title>窩不知道</title>
   
 
 
@@ -187,52 +187,115 @@
         <div class="content-wrap">
           
 
-          <div class="content tag">
+          <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://kenhuangtw.github.io/2022/09/05/PythonSqlalchemy1/">
 
-  
-  
-  
-  <div class="post-block">
-    <div class="posts-collapse">
-      <div class="collection-title">
-        <h2 class="collection-header">Unit testing
-          <small>標籤</small>
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="KenHuang">
+      <meta itemprop="description" content="技能樹很歪的工程師的筆記<br>主要寫Python<br>工作用Go、PHP<br>偶爾寫寫Swift">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="窩不知道">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/09/05/PythonSqlalchemy1/" class="post-title-link" itemprop="url">Python sqlalchemy note — 1</a>
         </h2>
-      </div>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2022-09-05 09:23:19" itemprop="dateCreated datePublished" datetime="2022-09-05T09:23:19+08:00">2022-09-05</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新於</span>
+                <time title="修改時間：2022-10-08 01:53:12" itemprop="dateModified" datetime="2022-10-08T01:53:12+08:00">2022-10-08</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/" itemprop="url" rel="index"><span itemprop="name">Python</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/ORM/" itemprop="url" rel="index"><span itemprop="name">ORM</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2022/09/05/PythonSqlalchemy1/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2022/09/05/PythonSqlalchemy1/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-    <div class="collection-year">
-      <span class="collection-header">2023</span>
+          <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>第一次嘗試寫blog，怕不寫下來兩個星期以後都忘記了，現在還很菜，鞭小力一點。</p>
+<p>這次的主題是python上熱門的ORM工具 — <strong>sqlalchemy</strong>。</p>
+<p>起初在寫一個有關於成績分析的sideproject，因為使用到資料庫做為儲存資料的方式，所以免不了的需要對資料庫的表格進行一些操作，原本的想法是使用 python 的 module 去做，但寫到一半發現，要是一個一個用 SQL 的語法寫下去，後面維護起來肯定是直接送急診。</p>
+<p>於是乎就開始思考，有沒有什麼方式可以解決我的困擾。<br>剛好工作的關係，接觸到了一種可以方便使用者對資料庫執行操作的方式 — <strong>ORM</strong>。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/09/05/PythonSqlalchemy1/#more" rel="contents">
+                閱讀全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
     </div>
 
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2023-09-25T20:47:52+08:00"
-              content="2023-09-25">
-          09-25
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2023/09/25/IronDay25/" itemprop="url">
-            <span itemprop="name">【Day-25】改造MVC - Controller(單元測試篇)</span>
-          </a>
-      </div>
-
-    </header>
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
   </article>
-
-    </div>
-  </div>
   
   
   
 
+
   
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/page/7/"><i class="fa fa-angle-left" aria-label="上一頁"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><span class="page-number current">8</span>
+  </nav>
 
 
 
