@@ -20,20 +20,23 @@
     var CONFIG = {"hostname":"kenhuangtw.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"enable":null,"type":null,"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
   </script>
 
-  <meta name="description" content="前言這篇單純記錄我遇到一些不熟悉的地方而已 我們先來看題目 - RGB To Hex Conversion">
+  <meta name="description" content="文章同步於it邦 前言改造MVC的最後一個章節，單元測試今天會來說說如何測試實作今天會示範Laravel">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Codewars - RGB To Hex Conversion (Use Swift)">
-<meta property="og:url" content="https://kenhuangtw.github.io/2022/10/08/Codewars-RGB-Use-Swift/index.html">
+<meta property="og:title" content="【Day-25】改造MVC - Controller(單元測試篇)">
+<meta property="og:url" content="https://kenhuangtw.github.io/2023/09/25/IronDay25/index.html">
 <meta property="og:site_name" content="窩不知道">
-<meta property="og:description" content="前言這篇單純記錄我遇到一些不熟悉的地方而已 我們先來看題目 - RGB To Hex Conversion">
+<meta property="og:description" content="文章同步於it邦 前言改造MVC的最後一個章節，單元測試今天會來說說如何測試實作今天會示範Laravel">
 <meta property="og:locale" content="zh_TW">
-<meta property="article:published_time" content="2022-10-08T05:52:04.000Z">
-<meta property="article:modified_time" content="2022-10-08T06:01:23.000Z">
+<meta property="article:published_time" content="2023-09-25T12:47:52.000Z">
+<meta property="article:modified_time" content="2023-09-25T12:49:29.501Z">
 <meta property="article:author" content="KenHuang">
-<meta property="article:tag" content="Swift">
+<meta property="article:tag" content="Software Development">
+<meta property="article:tag" content="MVC 重構">
+<meta property="article:tag" content="Laravel">
+<meta property="article:tag" content="Unit testing">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="https://kenhuangtw.github.io/2022/10/08/Codewars-RGB-Use-Swift/">
+<link rel="canonical" href="https://kenhuangtw.github.io/2023/09/25/IronDay25/">
 
 
 <script id="page-configurations">
@@ -46,7 +49,7 @@
   };
 </script>
 
-  <title>Codewars - RGB To Hex Conversion (Use Swift) | 窩不知道</title>
+  <title>【Day-25】改造MVC - Controller(單元測試篇) | 窩不知道</title>
   
 
 
@@ -196,7 +199,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="https://kenhuangtw.github.io/2022/10/08/Codewars-RGB-Use-Swift/">
+    <link itemprop="mainEntityOfPage" href="https://kenhuangtw.github.io/2023/09/25/IronDay25/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -209,7 +212,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Codewars - RGB To Hex Conversion (Use Swift)
+          【Day-25】改造MVC - Controller(單元測試篇)
         </h1>
 
         <div class="post-meta">
@@ -220,7 +223,7 @@
               <span class="post-meta-item-text">發表於</span>
               
 
-              <time title="創建時間：2022-10-08 13:52:04 / 修改時間：14:01:23" itemprop="dateCreated datePublished" datetime="2022-10-08T13:52:04+08:00">2022-10-08</time>
+              <time title="創建時間：2023-09-25 20:47:52 / 修改時間：20:49:29" itemprop="dateCreated datePublished" datetime="2023-09-25T20:47:52+08:00">2023-09-25</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -228,11 +231,7 @@
               </span>
               <span class="post-meta-item-text">分類於</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Swift/" itemprop="url" rel="index"><span itemprop="name">Swift</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Swift/Codewars/" itemprop="url" rel="index"><span itemprop="name">Codewars</span></a>
+                  <a href="/categories/2023%E9%90%B5%E4%BA%BA%E8%B3%BD/" itemprop="url" rel="index"><span itemprop="name">2023鐵人賽</span></a>
                 </span>
             </span>
 
@@ -245,8 +244,8 @@
       </span>
       <span class="post-meta-item-text">Disqus：</span>
     
-    <a title="disqus" href="/2022/10/08/Codewars-RGB-Use-Swift/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2022/10/08/Codewars-RGB-Use-Swift/" itemprop="commentCount"></span>
+    <a title="disqus" href="/2023/09/25/IronDay25/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2023/09/25/IronDay25/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -261,39 +260,19 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>這篇單純記錄我遇到一些不熟悉的地方而已</p>
-<p><a target="_blank" rel="noopener" href="https://www.codewars.com/kata/513e08acc600c94f01000001">我們先來看題目 - RGB To Hex Conversion</a></p>
+        <p>文章同步於<a target="_blank" rel="noopener" href="https://ithelp.ithome.com.tw/articles/10327791">it邦</a></p>
+<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>改造MVC的最後一個章節，單元測試<br>今天會來說說如何測試實作<br>今天會示範Laravel</p>
 <span id="more"></span>
 
-<h1 id="題目"><a href="#題目" class="headerlink" title="題目"></a>題目</h1><p>題目非常簡單，就是轉成色碼而已，所以大於 255(FF) 或是 小於 0 的都是無效的，題目要求我們把它變成最接近的數值也就是</p>
-<blockquote>
-<p>大於255就當做255，小於0當做0</p>
-</blockquote>
-<p>所以這邊我們可以額外寫一個函式，專門處理範圍的</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">func</span> <span class="title function_">limit</span>(<span class="keyword">_</span> <span class="params">color</span>: <span class="type">Int</span>) -&gt; <span class="type">Int</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">min</span>(<span class="number">255</span>, <span class="built_in">max</span>(<span class="number">0</span>, color))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="實作"><a href="#實作" class="headerlink" title="實作"></a>實作</h1><p>延續昨天的案例，假設我今天有一個註冊會員的Validator需要做驗證<br>這個function用於驗證帶入的參數分別為member_name、member_email、member_password<br>規則如下皆為必填、字串<br>name最長60最短為1<br>email最長255、要符合email格式並且為唯一值<br>password只要長度小於255就好<br>回傳array裡面包含失敗的參數名稱，若驗證成功則為空array</p>
+<p>假設我的Validator長這樣</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">public function validatorRequestData(array $request_data): array</span><br><span class="line">&#123;</span><br><span class="line">    $validator = $request-&gt;validate([</span><br><span class="line">        &#x27;member_name&#x27; =&gt; &#x27;required|string|min:1|max:60&#x27;,</span><br><span class="line">        &#x27;member_email&#x27; =&gt; &#x27;required|string|email|max:255|unique:members&#x27;,</span><br><span class="line">        &#x27;member_password&#x27; =&gt; &#x27;required|string|max:255&#x27;,</span><br><span class="line">    ]);</span><br><span class="line">    </span><br><span class="line">    return $validator-&gt;errors();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>接下來就可以處理字串了</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">func</span> <span class="title function_">rgb</span>(<span class="keyword">_</span> <span class="params">r</span>: <span class="type">Int</span>, <span class="keyword">_</span> <span class="params">g</span>: <span class="type">Int</span>, <span class="keyword">_</span> <span class="params">b</span>: <span class="type">Int</span>) -&gt; <span class="type">String</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="type">String</span>(format: <span class="string">&quot;%02X%02X%02X&quot;</span>, limit(r), limit(g), limit(b))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>那我的單元測試會這樣撰寫<br><strong>先假設我已經寫好Seeder，我目前用好一筆假資料，email已經有人使用<a href="mailto:&#x31;&#x32;&#x33;&#64;&#103;&#x6d;&#97;&#x69;&#x6c;&#x2e;&#x63;&#x6f;&#x6d;">&#x31;&#x32;&#x33;&#64;&#103;&#x6d;&#97;&#x69;&#x6c;&#x2e;&#x63;&#x6f;&#x6d;</a></strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">public function testValidatorRequestData()</span><br><span class="line">&#123;</span><br><span class="line">    $validator = new SomeValidator();</span><br><span class="line">        </span><br><span class="line">    $data_1 = [</span><br><span class="line">        &#x27;member_name&#x27; =&gt; &#x27;Unit testing&#x27;,</span><br><span class="line">        &#x27;member_email&#x27; =&gt; &#x27;Unittesting@email.com&#x27;,</span><br><span class="line">        &#x27;member_password&#x27; =&gt; &#x27;Unittesting&#x27;,</span><br><span class="line">    ];</span><br><span class="line">        </span><br><span class="line">    $data_2 = [</span><br><span class="line">        &#x27;member_name&#x27; =&gt; &#x27;&#x27;,</span><br><span class="line">        &#x27;member_email&#x27; =&gt; &#x27;0a&#x27;,</span><br><span class="line">        &#x27;member_password&#x27; =&gt; &#x27;1&#x27;,</span><br><span class="line">    ];</span><br><span class="line">        </span><br><span class="line">    $data_3 = </span><br><span class="line">        &#x27;member_name&#x27; =&gt; [],</span><br><span class="line">        &#x27;member_email&#x27; =&gt; &#x27;123@gmail.com&#x27;,</span><br><span class="line">        &#x27;member_password&#x27; =&gt; str_pad(&#x27;&#x27;, 256, &quot;a&quot;);,</span><br><span class="line">    ];</span><br><span class="line">        </span><br><span class="line">    $err_key_group_1 = $validator-&gt;validatorRequestData($data_1);</span><br><span class="line">    $err_key_group_2 = $validator-&gt;validatorRequestData($data_1);</span><br><span class="line">    $err_key_group_3 = $validator-&gt;validatorRequestData($data_1);</span><br><span class="line">        </span><br><span class="line">    $this-&gt;assertEquals($err_key_group_1, []);</span><br><span class="line">    $this-&gt;assertEquals($err_key_group_2, [&#x27;member_email&#x27;, &#x27;member_password&#x27;]);</span><br><span class="line">    $this-&gt;assertEquals($err_key_group_3, [&#x27;member_name&#x27;, &#x27;member_email&#x27;, &#x27;member_password&#x27;]);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>這樣就完成了</p>
-<h1 id="解析"><a href="#解析" class="headerlink" title="解析"></a>解析</h1><p>第一個 limit 這個函式，簡單來說就式處理範圍的(廢話)<br>第二個就是題目要求我們需要回傳的字串，使用<code>String(format: &quot;yourformat&quot;, argument: yourargument)</code>來達成我們要的，其中<br><code>%02X</code>代表:</p>
-<blockquote>
-<p>使用十六進位且大寫(X 的部份)，並且不足2位數就補0(02的部份)</p>
-</blockquote>
-<p>這樣就可以達到題目的要求了<br>完整程式碼如下</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">func</span> <span class="title function_">limit</span>(<span class="keyword">_</span> <span class="params">color</span>: <span class="type">Int</span>) -&gt; <span class="type">Int</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">min</span>(<span class="number">255</span>, <span class="built_in">max</span>(<span class="number">0</span>, color))</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">func</span> <span class="title function_">rgb</span>(<span class="keyword">_</span> <span class="params">r</span>: <span class="type">Int</span>, <span class="keyword">_</span> <span class="params">g</span>: <span class="type">Int</span>, <span class="keyword">_</span> <span class="params">b</span>: <span class="type">Int</span>) -&gt; <span class="type">String</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="type">String</span>(format: <span class="string">&quot;%02X%02X%02X&quot;</span>, limit(r), limit(g), limit(b))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<style>
-hr.style-one {
-    border: 0;
-    height: 5px;
-    background: #333;
-    background-image: linear-gradient(to right, #ccc, #333, #ccc);
-}
-</style>
-<hr class="style-one" />
-
-<p>如果有錯誤的部份，歡迎指正，謝謝。<br>如果你喜歡這篇文章，請幫我拍手<br>只需要註冊會員就可以囉，完全不用花費任何一毛錢就可以用來鼓裡創作者囉</p>
+<p>這樣就寫好單元測試了，這就可以驗證我的function是否有按照我要的樣子輸出</p>
+<h1 id="結語"><a href="#結語" class="headerlink" title="結語"></a>結語</h1><p>這幾天都是在講一些核心概念跟簡單的實作，明天接著講DI<br>最後幾天就來說說開發模式吧</p>
 <div>
     <script type="text/javascript">
     document.write(
@@ -309,7 +288,10 @@ hr.style-one {
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/Swift/" rel="tag"># Swift</a>
+              <a href="/tags/Software-Development/" rel="tag"># Software Development</a>
+              <a href="/tags/MVC-%E9%87%8D%E6%A7%8B/" rel="tag"># MVC 重構</a>
+              <a href="/tags/Laravel/" rel="tag"># Laravel</a>
+              <a href="/tags/Unit-testing/" rel="tag"># Unit testing</a>
           </div>
 
         
@@ -318,13 +300,10 @@ hr.style-one {
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2022/10/08/fucktk/" rel="prev" title="Python Tkinter 之你該仔細想想是否要用Tk">
-      <i class="fa fa-chevron-left"></i> Python Tkinter 之你該仔細想想是否要用Tk
+    <a href="/2023/09/24/IronDay24/" rel="prev" title="【Day-24】改造MVC - Controller(實作篇)">
+      <i class="fa fa-chevron-left"></i> 【Day-24】改造MVC - Controller(實作篇)
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2023/01/28/leetcode997/" rel="next" title="Leetcode - 997 with Python and Golang">
-      Leetcode - 997 with Python and Golang <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -390,7 +369,7 @@ hr.style-one {
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A1%8C%E7%9B%AE"><span class="nav-number">2.</span> <span class="nav-text">題目</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%A7%A3%E6%9E%90"><span class="nav-number">3.</span> <span class="nav-text">解析</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AF%A6%E4%BD%9C"><span class="nav-number">2.</span> <span class="nav-text">實作</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%B5%90%E8%AA%9E"><span class="nav-number">3.</span> <span class="nav-text">結語</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -525,9 +504,9 @@ hr.style-one {
 </script>
 <script>
   var disqus_config = function() {
-    this.page.url = "https://kenhuangtw.github.io/2022/10/08/Codewars-RGB-Use-Swift/";
-    this.page.identifier = "2022/10/08/Codewars-RGB-Use-Swift/";
-    this.page.title = "Codewars - RGB To Hex Conversion (Use Swift)";
+    this.page.url = "https://kenhuangtw.github.io/2023/09/25/IronDay25/";
+    this.page.identifier = "2023/09/25/IronDay25/";
+    this.page.title = "【Day-25】改造MVC - Controller(單元測試篇)";
     this.language = "zh_TW";
     };
   NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
