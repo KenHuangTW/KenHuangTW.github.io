@@ -20,23 +20,21 @@
     var CONFIG = {"hostname":"kenhuangtw.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"enable":null,"type":null,"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
   </script>
 
-  <meta name="description" content="文章同步於it邦 前言那麼今天直接來實作改造Controller">
+  <meta name="description" content="文章同步於blog 前言鐵人賽來到最後3天了，我想講開發模式這和程式會不會跑有什麼關係，當然有，關係可大了 當你沒有思考過開發模式的時候，就很容易讓軟體開發出現問題例如說：我今天走一步算一步，我就直接下去寫 結果發現寫出來的和業主、PM、市場需要的產品完全不同此時你會面臨幾個選項  全部重來，但這代表你的交付時間只會延長，有簽約的狀況下還會違約 硬著頭皮交差，如此一來就是損失商譽 人生重來  這兩">
 <meta property="og:type" content="article">
-<meta property="og:title" content="【Day-24】改造MVC - Controller(實作篇)">
-<meta property="og:url" content="https://kenhuangtw.github.io/2023/09/24/IronDay24/index.html">
+<meta property="og:title" content="【Day - 27】開發模式 - 隕石開發">
+<meta property="og:url" content="https://kenhuangtw.github.io/2023/09/27/IronDay27/index.html">
 <meta property="og:site_name" content="窩不知道">
-<meta property="og:description" content="文章同步於it邦 前言那麼今天直接來實作改造Controller">
+<meta property="og:description" content="文章同步於blog 前言鐵人賽來到最後3天了，我想講開發模式這和程式會不會跑有什麼關係，當然有，關係可大了 當你沒有思考過開發模式的時候，就很容易讓軟體開發出現問題例如說：我今天走一步算一步，我就直接下去寫 結果發現寫出來的和業主、PM、市場需要的產品完全不同此時你會面臨幾個選項  全部重來，但這代表你的交付時間只會延長，有簽約的狀況下還會違約 硬著頭皮交差，如此一來就是損失商譽 人生重來  這兩">
 <meta property="og:locale" content="zh_TW">
-<meta property="og:image" content="https://kenhuangtw.github.io/2023/07/29/RefactorMVC/newMVCSequence.png">
-<meta property="article:published_time" content="2023-09-24T08:16:19.000Z">
-<meta property="article:modified_time" content="2023-09-24T08:21:35.677Z">
+<meta property="article:published_time" content="2023-09-26T16:43:46.000Z">
+<meta property="article:modified_time" content="2023-09-26T16:45:55.294Z">
 <meta property="article:author" content="KenHuang">
 <meta property="article:tag" content="Software Development">
-<meta property="article:tag" content="MVC 重構">
+<meta property="article:tag" content="Software Development Methodology">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://kenhuangtw.github.io/2023/07/29/RefactorMVC/newMVCSequence.png">
 
-<link rel="canonical" href="https://kenhuangtw.github.io/2023/09/24/IronDay24/">
+<link rel="canonical" href="https://kenhuangtw.github.io/2023/09/27/IronDay27/">
 
 
 <script id="page-configurations">
@@ -49,7 +47,7 @@
   };
 </script>
 
-  <title>【Day-24】改造MVC - Controller(實作篇) | 窩不知道</title>
+  <title>【Day - 27】開發模式 - 隕石開發 | 窩不知道</title>
   
 
 
@@ -199,7 +197,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="https://kenhuangtw.github.io/2023/09/24/IronDay24/">
+    <link itemprop="mainEntityOfPage" href="https://kenhuangtw.github.io/2023/09/27/IronDay27/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -212,7 +210,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          【Day-24】改造MVC - Controller(實作篇)
+          【Day - 27】開發模式 - 隕石開發
         </h1>
 
         <div class="post-meta">
@@ -223,7 +221,7 @@
               <span class="post-meta-item-text">發表於</span>
               
 
-              <time title="創建時間：2023-09-24 16:16:19 / 修改時間：16:21:35" itemprop="dateCreated datePublished" datetime="2023-09-24T16:16:19+08:00">2023-09-24</time>
+              <time title="創建時間：2023-09-27 00:43:46 / 修改時間：00:45:55" itemprop="dateCreated datePublished" datetime="2023-09-27T00:43:46+08:00">2023-09-27</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -244,8 +242,8 @@
       </span>
       <span class="post-meta-item-text">Disqus：</span>
     
-    <a title="disqus" href="/2023/09/24/IronDay24/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2023/09/24/IronDay24/" itemprop="commentCount"></span>
+    <a title="disqus" href="/2023/09/27/IronDay27/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2023/09/27/IronDay27/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -260,27 +258,39 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>文章同步於<a target="_blank" rel="noopener" href="https://ithelp.ithome.com.tw/articles/10326015">it邦</a></p>
-<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>那麼今天直接來實作改造Controller</p>
+        <p>文章同步於<a href="https://kenhuangtw.github.io/2023/09/27/IronDay27">blog</a></p>
+<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>鐵人賽來到最後3天了，我想講開發模式<br>這和程式會不會跑有什麼關係，當然有，關係可大了</p>
+<p>當你沒有思考過開發模式的時候，就很容易讓軟體開發出現問題<br>例如說：我今天走一步算一步，我就直接下去寫</p>
+<p>結果發現寫出來的和業主、PM、市場需要的產品完全不同<br>此時你會面臨幾個選項</p>
+<ol>
+<li>全部重來，但這代表你的交付時間只會延長，有簽約的狀況下還會違約</li>
+<li>硬著頭皮交差，如此一來就是損失商譽</li>
+<li><del>人生重來</del></li>
+</ol>
+<p>這兩者似乎都不是我們樂見的</p>
+<p>那又要如何選擇我們要的模式呢，就在接下來的文章介紹<br>今天先來輕鬆的介紹，惡名昭彰的隕石開發</p>
 <span id="more"></span>
 
-<h1 id="狀況"><a href="#狀況" class="headerlink" title="狀況"></a>狀況</h1><p>假設我今天需要一個註冊會員的功能<br>我們需要驗證資料、儲存資料、金流和物流以及回傳資料</p>
-<p>今天我會先用DI(依賴注入)的方式來撰寫，這個下次有機會再來介紹</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MemberController</span> <span class="keyword">extends</span> <span class="title">Controller</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">protected</span> <span class="variable">$member_validator</span>;</span><br><span class="line">    <span class="keyword">protected</span> <span class="variable">$member_use_case</span>;</span><br><span class="line">    <span class="keyword">protected</span> <span class="variable">$member_repository</span>;</span><br><span class="line">    <span class="keyword">protected</span> <span class="variable">$member_formatter</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_ invoke__">__construct</span>(MemberValidator <span class="variable">$member_validator</span>, MemberUseCase <span class="variable">$member_use_case</span>, MemberRepository <span class="variable">$member_repository</span>, MemberFormatter <span class="variable">$member_formatter</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="variable language_">$this</span>-&gt;member_validator = <span class="variable">$member_validator</span>;</span><br><span class="line">        <span class="variable language_">$this</span>-&gt;member_use_case = <span class="variable">$member_use_case</span>;</span><br><span class="line">        <span class="variable language_">$this</span>-&gt;member_repository = <span class="variable">$member_repository</span>;</span><br><span class="line">        <span class="variable language_">$this</span>-&gt;member_formatter = <span class="variable">$member_formatter</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">registerMember</span>(<span class="params">Request <span class="variable">$request</span></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="variable">$request_data</span> = <span class="variable">$request</span>-&gt;data;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 驗證請求參數</span></span><br><span class="line">        <span class="variable">$error_key_group</span> = <span class="variable language_">$this</span>-&gt;member_validator-&gt;<span class="title function_ invoke__">getRegisterMemberErrorKeyGroup</span>(<span class="variable">$request</span>-&gt;data);</span><br><span class="line">        <span class="keyword">if</span> (<span class="title function_ invoke__">count</span>(error_key_group) != <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="variable">$validate_fail_response_data</span> = <span class="variable language_">$this</span>-&gt;<span class="variable">$member_formatter</span>-&gt;<span class="title function_ invoke__">getValidateFailResponseData</span>(<span class="variable">$error_key_group</span>)</span><br><span class="line">            <span class="keyword">return</span> <span class="title function_ invoke__">response</span>()-&gt;<span class="title function_ invoke__">json</span>(<span class="variable">$validate_fail_response_data</span>, <span class="number">400</span>)</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 金流和物流</span></span><br><span class="line">        <span class="keyword">if</span> (!<span class="variable language_">$this</span>-&gt;member_use_case-&gt;<span class="title function_ invoke__">isPaySuccessful</span>(<span class="variable">$request_data</span>)) &#123;</span><br><span class="line">            <span class="variable">$pay_fail_response_data</span> = <span class="variable language_">$this</span>-&gt;<span class="variable">$member_formatter</span>-&gt;<span class="title function_ invoke__">getPayFailResponseData</span>()</span><br><span class="line">            <span class="keyword">return</span> <span class="title function_ invoke__">response</span>()-&gt;<span class="title function_ invoke__">json</span>(<span class="variable">$pay_fail_response_data</span>, <span class="number">400</span>)</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (!<span class="variable language_">$this</span>-&gt;member_use_case-&gt;<span class="title function_ invoke__">isGiftSuccessful</span>(<span class="variable">$request_data</span>)) &#123;</span><br><span class="line">            <span class="variable">$gift_fail_response_data</span> = <span class="variable language_">$this</span>-&gt;<span class="variable">$member_formatter</span>-&gt;<span class="title function_ invoke__">getGiftFailResponseData</span>()</span><br><span class="line">            <span class="keyword">return</span> <span class="title function_ invoke__">response</span>()-&gt;<span class="title function_ invoke__">json</span>(<span class="variable">$gift_fail_response_data</span>, <span class="number">400</span>)</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 建立資料</span></span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="variable language_">$this</span>-&gt;member_repository-&gt;<span class="title function_ invoke__">createMember</span>(<span class="variable">$request_data</span>);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (\<span class="built_in">Exception</span> <span class="variable">$e</span>) &#123;</span><br><span class="line">            <span class="variable">$create_data_fail_response_data</span> = <span class="variable language_">$this</span>-&gt;<span class="variable">$member_formatter</span>-&gt;<span class="title function_ invoke__">getCreateDataFailResponseData</span>();</span><br><span class="line">            <span class="keyword">return</span> <span class="title function_ invoke__">response</span>()-&gt;<span class="title function_ invoke__">json</span>(<span class="variable">$create_data_fail_response_data</span>, <span class="number">400</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="variable">$success_response_data</span> = <span class="variable language_">$this</span>-&gt;<span class="variable">$member_formatter</span>-&gt;<span class="title function_ invoke__">getSuccessResponseData</span>();</span><br><span class="line">        <span class="keyword">return</span> <span class="title function_ invoke__">response</span>()-&gt;<span class="title function_ invoke__">json</span>(<span class="variable">$success_response_data</span>, <span class="number">201</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>我們可以得知這個順序是</p>
+<h1 id="介紹"><a href="#介紹" class="headerlink" title="介紹"></a>介紹</h1><p>從前從前有一個工程師，他叫小明<br>他花了1個月的時間，把某個系統建構完成</p>
+<p>此時某位荷包蛋，我們稱它為蛋蛋君<br>蛋蛋君跟小明說：「小明阿，我發現我需求對錯了，你要把A功能整個改掉重做」<br>…說明需求…<br>小明：「可是這會涉及到很多的層面，這樣子是連核心的業務邏輯都不同了，規格書當初不是這樣…」<br>蛋蛋君：「不行，我就是需要，還有我們只有３天的時間，我已經說３天後我要交給客戶了，你一定要改出來，就這樣」<br>然後蛋蛋君就走人了</p>
+<p>1天後…<br>蛋蛋君：「小明阿，我需要幫某個網站多加一個功能，不難」<br>…說明需求…<br>小明：「這個功能涉及的層面很廣，不是說改…」<br>蛋蛋君：「照我說的做就對了，還有明天就要！交不出來就直接扣考績！還有A功能也要交出來，我跟客戶掛保證說明天就要了！」<br>小明：「不是說三天…」<br>蛋蛋君：「有時間廢話還不快點做事，我不管你怎樣做，你就是要做出來，另外這樣不能報加班，讓我看到你報加班，你連年終都不用領了。」</p>
+<p>隔天…<br>小明：「好了，我趕出來了，我在公司做到凌晨三點才走人」<br>蛋蛋君：「慢死了，你是不是沒什麼能力阿，快點走，我不想看到你。」<br>然後蛋蛋君轉頭直接跟客戶說：「是，這些都是你要的功能，在我的領導之下，雖然晚了一點，但我還是交付給您」<br>小明：#$%$#%^</p>
+<p>我們可以看到，規格書的需求被破壞、臨時的插件這些都是隕石<br>莫名其妙有個神仙從天上砸隕石下來<br>再拿你的心血說這是他的功勞</p>
+<p>更慘一點，後續還是要叫你加上其他功能<br>這就是<strong>隕石開發</strong></p>
+<h1 id="優點"><a href="#優點" class="headerlink" title="優點"></a>優點</h1><p>我條列以下優點</p>
 <ol>
-<li>Request 進入 Controller</li>
-<li>Controller 向 Validator 驗證使用者的資料</li>
-<li>Controller 向 UseCase 傳遞資料(處理業務邏輯，像是金流物流)</li>
-<li>Controller 向 Repository 請求建立資料</li>
-<li>Repository 向 Model 請求建立資料</li>
-<li>Model 向 DB 建立資料</li>
-<li>Controller 向 Formatter 請求回傳資料</li>
-<li>Controller 給出 Response</li>
+<li>逼出你個人的極限，不過高機率寫爛扣</li>
+<li>證明參與該開發模型的員工，通常CP值都非常高</li>
 </ol>
-<p>搭配圖大概長這樣<br><img src="https://kenhuangtw.github.io/2023/07/29/RefactorMVC/newMVCSequence.png" alt="時序圖"></p>
-<p>這樣我們就可以分別為每一層撰寫單元測試，明天我們再來談這一部分</p>
+<h1 id="缺點"><a href="#缺點" class="headerlink" title="缺點"></a>缺點</h1><p>我想應該是會折壽吧</p>
+<h1 id="如何用Clean-Coder的方式去面對"><a href="#如何用Clean-Coder的方式去面對" class="headerlink" title="如何用Clean Coder的方式去面對"></a>如何用Clean Coder的方式去面對</h1><p>不講幹話了<br>工作上就是會有那麼多無理的要求，身為一個專業人員，確實是該將公司的利益視同為自己的利益</p>
+<p>基本上身為一個專業人員，就必須從中找出良好的解方，時間趕沒錯，但還是不能像爛架構妥協<br>舉個例子：<br>約莫我在寫這篇文章的前幾天，我才被要求說要改某個核心功能<br>PM說的倒是簡單，但真的這麼做，我就必須要資料表中加入8個欄位<br>但受限於我們使用的套件，跟資料庫格式設計非常有關連，且又會影響到顯示，所以這件事其實沒有那麼容易</p>
+<p>這個欄位你就想像是，我有一個資料表示用來儲存學生的資訊，而這8個欄位儲存的是他們考試的成績<br>所以哪天他們要多考一科要在紀錄上去你就要再多開一個Column<br>大概是這個概念</p>
+<p>於是乎我就必須幫自己想個解套的方法<br>後來我找了各種文章、GitHub issue想出了一個能夠符合他們的需求，又可以保持資料表的彈性不違反正規化的作法</p>
+<p>當然啦，如果說他們只給幾小時，我可能也沒時間找了。<br>但我們還是要盡力的去說明各種做法的利弊，<strong>至少盡到告知的義務</strong></p>
+<h2 id="提升自身價值"><a href="#提升自身價值" class="headerlink" title="提升自身價值"></a>提升自身價值</h2><p>這一切聽起來都不合理<br>但仔細想想，也是我們選擇這間公司的</p>
+<p>不如思考，為什麼我們會在這個地方<br>所以，多多面試、刷題、做side project、讀書<br>身為一個Clean Coder當然是找專業的公司囉</p>
+<h1 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h1><p><a target="_blank" rel="noopener" href="https://eiki.hatenablog.jp/entry/meteo_fall">メテオフォール型開発</a><br><a target="_blank" rel="noopener" href="https://ithelp.ithome.com.tw/articles/10198394">轉載好文:隕石開發法</a></p>
 <div>
     <script type="text/javascript">
     document.write(
@@ -297,7 +307,7 @@
       <footer class="post-footer">
           <div class="post-tags">
               <a href="/tags/Software-Development/" rel="tag"># Software Development</a>
-              <a href="/tags/MVC-%E9%87%8D%E6%A7%8B/" rel="tag"># MVC 重構</a>
+              <a href="/tags/Software-Development-Methodology/" rel="tag"># Software Development Methodology</a>
           </div>
 
         
@@ -306,13 +316,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2023/09/23/IronDay23/" rel="prev" title="【Day-23】改造MVC - Controller(概念篇)">
-      <i class="fa fa-chevron-left"></i> 【Day-23】改造MVC - Controller(概念篇)
+    <a href="/2023/09/26/IronDay26/" rel="prev" title="【Day-26】淺談DI - 可以嘗試不在function裡面建立物件">
+      <i class="fa fa-chevron-left"></i> 【Day-26】淺談DI - 可以嘗試不在function裡面建立物件
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2023/09/25/IronDay25/" rel="next" title="【Day-25】改造MVC - Controller(單元測試篇)">
-      【Day-25】改造MVC - Controller(單元測試篇) <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -378,7 +385,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%8B%80%E6%B3%81"><span class="nav-number">2.</span> <span class="nav-text">狀況</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BB%8B%E7%B4%B9"><span class="nav-number">2.</span> <span class="nav-text">介紹</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%84%AA%E9%BB%9E"><span class="nav-number">3.</span> <span class="nav-text">優點</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BC%BA%E9%BB%9E"><span class="nav-number">4.</span> <span class="nav-text">缺點</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E7%94%A8Clean-Coder%E7%9A%84%E6%96%B9%E5%BC%8F%E5%8E%BB%E9%9D%A2%E5%B0%8D"><span class="nav-number">5.</span> <span class="nav-text">如何用Clean Coder的方式去面對</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8F%90%E5%8D%87%E8%87%AA%E8%BA%AB%E5%83%B9%E5%80%BC"><span class="nav-number">5.1.</span> <span class="nav-text">提升自身價值</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="nav-number">6.</span> <span class="nav-text">參考資料</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -513,9 +520,9 @@
 </script>
 <script>
   var disqus_config = function() {
-    this.page.url = "https://kenhuangtw.github.io/2023/09/24/IronDay24/";
-    this.page.identifier = "2023/09/24/IronDay24/";
-    this.page.title = "【Day-24】改造MVC - Controller(實作篇)";
+    this.page.url = "https://kenhuangtw.github.io/2023/09/27/IronDay27/";
+    this.page.identifier = "2023/09/27/IronDay27/";
+    this.page.title = "【Day - 27】開發模式 - 隕石開發";
     this.language = "zh_TW";
     };
   NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
