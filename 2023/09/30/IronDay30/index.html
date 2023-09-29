@@ -20,21 +20,20 @@
     var CONFIG = {"hostname":"kenhuangtw.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"enable":null,"type":null,"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
   </script>
 
-  <meta name="description" content="文章同步於it邦 前言今天來繼續說明什麼是HTTP Status Code，以及為什麼有時候會那麼常看到200的status code">
+  <meta name="description" content="文章同步於it邦 前言鐵人賽也來到最後一天了今天就把整個系列完整的做個總結吧">
 <meta property="og:type" content="article">
-<meta property="og:title" content="【Day-18】HTTP Status Code與統一200的設計">
-<meta property="og:url" content="https://kenhuangtw.github.io/2023/09/18/IronDay18/index.html">
+<meta property="og:title" content="【Day-30】最終章 - 程式會跑而且還跑得好">
+<meta property="og:url" content="https://kenhuangtw.github.io/2023/09/30/IronDay30/index.html">
 <meta property="og:site_name" content="窩不知道">
-<meta property="og:description" content="文章同步於it邦 前言今天來繼續說明什麼是HTTP Status Code，以及為什麼有時候會那麼常看到200的status code">
+<meta property="og:description" content="文章同步於it邦 前言鐵人賽也來到最後一天了今天就把整個系列完整的做個總結吧">
 <meta property="og:locale" content="zh_TW">
-<meta property="article:published_time" content="2023-09-17T16:23:55.000Z">
-<meta property="article:modified_time" content="2023-09-17T16:29:31.418Z">
+<meta property="article:published_time" content="2023-09-29T16:45:38.000Z">
+<meta property="article:modified_time" content="2023-09-29T16:47:01.461Z">
 <meta property="article:author" content="KenHuang">
 <meta property="article:tag" content="Software Development">
-<meta property="article:tag" content="HTTP Status Code">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="https://kenhuangtw.github.io/2023/09/18/IronDay18/">
+<link rel="canonical" href="https://kenhuangtw.github.io/2023/09/30/IronDay30/">
 
 
 <script id="page-configurations">
@@ -47,7 +46,7 @@
   };
 </script>
 
-  <title>【Day-18】HTTP Status Code與統一200的設計 | 窩不知道</title>
+  <title>【Day-30】最終章 - 程式會跑而且還跑得好 | 窩不知道</title>
   
 
 
@@ -197,7 +196,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="https://kenhuangtw.github.io/2023/09/18/IronDay18/">
+    <link itemprop="mainEntityOfPage" href="https://kenhuangtw.github.io/2023/09/30/IronDay30/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -210,7 +209,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          【Day-18】HTTP Status Code與統一200的設計
+          【Day-30】最終章 - 程式會跑而且還跑得好
         </h1>
 
         <div class="post-meta">
@@ -221,7 +220,7 @@
               <span class="post-meta-item-text">發表於</span>
               
 
-              <time title="創建時間：2023-09-18 00:23:55 / 修改時間：00:29:31" itemprop="dateCreated datePublished" datetime="2023-09-18T00:23:55+08:00">2023-09-18</time>
+              <time title="創建時間：2023-09-30 00:45:38 / 修改時間：00:47:01" itemprop="dateCreated datePublished" datetime="2023-09-30T00:45:38+08:00">2023-09-30</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -242,8 +241,8 @@
       </span>
       <span class="post-meta-item-text">Disqus：</span>
     
-    <a title="disqus" href="/2023/09/18/IronDay18/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2023/09/18/IronDay18/" itemprop="commentCount"></span>
+    <a title="disqus" href="/2023/09/30/IronDay30/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2023/09/30/IronDay30/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -258,20 +257,32 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>文章同步於<a target="_blank" rel="noopener" href="https://ithelp.ithome.com.tw/articles/10321138">it邦</a></p>
-<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>今天來繼續說明什麼是HTTP Status Code，以及為什麼有時候會那麼常看到200的status code</p>
+        <p>文章同步於<a target="_blank" rel="noopener" href="https://ithelp.ithome.com.tw/articles/10331205">it邦</a></p>
+<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>鐵人賽也來到最後一天了<br>今天就把整個系列完整的做個總結吧</p>
 <span id="more"></span>
 
-<h1 id="什麼是HTTP-Status-Code"><a href="#什麼是HTTP-Status-Code" class="headerlink" title="什麼是HTTP Status Code"></a>什麼是HTTP Status Code</h1><p>簡單來說就是執行一個http或https請求後得到的一個狀態的回覆，但以數字表示<br>例如最常見的就是在我執行完一個GET請求後就會給一個200表示我完成這個請求</p>
-<h2 id="統一200的設計"><a href="#統一200的設計" class="headerlink" title="統一200的設計"></a>統一200的設計</h2><p>通常在實務上有兩種做法，第一種就是我們直接沿用定義好的status code去表示狀態</p>
-<p>第二種則是統一回傳200，<strong>但我的詳細的狀態會帶再回傳格式裡面</strong><br>當我統一回傳200時，對於前端的框架來說是比較好處理的<br>這種做法比較會應用在大專案上，因為400、500系列的錯誤無法應付專案需求而需要客製化</p>
-<p>所以我可能會類似這樣</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;status_code&quot;: 10000,</span><br><span class="line">    &quot;message&quot;: &quot;資料庫意外錯誤&quot;,</span><br><span class="line">    &quot;detail&quot;: [&quot;資料庫被關閉而無法連線&quot;],</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>可能類似的錯誤還有好幾種，所以會用客製化的錯誤碼</p>
-<p>不過如果是統一回傳200，但又沒有自定義錯誤碼的時候就容易讓設計面的詭異<br>此時的訊息傳達是不夠清晰的，且也有可能影響SEO的分數<br>前者就是違反我們的系列主軸的核心概念的，在傳達訊息不夠清晰的狀況下，就有可能導致誤會，衍生出其他問題</p>
-<h1 id="常見的status-code"><a href="#常見的status-code" class="headerlink" title="常見的status code"></a>常見的status code</h1><p>通常最常見的我們會使用200、201、204<br>200用於Get請求以及大部分的狀況<br>201用於建立資源使使用<br>204則是put、patch、head等確認成功或是資源是否存在時使用</p>
-<p>失敗的則多為400、401、404、500<br>400通常用於絕大多數的錯誤訊息，而這個錯誤是因明顯的客戶端錯誤而起，例如email格式錯誤<br>401通常會在驗證token失敗時使用，也就是說<strong>沒有經過驗證</strong>，注意是沒有驗證，跟沒有權限不同，沒有權限通常可以回覆403<br>404則是找不到路徑或資源<br>500看到就可以直接告訴後端<del>失火了</del>你的邏輯有bug</p>
-<h1 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h1><p><a target="_blank" rel="noopener" href="https://zh.wikipedia.org/zh-tw/HTTP%E7%8A%B6%E6%80%81%E7%A0%81">HTTP Status Code</a></p>
+<h1 id="邏輯上和寫法的精簡"><a href="#邏輯上和寫法的精簡" class="headerlink" title="邏輯上和寫法的精簡"></a>邏輯上和寫法的精簡</h1><p>其實不只是Coding Style可以讓程式碼更乾淨<br>還有包含邏輯上的梳理、換個方法，也可以幫助程式碼變得更乾淨</p>
+<p>舉個例子：<br>假設今天使用者在註冊的時候<br>輸入密碼需要驗證<br>規則是不可以有連續 4碼升冪 或 降冪 的狀況<br>如果驗證成功，回傳True，反之False</p>
+<p>密碼僅能為英文字母 + 數字，最長長度255</p>
+<p>1234 -&gt; False<br>1237 -&gt; True<br>3210 -&gt; False<br>5456 -&gt; False<br>abcd -&gt; False<br>Abcd -&gt; False<br>abbc -&gt; True</p>
+<p>在這個情況下我們可以用最原始的方法來寫，遍歷所有的字串 + Ascii Code的方式來撰寫</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">def validate_password(password: str) -&gt; bool:</span><br><span class="line">    &quot;&quot;&quot;驗證連續四碼是否有升降冪</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    password = password.lower()</span><br><span class="line">    temp_char = password[0]</span><br><span class="line">    invalid_count = 0</span><br><span class="line"></span><br><span class="line">    for curr_char in password[1:]:</span><br><span class="line">        if abs(ord(curr_char) - ord(temp_char)) == 1:</span><br><span class="line">            invalid_count += 1</span><br><span class="line">        else:</span><br><span class="line">            invalid_count = 0</span><br><span class="line">        </span><br><span class="line">        if invalid_count == 3:</span><br><span class="line">            return False</span><br><span class="line">        </span><br><span class="line">        temp_char = curr_char</span><br><span class="line">    </span><br><span class="line">    return True</span><br></pre></td></tr></table></figure>
+
+<p>看起來完成了，但<code>if-else</code>的使用感覺可以載更精簡，然後<code>temp_char</code>這個變數好像也不是必要的<br>所以我們可以想一下 <code>if-else</code> 的邏輯似乎可以改變為 <code>!= 1</code> 來，然後讓 invalid_count 歸零之後繼續下一個迴圈<br>再來<code>temp_char</code>的部分就可以改成使用索引的方式去做</p>
+<p>最終會變成</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">def validate_password(password: str) -&gt; bool:</span><br><span class="line">    &quot;&quot;&quot;驗證連續四碼是否有升降冪</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    password = password.lower()</span><br><span class="line">    invalid_count = 0</span><br><span class="line">    </span><br><span class="line">    for i in range(1, len(password)):</span><br><span class="line">        if abs(ord(password[i]) - ord(password[i-1])) != 1:</span><br><span class="line">            invalid_count = 0</span><br><span class="line">            continue</span><br><span class="line"></span><br><span class="line">        invalid_count += 1</span><br><span class="line">        if invalid_count == 3:</span><br><span class="line">            return False</span><br><span class="line">        </span><br><span class="line">    return True</span><br></pre></td></tr></table></figure>
+
+<p>如此一來我們就又可以少用一點記憶體空間</p>
+<h1 id="不要小看單元測試"><a href="#不要小看單元測試" class="headerlink" title="不要小看單元測試"></a>不要小看單元測試</h1><p>單元測試這件事情，部分開發者經常仗著自己寫過很多次、並以沒有時間為由來拒絕寫單元測試</p>
+<p>但實際上，撰寫單元測試，更是可以幫助自己開發更為順暢，即便自己寫過很多次，每次在寫單元測試時，其實都是在想各種狀況，畢竟使用者不會按照你所想的那樣操作系統</p>
+<p>且系統交接給後人的時候，你總不會希望有人看不懂一直問吧，寫單元測試跑過一次就知道function大概在做什麼了</p>
+<h1 id="不要什麼都為了當下，想想未來"><a href="#不要什麼都為了當下，想想未來" class="headerlink" title="不要什麼都為了當下，想想未來"></a>不要什麼都為了當下，想想未來</h1><p>一開始在學寫程式的時候，一定都有一個狀況就是<br>先把function整個寫死<br>結果別人看到就說，那如果我丟你條件以外的東西你不就炸掉了</p>
+<p>換到實際狀況，你根本不知道甚麼時候要多加什麼需求<br>我曾經遇過一個狀況，今天我們需要為每一件商品新增方案，至多8個<br>但這個功能非常之趕，一定要快速寫出來<br>此時有人提議，直接在所有商品上新增8個欄位阿，反正他以後不可能再新增了</p>
+<p>別傻了，你哪知道他哪天又回心轉意了，他哪天想要100個方案你還讓他新增的時候，你也是來問開發者為什麼不行<br>還是思考一下未來吧，你不會知道哪天需要加上什麼新功能的</p>
+<p>當下方便有時可以減輕開發者的負擔，但如此只是把技術債給債留子孫<br>明明可以做得更好，那就做好吧(<del>除非你薪水領太少</del></p>
+<h1 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h1><p>這一個系列都在講述如何成為一個更好的開發者，專業的開發者不能只站在自己的角度想<br>也必須為了公司著想，公司的營運狀況是會影響到大家的，總不會奢求公司沒賺錢還要狂發一堆獎金給你吧</p>
+<p>當把公司的利益放在前面的時候，公司就更有機會賺錢，也更有機會分享成功的果實給大家</p>
+<p>這裡不是要大家當個奴性的程序猿，完全聽命於上級<br>而是<strong>要發揮自身專業的價值，還有技術以外的想法，這樣一來才可以讓自己的價值更為提升</strong></p>
 <div>
     <script type="text/javascript">
     document.write(
@@ -288,7 +299,6 @@
       <footer class="post-footer">
           <div class="post-tags">
               <a href="/tags/Software-Development/" rel="tag"># Software Development</a>
-              <a href="/tags/HTTP-Status-Code/" rel="tag"># HTTP Status Code</a>
           </div>
 
         
@@ -297,13 +307,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2023/09/17/IronDay17/" rel="prev" title="【Day-17】HTTP Method">
-      <i class="fa fa-chevron-left"></i> 【Day-17】HTTP Method
+    <a href="/2023/09/29/IronDay29/" rel="prev" title="IronDay29">
+      <i class="fa fa-chevron-left"></i> IronDay29
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2023/09/19/IronDay19/" rel="next" title="【Day-19】MVC架構、實作與選擇">
-      【Day-19】MVC架構、實作與選擇 <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -369,7 +376,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BB%80%E9%BA%BC%E6%98%AFHTTP-Status-Code"><span class="nav-number">2.</span> <span class="nav-text">什麼是HTTP Status Code</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B5%B1%E4%B8%80200%E7%9A%84%E8%A8%AD%E8%A8%88"><span class="nav-number">2.1.</span> <span class="nav-text">統一200的設計</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B8%B8%E8%A6%8B%E7%9A%84status-code"><span class="nav-number">3.</span> <span class="nav-text">常見的status code</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="nav-number">4.</span> <span class="nav-text">參考資料</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%82%8F%E8%BC%AF%E4%B8%8A%E5%92%8C%E5%AF%AB%E6%B3%95%E7%9A%84%E7%B2%BE%E7%B0%A1"><span class="nav-number">2.</span> <span class="nav-text">邏輯上和寫法的精簡</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%8D%E8%A6%81%E5%B0%8F%E7%9C%8B%E5%96%AE%E5%85%83%E6%B8%AC%E8%A9%A6"><span class="nav-number">3.</span> <span class="nav-text">不要小看單元測試</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%8D%E8%A6%81%E4%BB%80%E9%BA%BC%E9%83%BD%E7%82%BA%E4%BA%86%E7%95%B6%E4%B8%8B%EF%BC%8C%E6%83%B3%E6%83%B3%E6%9C%AA%E4%BE%86"><span class="nav-number">4.</span> <span class="nav-text">不要什麼都為了當下，想想未來</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%B8%BD%E7%B5%90"><span class="nav-number">5.</span> <span class="nav-text">總結</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -504,9 +511,9 @@
 </script>
 <script>
   var disqus_config = function() {
-    this.page.url = "https://kenhuangtw.github.io/2023/09/18/IronDay18/";
-    this.page.identifier = "2023/09/18/IronDay18/";
-    this.page.title = "【Day-18】HTTP Status Code與統一200的設計";
+    this.page.url = "https://kenhuangtw.github.io/2023/09/30/IronDay30/";
+    this.page.identifier = "2023/09/30/IronDay30/";
+    this.page.title = "【Day-30】最終章 - 程式會跑而且還跑得好";
     this.language = "zh_TW";
     };
   NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
