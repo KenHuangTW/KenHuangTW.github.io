@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.2">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"kenhuangtw.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"enable":null,"type":null,"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
+
+  <meta name="description" content="前言在 Laravel 中，Queue的設定其實非常簡單 不過 Laravel 本身的 Application Server 是屬於同步阻塞式，沒有仰賴外部服務(Ex: Apache, Nginx…) 基本上做不到異步非阻塞 如果在這時候，某些Controller需要寄送Email，我們沒有去把 .env 把 QUEUE_CONNECTION 的 sync換掉，人只要多起來，那阻塞的程度堪比我的腦">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Laravel Queue And RabbitMQ">
+<meta property="og:url" content="https://kenhuangtw.github.io/2024/02/18/LaravelAndRabbitMQ/index.html">
+<meta property="og:site_name" content="窩不知道">
+<meta property="og:description" content="前言在 Laravel 中，Queue的設定其實非常簡單 不過 Laravel 本身的 Application Server 是屬於同步阻塞式，沒有仰賴外部服務(Ex: Apache, Nginx…) 基本上做不到異步非阻塞 如果在這時候，某些Controller需要寄送Email，我們沒有去把 .env 把 QUEUE_CONNECTION 的 sync換掉，人只要多起來，那阻塞的程度堪比我的腦">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://kenhuangtw.github.io/2024/02/18/LaravelAndRabbitMQ/sync-queue-postman-test.png">
+<meta property="og:image" content="https://kenhuangtw.github.io/2024/02/18/LaravelAndRabbitMQ/database-queue-postman-test.png">
+<meta property="og:image" content="https://kenhuangtw.github.io/2024/02/18/LaravelAndRabbitMQ/rabbitMQ-exec.png">
+<meta property="article:published_time" content="2024-02-18T06:51:00.000Z">
+<meta property="article:modified_time" content="2024-02-18T11:12:34.454Z">
+<meta property="article:author" content="KenHuang">
+<meta property="article:tag" content="Laravel">
+<meta property="article:tag" content="RabbitMQ">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://kenhuangtw.github.io/2024/02/18/LaravelAndRabbitMQ/sync-queue-postman-test.png">
+
+<link rel="canonical" href="https://kenhuangtw.github.io/2024/02/18/LaravelAndRabbitMQ/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-TW'
+  };
+</script>
+
+  <title>Laravel Queue And RabbitMQ | 窩不知道</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">窩不知道</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>關於</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分類</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜尋
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜尋..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://kenhuangtw.github.io/2024/02/18/LaravelAndRabbitMQ/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="KenHuang">
+      <meta itemprop="description" content="技能樹很歪的工程師的筆記<br>主要寫Python<br>工作用Go、PHP<br>偶爾寫寫Swift">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="窩不知道">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Laravel Queue And RabbitMQ
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+              
+
+              <time title="創建時間：2024-02-18 14:51:00 / 修改時間：19:12:34" itemprop="dateCreated datePublished" datetime="2024-02-18T14:51:00+08:00">2024-02-18</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Laravel/" itemprop="url" rel="index"><span itemprop="name">Laravel</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Laravel/RabbitMQ/" itemprop="url" rel="index"><span itemprop="name">RabbitMQ</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2024/02/18/LaravelAndRabbitMQ/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2024/02/18/LaravelAndRabbitMQ/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>在 Laravel 中，Queue的設定其實非常簡單</p>
+<p>不過 Laravel 本身的 Application Server 是屬於同步阻塞式，沒有仰賴外部服務(Ex: Apache, Nginx…)</p>
+<p>基本上做不到異步非阻塞</p>
+<p>如果在這時候，某些Controller需要寄送Email，我們沒有去把 <code>.env</code> 把 <code>QUEUE_CONNECTION</code> 的 <code>sync</code>換掉，人只要多起來，那阻塞的程度堪比我的腦血管</p>
+<p>所以今天要來介紹一個好用的工具 RabbitMQ 以及 Queue的相關設定</p>
+<span id="more"></span>
+
+<h1 id="Queue"><a href="#Queue" class="headerlink" title="Queue"></a>Queue</h1><p>先來說說 Laravel 中比較常見的設定方式，分別是 sync, database, redis</p>
+<p>這邊先放上一個簡單的寄送 email 的 function 做示範</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MailController</span> <span class="keyword">extends</span> <span class="title">Controller</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">sendMail</span>(<span class="params">Request <span class="variable">$request</span></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="variable">$target_mail</span> = <span class="variable">$request</span>-&gt;<span class="title function_ invoke__">all</span>(<span class="string">&#x27;mail_address&#x27;</span>);</span><br><span class="line"></span><br><span class="line">        <span class="title class_">Log</span>::<span class="title function_ invoke__">info</span>(<span class="string">&#x27;Prepare sending mail...&#x27;</span>);</span><br><span class="line"></span><br><span class="line">        <span class="title class_">Queue</span>::<span class="title function_ invoke__">push</span>(function(<span class="variable">$job</span>) <span class="keyword">use</span> ($<span class="title">target_mail</span>) &#123;</span><br><span class="line">            <span class="title">Mail</span>::<span class="title">to</span>($<span class="title">target_mail</span>)-&gt;<span class="title">send</span>(<span class="title">new</span> <span class="title">HelloWorldMail</span>());</span><br><span class="line">            <span class="variable">$job</span>-&gt;<span class="title function_ invoke__">delete</span>();</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;Email has been sent successfully!&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Sync"><a href="#Sync" class="headerlink" title="Sync"></a>Sync</h2><p>如其名，就是一個同步地發送方式，基本上這個是開發時使用的，上到生產環境之後必須更換掉<br>它的運作方式是，當寫入一個 job，此時會直接實行job要做的事情，也就是同步(Sync)處理這個 job ，處理完才繼續執行後續的程式碼。</p>
+<p>正常來說配置會是這樣</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">QUEUE_CONNECTION=<span class="built_in">sync</span></span><br></pre></td></tr></table></figure>
+<p>再來我們去Postman呼叫一次api，並且看看結果<br><img src="/2024/02/18/LaravelAndRabbitMQ/sync-queue-postman-test.png" alt="sync-queue-postman-test"><br>我們可以看到，一個簡單寄送郵件的function，就足足花費了2.83秒<br>可以說這個queue根本沒用</p>
+<h2 id="Database"><a href="#Database" class="headerlink" title="Database"></a>Database</h2><p>這個方式就是把 DB 當作是 queue，如果我把 job 推進去 queue 裡面，此時 Laravel 會把 job 的資訊給記錄在DB內部的某個table(通常是job)</p>
+<p>要使用這個方式的話，首先要先建立 table</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">php artisan queue:table</span><br><span class="line">php artisan migrate</span><br></pre></td></tr></table></figure>
+<p>最後記得要改掉.env的設定</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">QUEUE_CONNECTION=database</span><br></pre></td></tr></table></figure>
+<p>其他設定可以去 <code>config/queue.php</code> 中察看，這邊不多做說明</p>
+<p>如此一來，我們的queue就不再是一個同步的方式了<br>我們再來執行一次看看<br><img src="/2024/02/18/LaravelAndRabbitMQ/database-queue-postman-test.png" alt="database-queue-postman-test"></p>
+<p>時間直接被壓到213毫秒了，很明顯發送郵件的任務已經被放到queue裡面等著執行了</p>
+<h2 id="Redis"><a href="#Redis" class="headerlink" title="Redis"></a>Redis</h2><p>設定上和Database差不多，但兩者要討論的就是系統設計的範疇了<br>需要考量的點就會變成是</p>
+<ul>
+<li>這個需求要做什麼</li>
+<li>這個需求在乎甚麼</li>
+<li>他的併發量或是流量會不會大<br>不過小型專案用個database就好了，現今的硬體效能和資料庫沒有想像中的那麼脆弱不堪</li>
+</ul>
+<h1 id="RabbitMQ"><a href="#RabbitMQ" class="headerlink" title="RabbitMQ"></a>RabbitMQ</h1><p>RabbitMQ 是一個開源的訊息代理軟體(Message Broker)，它實現了高級訊息隊列協定(AMQP)的標準<br>它是一個在分散式系統中傳遞訊息的中介軟體，用於在應用程式、系統或服務之間傳遞訊息<br>RabbitMQ 提供了可靠的訊息傳遞機制，可以在不同的應用程式和服務之間進行通信，並支援各種不同的訊息通訊模式，包括點對點通信和發布&#x2F;訂閱模式等。</p>
+<p>使用 RabbitMQ 可以幫助開發者構建高效、靈活和可擴展的系統架構，尤其是在需要處理大量訊息和實現解耦合的情況下。它提供了多種客戶端庫和插件，可以與各種語言和框架集成，包括 Python、Java、Ruby、.NET 等<br>此外也提供了豐富的管理和監控工具，使得系統管理員可以輕鬆地監控訊息流量、配置設定和管理用戶。</p>
+<p>簡單來說就是專門處理 Message Queue 的軟體，並且可以透過方法來做監控</p>
+<p>至於RabbitMQ的教學其他地方有，這邊也不贅述<br>這邊給一個簡單的Docker啟動RabbitMQ的指令就好</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run --name rabbitmq -d -p 15672:15672 -p 5672:5672 -e RABBITMQ_DEFAULT_USER=guest -e RABBITMQ_DEFAULT_PASS=guest rabbitmq:management</span><br></pre></td></tr></table></figure>
+<p>跑完之後去 <a target="_blank" rel="noopener" href="http://localhost:15672/">http://localhost:15672</a> 看看是否啟動成功<br>user和password都是 guest</p>
+<h2 id="與-Redis-的差別"><a href="#與-Redis-的差別" class="headerlink" title="與 Redis 的差別"></a>與 Redis 的差別</h2><p>本質上就完全不同，Redis 是一個Key-value的非關聯式資料庫，而 RabbitMQ 是一個訊息代理軟體<br>這邊引用<a target="_blank" rel="noopener" href="https://aws.amazon.com/tw/compare/the-difference-between-rabbitmq-and-redis/">AWS的文章</a></p>
+<blockquote>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>RabbitMQ</th>
+<th>Redis</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>訊息交付</td>
+<td>保證訊息傳遞。支援複雜的邏輯。</td>
+<td>不保證訊息傳遞。需要來自訂閱者的作用中連線。</td>
+</tr>
+<tr>
+<td>訊息大小</td>
+<td>訊息大小限制在 128MB 以內。可以處理大型訊息。</td>
+<td>無訊息限制，但是處理大型訊息 (大於 1 MB) 時效能會降低。</td>
+</tr>
+<tr>
+<td>訊息持久性</td>
+<td>支援持久性和暫時性訊息。將持久性訊息寫入磁碟。</td>
+<td>預設不支援持久性訊息。</td>
+</tr>
+<tr>
+<td>訊息加密</td>
+<td>支援 SSL 加密。</td>
+<td>SSL 加密適用於 Redis 6.0 版及以上版本。</td>
+</tr>
+<tr>
+<td>速度</td>
+<td>每秒最多傳送數萬條訊息。</td>
+<td>每秒最多傳送數百萬條訊息。</td>
+</tr>
+<tr>
+<td>可用性</td>
+<td>在叢集中建立多個對等節點。</td>
+<td>在叢集中使用領導人-追隨者模型。</td>
+</tr>
+</tbody></table>
+</blockquote>
+<p>所以我們可以發現，大部分的時間點RabbitMQ都比起Redis好，除非今天有需要有非常大量的訊息處理，或是即時資料處理那才會改用Redis</p>
+<h2 id="Laravel-安裝"><a href="#Laravel-安裝" class="headerlink" title="Laravel 安裝"></a>Laravel 安裝</h2><p>首先，需要安裝 <code>php-amqplib</code> 再安裝 <code>laravel-queue-rabbitmq</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">composer require php-amqplib/php-amqplib</span><br><span class="line">composer require vladimir-yuldashev/laravel-queue-rabbitmq</span><br></pre></td></tr></table></figure>
+
+<p>再來去 <code>config/queue.php</code> 進行設定</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&#x27;connections&#x27;</span> =&gt; [</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line"></span><br><span class="line">    <span class="string">&#x27;rabbitmq&#x27;</span> =&gt; [</span><br><span class="line">    </span><br><span class="line">       <span class="string">&#x27;driver&#x27;</span> =&gt; <span class="string">&#x27;rabbitmq&#x27;</span>,</span><br><span class="line">       <span class="string">&#x27;hosts&#x27;</span> =&gt; [</span><br><span class="line">           [</span><br><span class="line">               <span class="string">&#x27;host&#x27;</span> =&gt; <span class="title function_ invoke__">env</span>(<span class="string">&#x27;RABBITMQ_HOST&#x27;</span>, <span class="string">&#x27;127.0.0.1&#x27;</span>),</span><br><span class="line">               <span class="string">&#x27;port&#x27;</span> =&gt; <span class="title function_ invoke__">env</span>(<span class="string">&#x27;RABBITMQ_PORT&#x27;</span>, <span class="number">5672</span>),</span><br><span class="line">               <span class="string">&#x27;user&#x27;</span> =&gt; <span class="title function_ invoke__">env</span>(<span class="string">&#x27;RABBITMQ_USER&#x27;</span>, <span class="string">&#x27;guest&#x27;</span>),</span><br><span class="line">               <span class="string">&#x27;password&#x27;</span> =&gt; <span class="title function_ invoke__">env</span>(<span class="string">&#x27;RABBITMQ_PASSWORD&#x27;</span>, <span class="string">&#x27;guest&#x27;</span>),</span><br><span class="line">               <span class="string">&#x27;vhost&#x27;</span> =&gt; <span class="title function_ invoke__">env</span>(<span class="string">&#x27;RABBITMQ_VHOST&#x27;</span>, <span class="string">&#x27;/&#x27;</span>),</span><br><span class="line">           ],</span><br><span class="line">           <span class="comment">// ...</span></span><br><span class="line">       ],</span><br><span class="line"></span><br><span class="line">       <span class="comment">// ...</span></span><br><span class="line">    ],</span><br><span class="line"></span><br><span class="line">    <span class="comment">// ...    </span></span><br><span class="line">],</span><br></pre></td></tr></table></figure>
+
+<p>記得 .env 也要改掉</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">QUEUE_CONNECTION=rabbitmq</span><br></pre></td></tr></table></figure>
+
+<p>然後發送 request 給 Laravel Server</p>
+<p>再來我們就可以看到RabbitMQ有任務進來了<br><img src="/2024/02/18/LaravelAndRabbitMQ/rabbitMQ-exec.png" alt="rabbitMQ-exec"><br>當然正常可能沒機會看到，這邊是因為我故意沒有啟動queue所以才看的到，queue work之後就會看到他被消化掉了</p>
+<p>如此一來我們的 Laravel 使用的 Queue 就會是RabbitMQ了</p>
+<h1 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h1><p><a target="_blank" rel="noopener" href="https://laravel.com/docs/10.x/queues">Laravel Queues</a><br><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/43467680/laravel-queues-how-sync-driver-works-does-it-executes-in-a-separate-process-t">laravel queues - how sync driver works?</a><br><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/RabbitMQ">RabbitMQ</a><br><a target="_blank" rel="noopener" href="https://kucw.github.io/blog/2020/11/rabbitmq/">RabbitMQ 基本介紹、安裝教學</a><br><a target="_blank" rel="noopener" href="https://github.com/vyuldashev/laravel-queue-rabbitmq">laravel-queue-rabbitmq</a><br><a target="_blank" rel="noopener" href="https://aws.amazon.com/tw/compare/the-difference-between-rabbitmq-and-redis/">RabbitMQ 與 Redis 之間有何差異？</a></p>
+<p></style></p>
+<hr class="style-one" />
+
+<p>如果有錯誤的部份，歡迎指正，謝謝。<br>如果你喜歡這篇文章，請幫我拍手<br>只需要註冊會員就可以囉，完全不用花費任何一毛錢就可以用來鼓裡創作者囉</p>
+<div>
+    <script type="text/javascript">
+    document.write(
+        "<iframe scrolling='no' frameborder='0' sandbox='allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox allow-storage-access-by-user-activation' style='height: 212px; width: 100%;' src='https://button.like.co/in/embed/wtf81905/button?referrer=" +
+        encodeURIComponent(location.href.split("?")[0].split("#")[0]) + "'></iframe>");
+    </script>
+</div>
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Laravel/" rel="tag"># Laravel</a>
+              <a href="/tags/RabbitMQ/" rel="tag"># RabbitMQ</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/09/30/IronDay30/" rel="prev" title="【Day-30】最終章 - 程式會跑而且還跑得好">
+      <i class="fa fa-chevron-left"></i> 【Day-30】最終章 - 程式會跑而且還跑得好
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Queue"><span class="nav-number">2.</span> <span class="nav-text">Queue</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Sync"><span class="nav-number">2.1.</span> <span class="nav-text">Sync</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Database"><span class="nav-number">2.2.</span> <span class="nav-text">Database</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Redis"><span class="nav-number">2.3.</span> <span class="nav-text">Redis</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#RabbitMQ"><span class="nav-number">3.</span> <span class="nav-text">RabbitMQ</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%88%87-Redis-%E7%9A%84%E5%B7%AE%E5%88%A5"><span class="nav-number">3.1.</span> <span class="nav-text">與 Redis 的差別</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Laravel-%E5%AE%89%E8%A3%9D"><span class="nav-number">3.2.</span> <span class="nav-text">Laravel 安裝</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="nav-number">4.</span> <span class="nav-text">參考資料</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">KenHuang</p>
+  <div class="site-description" itemprop="description">技能樹很歪的工程師的筆記<br>主要寫Python<br>工作用Go、PHP<br>偶爾寫寫Swift</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">41</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">39</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/KenHuangTW" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;KenHuangTW" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">KenHuang</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://KenH-TW.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  var disqus_config = function() {
+    this.page.url = "https://kenhuangtw.github.io/2024/02/18/LaravelAndRabbitMQ/";
+    this.page.identifier = "2024/02/18/LaravelAndRabbitMQ/";
+    this.page.title = "Laravel Queue And RabbitMQ";
+    this.language = "zh_TW";
+    };
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://KenH-TW.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  });
+</script>
+
+</body>
+</html>

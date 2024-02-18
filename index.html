@@ -193,7 +193,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="https://kenhuangtw.github.io/2023/10/21/AreEstimatesStupid/">
+    <link itemprop="mainEntityOfPage" href="https://kenhuangtw.github.io/2024/02/18/LaravelAndRabbitMQ/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -207,7 +207,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2023/10/21/AreEstimatesStupid/" class="post-title-link" itemprop="url">淺談開發方與公司方的角度</a>
+            <a href="/2024/02/18/LaravelAndRabbitMQ/" class="post-title-link" itemprop="url">Laravel Queue And RabbitMQ</a>
         </h2>
 
         <div class="post-meta">
@@ -216,16 +216,23 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">發表於</span>
+              
 
-              <time title="創建時間：2023-10-21 21:39:37" itemprop="dateCreated datePublished" datetime="2023-10-21T21:39:37+08:00">2023-10-21</time>
+              <time title="創建時間：2024-02-18 14:51:00 / 修改時間：19:12:34" itemprop="dateCreated datePublished" datetime="2024-02-18T14:51:00+08:00">2024-02-18</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新於</span>
-                <time title="修改時間：2023-10-22 12:05:28" itemprop="dateModified" datetime="2023-10-22T12:05:28+08:00">2023-10-22</time>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
               </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Laravel/" itemprop="url" rel="index"><span itemprop="name">Laravel</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Laravel/RabbitMQ/" itemprop="url" rel="index"><span itemprop="name">RabbitMQ</span></a>
+                </span>
+            </span>
 
           
   
@@ -236,8 +243,8 @@
       </span>
       <span class="post-meta-item-text">Disqus：</span>
     
-    <a title="disqus" href="/2023/10/21/AreEstimatesStupid/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2023/10/21/AreEstimatesStupid/" itemprop="commentCount"></span>
+    <a title="disqus" href="/2024/02/18/LaravelAndRabbitMQ/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2024/02/18/LaravelAndRabbitMQ/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -252,11 +259,14 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>這篇文章將是一個很大的主題，會包含例如：預估時間、更改需求、技術債等等開發者會遇到的問題<br>並且從<strong>正常</strong>公司方的角度來看待這些問題</p>
-<p>如果你的公司是技術真的很老舊(python2、php5.x)這種狀況，則你可能要優先考慮自己的職涯</p>
+          <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>在 Laravel 中，Queue的設定其實非常簡單</p>
+<p>不過 Laravel 本身的 Application Server 是屬於同步阻塞式，沒有仰賴外部服務(Ex: Apache, Nginx…)</p>
+<p>基本上做不到異步非阻塞</p>
+<p>如果在這時候，某些Controller需要寄送Email，我們沒有去把 <code>.env</code> 把 <code>QUEUE_CONNECTION</code> 的 <code>sync</code>換掉，人只要多起來，那阻塞的程度堪比我的腦血管</p>
+<p>所以今天要來介紹一個好用的工具 RabbitMQ 以及 Queue的相關設定</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2023/10/21/AreEstimatesStupid/#more" rel="contents">
+              <a class="btn" href="/2024/02/18/LaravelAndRabbitMQ/#more" rel="contents">
                 閱讀全文 &raquo;
               </a>
             </div>
@@ -733,13 +743,13 @@
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-count">19</span>
         <span class="site-state-item-name">分類</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">38</span>
+        <span class="site-state-item-count">39</span>
         <span class="site-state-item-name">標籤</span></a>
       </div>
   </nav>
@@ -771,7 +781,7 @@
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2023</span>
+  <span itemprop="copyrightYear">2024</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
