@@ -193,6 +193,109 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://kenhuangtw.github.io/2024/02/21/RabbitMQvsDataBase/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="KenHuang">
+      <meta itemprop="description" content="技能樹很歪的工程師的筆記<br>主要寫Python<br>工作用Go、PHP<br>偶爾寫寫Swift">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="窩不知道">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/02/21/RabbitMQvsDataBase/" class="post-title-link" itemprop="url">RabbitMQ vs DataBase</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+              
+
+              <time title="創建時間：2024-02-21 20:45:36 / 修改時間：21:03:45" itemprop="dateCreated datePublished" datetime="2024-02-21T20:45:36+08:00">2024-02-21</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/RabbitMQ/" itemprop="url" rel="index"><span itemprop="name">RabbitMQ</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/RabbitMQ/Queue/" itemprop="url" rel="index"><span itemprop="name">Queue</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2024/02/21/RabbitMQvsDataBase/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2024/02/21/RabbitMQvsDataBase/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>補述前幾天寫的<a href="https://kenhuangtw.github.io/2024/02/18/LaravelAndRabbitMQ">文章</a><br>當時有提到和Redis的取捨<br>今天補述一下 DataBase 和 RabbitMQ 的之間的選擇</p>
+<h1 id="兩者的差異"><a href="#兩者的差異" class="headerlink" title="兩者的差異"></a>兩者的差異</h1><p>如同 Redis 和 RabbitMQ 一樣，本質上 DataBase 和 RabbitMQ 就是完全不同的資源<br>前者主要使用於<strong>資料儲存</strong>，後者則是<strong>訊息代理(Message broker)</strong></p>
+<p>我們可以把它看作<strong>倉庫</strong>和<strong>貨架</strong></p>
+<p>DataBase就像倉庫一樣，它們被設計用來存放許多不同的東西，並使它們相對整齊地保持在一起<br>一個好的倉庫可以讓使用者快速找到其中的物品，避免丟失零件和材料<br>如果東西進入了倉庫，它可以很容易地再次取出來，但不能立即取出</p>
+<p>另一方面，訊息代理就像裝在產線附近的貨架(或料架)<br>零件從上一個操作被移動到貨架上，等待被下一個人使用<br>這些架子被設計用來存放少量相同的東西 - 就像 Queue 一樣。它們靠近工人，所以當下一個零件準備好進行加工時，它可以很快地被取出來（而不是去倉庫，可能需要幾分鐘甚至更長時間）。此外，工人可以立即看到架子上的物品 - 如果架子是空的，工人可能會休息一下，等待它再次積累一兩個零件。</p>
+<h1 id="如何選擇"><a href="#如何選擇" class="headerlink" title="如何選擇"></a>如何選擇</h1><p>僅以兩者之間來做選擇的話，假設我們希望它快速的處理完任務的話，我們就會使用RabbitMQ<br>那如果說有需要複雜的操作，例如可能還要把執行狀態、結果等等資訊去做額外處理，那可能要考慮Database(或者兩者作結合)</p>
+<p>我個人認為在專案不大的狀況下，併發量不多的狀況下其實用個Database就很夠了，那如果說有甚麼高併發、高流量<br>Kafka可能會是個選擇，不過這就是另一個故事了</p>
+<h1 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h1><p><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/48099098/message-broker-vs-database-and-monitoring">Message broker vs. database and monitoring</a><br><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=DOaDpHh1FsQ">Using your Database as a Queue? Good or bad idea?</a></p>
+<p></style></p>
+<hr class="style-one" />
+
+<p>如果有錯誤的部份，歡迎指正，謝謝。<br>如果你喜歡這篇文章，請幫我拍手<br>只需要註冊會員就可以囉，完全不用花費任何一毛錢就可以用來鼓裡創作者囉</p>
+<div>
+    <script type="text/javascript">
+    document.write(
+        "<iframe scrolling='no' frameborder='0' sandbox='allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox allow-storage-access-by-user-activation' style='height: 212px; width: 100%;' src='https://button.like.co/in/embed/wtf81905/button?referrer=" +
+        encodeURIComponent(location.href.split("?")[0].split("#")[0]) + "'></iframe>");
+    </script>
+</div>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
     <link itemprop="mainEntityOfPage" href="https://kenhuangtw.github.io/2024/02/18/LaravelAndRabbitMQ/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -562,111 +665,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="https://kenhuangtw.github.io/2023/09/27/IronDay27/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="KenHuang">
-      <meta itemprop="description" content="技能樹很歪的工程師的筆記<br>主要寫Python<br>工作用Go、PHP<br>偶爾寫寫Swift">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="窩不知道">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2023/09/27/IronDay27/" class="post-title-link" itemprop="url">【Day - 27】開發模式 - 隕石開發</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">發表於</span>
-
-              <time title="創建時間：2023-09-27 00:43:46" itemprop="dateCreated datePublished" datetime="2023-09-27T00:43:46+08:00">2023-09-27</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新於</span>
-                <time title="修改時間：2023-09-28 01:08:24" itemprop="dateModified" datetime="2023-09-28T01:08:24+08:00">2023-09-28</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分類於</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/2023%E9%90%B5%E4%BA%BA%E8%B3%BD/" itemprop="url" rel="index"><span itemprop="name">2023鐵人賽</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/2023/09/27/IronDay27/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2023/09/27/IronDay27/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>文章同步於<a target="_blank" rel="noopener" href="https://ithelp.ithome.com.tw/articles/10329061">it邦</a></p>
-<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>鐵人賽來到最後3天了，我想講開發模式<br>這和程式會不會跑有什麼關係，當然有，關係可大了</p>
-<p>當你沒有思考過開發模式的時候，就很容易讓軟體開發出現問題<br>例如說：我今天走一步算一步，我就直接下去寫</p>
-<p>結果發現寫出來的和業主、PM、市場需要的產品完全不同<br>此時你會面臨幾個選項</p>
-<ol>
-<li>全部重來，但這代表你的交付時間只會延長，有簽約的狀況下還會違約</li>
-<li>硬著頭皮交差，如此一來就是損失商譽</li>
-<li><del>人生重來</del></li>
-</ol>
-<p>這兩者似乎都不是我們樂見的</p>
-<p>那又要如何選擇我們要的模式呢，就在接下來的文章介紹<br>今天先來輕鬆的介紹，惡名昭彰的隕石開發</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2023/09/27/IronDay27/#more" rel="contents">
-                閱讀全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -736,20 +734,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">41</span>
+          <span class="site-state-item-count">42</span>
           <span class="site-state-item-name">文章</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-count">21</span>
         <span class="site-state-item-name">分類</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">39</span>
+        <span class="site-state-item-count">40</span>
         <span class="site-state-item-name">標籤</span></a>
       </div>
   </nav>
