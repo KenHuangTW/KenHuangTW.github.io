@@ -20,15 +20,15 @@
     var CONFIG = {"hostname":"kenhuangtw.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"enable":null,"type":null,"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
   </script>
 
-  <meta name="description" content="前言補述前幾天寫的文章當時有提到和Redis的取捨今天補述一下 DataBase 和 RabbitMQ 的之間的選擇 兩者的差異如同 Redis 和 RabbitMQ 一樣，本質上 DataBase 和 RabbitMQ 就是完全不同的資源前者主要使用於資料儲存，後者則是訊息代理(Message broker) 我們可以把它看作倉庫和貨架 DataBase就像倉庫一樣，它們被設計用來存放許多不同的">
+  <meta name="description" content="前言補述前幾天寫的文章當時有提到和Redis的取捨今天補述一下 DataBase 和 RabbitMQ 的之間的選擇">
 <meta property="og:type" content="article">
 <meta property="og:title" content="RabbitMQ vs DataBase">
 <meta property="og:url" content="https://kenhuangtw.github.io/2024/02/21/RabbitMQvsDataBase/index.html">
 <meta property="og:site_name" content="窩不知道">
-<meta property="og:description" content="前言補述前幾天寫的文章當時有提到和Redis的取捨今天補述一下 DataBase 和 RabbitMQ 的之間的選擇 兩者的差異如同 Redis 和 RabbitMQ 一樣，本質上 DataBase 和 RabbitMQ 就是完全不同的資源前者主要使用於資料儲存，後者則是訊息代理(Message broker) 我們可以把它看作倉庫和貨架 DataBase就像倉庫一樣，它們被設計用來存放許多不同的">
+<meta property="og:description" content="前言補述前幾天寫的文章當時有提到和Redis的取捨今天補述一下 DataBase 和 RabbitMQ 的之間的選擇">
 <meta property="og:locale" content="zh_TW">
 <meta property="article:published_time" content="2024-02-21T12:45:36.000Z">
-<meta property="article:modified_time" content="2024-02-21T13:03:45.936Z">
+<meta property="article:modified_time" content="2024-02-21T13:07:11.053Z">
 <meta property="article:author" content="KenHuang">
 <meta property="article:tag" content="RabbitMQ">
 <meta property="article:tag" content="Queue">
@@ -221,7 +221,7 @@
               <span class="post-meta-item-text">發表於</span>
               
 
-              <time title="創建時間：2024-02-21 20:45:36 / 修改時間：21:03:45" itemprop="dateCreated datePublished" datetime="2024-02-21T20:45:36+08:00">2024-02-21</time>
+              <time title="創建時間：2024-02-21 20:45:36 / 修改時間：21:07:11" itemprop="dateCreated datePublished" datetime="2024-02-21T20:45:36+08:00">2024-02-21</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -263,6 +263,8 @@
 
       
         <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>補述前幾天寫的<a href="https://kenhuangtw.github.io/2024/02/18/LaravelAndRabbitMQ">文章</a><br>當時有提到和Redis的取捨<br>今天補述一下 DataBase 和 RabbitMQ 的之間的選擇</p>
+<span id="more"></span>
+
 <h1 id="兩者的差異"><a href="#兩者的差異" class="headerlink" title="兩者的差異"></a>兩者的差異</h1><p>如同 Redis 和 RabbitMQ 一樣，本質上 DataBase 和 RabbitMQ 就是完全不同的資源<br>前者主要使用於<strong>資料儲存</strong>，後者則是<strong>訊息代理(Message broker)</strong></p>
 <p>我們可以把它看作<strong>倉庫</strong>和<strong>貨架</strong></p>
 <p>DataBase就像倉庫一樣，它們被設計用來存放許多不同的東西，並使它們相對整齊地保持在一起<br>一個好的倉庫可以讓使用者快速找到其中的物品，避免丟失零件和材料<br>如果東西進入了倉庫，它可以很容易地再次取出來，但不能立即取出</p>
