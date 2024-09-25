@@ -2,6 +2,15 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://kenhuangtw.github.io/2024/09/25/leetcode2022/</loc>
+    
+    <lastmod>2024-09-25</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://kenhuangtw.github.io/about/index.html</loc>
     
     <lastmod>2024-09-25</lastmod>
@@ -873,6 +882,13 @@
   
   <url>
     <loc>https://kenhuangtw.github.io/categories/Python/Golang/Swift/leetcode/</loc>
+    <lastmod>2024-09-25</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://kenhuangtw.github.io/categories/Python/leetcode/</loc>
     <lastmod>2024-09-25</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
