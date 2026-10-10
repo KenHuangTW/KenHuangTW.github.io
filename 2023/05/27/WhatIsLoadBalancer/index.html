@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 8.1.2">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"kenhuangtw.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.29.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"base16/tomorrow","dark":"base16/tomorrow"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜尋...","empty":"我們無法找到任何有關 ${query} 的搜索結果","hits_time":"找到 ${hits} 個搜索結果（用時 ${time} 毫秒）","hits":"找到 ${hits} 個搜索結果"},"path":"/search.json","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="前言現在也是個工作第二年的後端了，是時候該學一些系統設計的知識 系統設計顧名思義是指設計軟體系統的過程，例如說我們要設計一個大型社交網站那我們可能就會需要非常非常多的技術，包含：用什麼語言去寫Server、使用什麼樣的Database、如果說系統Loading太大該怎麼辦等等，族繁不及備載。 要考量的點實在太多了，而且也沒有所謂的正確答案，端看能不能有效解決問題能夠利用手上會的知識，去整合並且設計">
+<meta property="og:type" content="article">
+<meta property="og:title" content="什麼是 Load Balancer">
+<meta property="og:url" content="https://kenhuangtw.github.io/2023/05/27/WhatIsLoadBalancer/index.html">
+<meta property="og:site_name" content="窩不知道">
+<meta property="og:description" content="前言現在也是個工作第二年的後端了，是時候該學一些系統設計的知識 系統設計顧名思義是指設計軟體系統的過程，例如說我們要設計一個大型社交網站那我們可能就會需要非常非常多的技術，包含：用什麼語言去寫Server、使用什麼樣的Database、如果說系統Loading太大該怎麼辦等等，族繁不及備載。 要考量的點實在太多了，而且也沒有所謂的正確答案，端看能不能有效解決問題能夠利用手上會的知識，去整合並且設計">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://kenhuangtw.github.io/2023/05/27/WhatIsLoadBalancer/LoadBalancer.jpg">
+<meta property="og:image" content="https://kenhuangtw.github.io/2023/05/27/WhatIsLoadBalancer/LeastResponseTimeMethod.png">
+<meta property="article:published_time" content="2023-05-27T08:46:59.000Z">
+<meta property="article:modified_time" content="2023-05-27T11:19:07.000Z">
+<meta property="article:author" content="KenHuang">
+<meta property="article:tag" content="Load Balancer">
+<meta property="article:tag" content="note">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://kenhuangtw.github.io/2023/05/27/WhatIsLoadBalancer/LoadBalancer.jpg">
+
+
+<link rel="canonical" href="https://kenhuangtw.github.io/2023/05/27/WhatIsLoadBalancer/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-TW","comments":true,"permalink":"https://kenhuangtw.github.io/2023/05/27/WhatIsLoadBalancer/","path":"2023/05/27/WhatIsLoadBalancer/","title":"什麼是 Load Balancer"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>什麼是 Load Balancer | 窩不知道</title>
+  
+
+
+
+
+
+
+
+
+  
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script><script src="/js/bookmark.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/js/third-party/search/local-search.js" defer></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">窩不知道</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜尋" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>關於</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分類</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜尋
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜尋..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BB%80%E9%BA%BC%E6%98%AFLoad-Balancer"><span class="nav-number">2.</span> <span class="nav-text">什麼是Load Balancer</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B8%B8%E8%A6%8B%E7%9A%84-Public-Rule"><span class="nav-number">3.</span> <span class="nav-text">常見的 Public Rule</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Redundant-Load-Balancer"><span class="nav-number">4.</span> <span class="nav-text">Redundant Load Balancer</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%81%B2%E6%98%8E"><span class="nav-number">5.</span> <span class="nav-text">聲明</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%B3%87%E6%96%99%E4%BE%86%E6%BA%90"><span class="nav-number">6.</span> <span class="nav-text">資料來源</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">KenHuang</p>
+  <div class="site-description" itemprop="description">Hi 我是 Ken, 是個後端工程師</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">44</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">22</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">41</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/KenHuangTW" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;KenHuangTW" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://kenhuangtw.github.io/2023/05/27/WhatIsLoadBalancer/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="KenHuang">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="窩不知道">
+      <meta itemprop="description" content="Hi 我是 Ken, 是個後端工程師">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="什麼是 Load Balancer | 窩不知道">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          什麼是 Load Balancer
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+      
+
+      <time title="創建時間：2023-05-27 16:46:59 / 修改時間：19:19:07" itemprop="dateCreated datePublished" datetime="2023-05-27T16:46:59+08:00">2023-05-27</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分類於</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/System-Design/" itemprop="url" rel="index"><span itemprop="name">System Design</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2023/05/27/WhatIsLoadBalancer/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2023/05/27/WhatIsLoadBalancer/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>現在也是個工作第二年的後端了，是時候該學一些系統設計的知識</p>
+<p>系統設計顧名思義是指設計軟體系統的過程，例如說我們要設計一個大型社交網站<br>那我們可能就會需要非常非常多的技術，包含：用什麼語言去寫Server、使用什麼樣的Database、如果說系統Loading太大該怎麼辦等等，族繁不及備載。</p>
+<p>要考量的點實在太多了，而且也沒有所謂的正確答案，端看能不能有效解決問題<br>能夠利用手上會的知識，去整合並且設計系統</p>
+<p>另外面試的時候不會要你真的設計一個超級完整的系統，每個細節都要做到<br>不會，因為時間不夠，而且要你在臨場想出來也是強人所難，別人花了好幾次會議好幾個月甚至好幾年才構思出來的系統，要你在45~60分鐘內想出來，屬實過分。<br>所以我們在面試的時候必須持續溝通，詢問面試官說，這邊的需求，你想怎麼做等等。</p>
+<p>系統設計面試都是開放式的問題，沒有標準答案，所以要慢慢限縮問題的範圍，而且實際面對需求或客戶，本來也就是這樣，每個人的認知都不同，你的大跟我的大應該是不同的。這時候如果沒有釐清需求，直接給他做下去，相信我87%痛苦的都是自己。</p>
+<p>好了，我們先來介紹什麼是Load Balancer吧</p>
+<span id="more"></span>
+
+<h1 id="什麼是Load-Balancer"><a href="#什麼是Load-Balancer" class="headerlink" title="什麼是Load Balancer"></a>什麼是Load Balancer</h1><p>負責分散每個 Server 或是 Service 的壓力，就是 Load Balancer 的工作<br><img src="/2023/05/27/WhatIsLoadBalancer/LoadBalancer.jpg"></p>
+<p>假設今天我們有三台 Server(A, B, C)， Load Balancer 的工作就必須要把流量平均分布到各個Server上<br>避免流量過度集中在某個 Server 而過度爆掉</p>
+<p>你可以想像，Server 是員工，Load Balancer就像是我們的主管一樣，負責把每個任務每個任務平均分配到每個人手上(如果你的主管沒有，那我也沒辦法🌚)</p>
+<h1 id="常見的-Public-Rule"><a href="#常見的-Public-Rule" class="headerlink" title="常見的 Public Rule"></a>常見的 Public Rule</h1><ul>
+<li>Least Connection Method: 就是我們剛剛說的平均分配每個流量給不同的Server的方式</li>
+<li>Least Response Time Method: 分配給沒有那麼多用戶端連結的Server，並且那個Server的回應時間是最短的</li>
+</ul>
+<details>
+  <summary>圖片</summary>
+  <img src="LeastResponseTimeMethod.png" id="image" class="collapsed">
+</details>
+
+<ul>
+<li>Least Bandwidth Method: 把流量分到目前每秒頻寬(MB)最小的Server</li>
+<li>Round Robin Method: 按照順序分，如果 Server 掛了就跳過，適用於硬體配備相差不多的 Server 上<ul>
+<li>IP Hash: 按照使用者的 IP 去分</li>
+</ul>
+</li>
+</ul>
+<h1 id="Redundant-Load-Balancer"><a href="#Redundant-Load-Balancer" class="headerlink" title="Redundant Load Balancer"></a>Redundant Load Balancer</h1><p>防止 Load Balancer 掛了還有另一個 Load Balancer 可以用</p>
+<h1 id="聲明"><a href="#聲明" class="headerlink" title="聲明"></a>聲明</h1><p>本人只是將學習 Load Balancer 的過程記錄下來，並且整合成一篇筆記<br>如有侵權煩請告知<br>This writings just record the swift install process. If infringement, please be informed.</p>
+<h1 id="資料來源"><a href="#資料來源" class="headerlink" title="資料來源"></a>資料來源</h1><p><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=32946vRu4RA&ab_channel=%E4%BB%8A%E5%A4%A9%E6%AF%94%E6%98%A8%E5%A4%A9%E5%8E%B2%E5%AE%B3">https://www.youtube.com/watch?v=32946vRu4RA&amp;ab_channel=%E4%BB%8A%E5%A4%A9%E6%AF%94%E6%98%A8%E5%A4%A9%E5%8E%B2%E5%AE%B3</a></p>
+<div>
+    <script type="text/javascript">
+    document.write(
+        "<iframe scrolling='no' frameborder='0' sandbox='allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox allow-storage-access-by-user-activation' style='height: 212px; width: 100%;' src='https://button.like.co/in/embed/wtf81905/button?referrer=" +
+        encodeURIComponent(location.href.split("?")[0].split("#")[0]) + "'></iframe>");
+    </script>
+</div>
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Load-Balancer/" rel="tag"># Load Balancer</a>
+              <a href="/tags/note/" rel="tag"># note</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/01/28/leetcode997/" rel="prev" title="Leetcode - 997 with Python and Golang">
+                  <i class="fa fa-angle-left"></i> Leetcode - 997 with Python and Golang
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2023/07/29/RefactorMVC/" rel="next" title="MVC與MTV框架的重構">
+                  MVC與MTV框架的重構 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  <div class="comments" id="disqus_thread">
+    <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+  </div>
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">KenHuang</span>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="回到頂端">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<script class="next-config" data-name="disqus" type="application/json">{"enable":true,"shortname":"KenH-TW","count":true,"i18n":{"disqus":"zh_TW"}}</script>
+<script src="/js/third-party/comments/disqus.js" defer></script>
+
+</body>
+</html>

@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 8.1.2">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"kenhuangtw.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.29.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"base16/tomorrow","dark":"base16/tomorrow"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜尋...","empty":"我們無法找到任何有關 ${query} 的搜索結果","hits_time":"找到 ${hits} 個搜索結果（用時 ${time} 毫秒）","hits":"找到 ${hits} 個搜索結果"},"path":"/search.json","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="文章同步於it邦 前言鐵人賽來到最後3天了，我想講開發模式這和程式會不會跑有什麼關係，當然有，關係可大了 當你沒有思考過開發模式的時候，就很容易讓軟體開發出現問題例如說：我今天走一步算一步，我就直接下去寫 結果發現寫出來的和業主、PM、市場需要的產品完全不同此時你會面臨幾個選項  全部重來，但這代表你的交付時間只會延長，有簽約的狀況下還會違約 硬著頭皮交差，如此一來就是損失商譽 人生重來  這兩者">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【Day - 27】開發模式 - 隕石開發">
+<meta property="og:url" content="https://kenhuangtw.github.io/2023/09/27/IronDay27/index.html">
+<meta property="og:site_name" content="窩不知道">
+<meta property="og:description" content="文章同步於it邦 前言鐵人賽來到最後3天了，我想講開發模式這和程式會不會跑有什麼關係，當然有，關係可大了 當你沒有思考過開發模式的時候，就很容易讓軟體開發出現問題例如說：我今天走一步算一步，我就直接下去寫 結果發現寫出來的和業主、PM、市場需要的產品完全不同此時你會面臨幾個選項  全部重來，但這代表你的交付時間只會延長，有簽約的狀況下還會違約 硬著頭皮交差，如此一來就是損失商譽 人生重來  這兩者">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2023-09-26T16:43:46.000Z">
+<meta property="article:modified_time" content="2023-09-27T17:08:24.000Z">
+<meta property="article:author" content="KenHuang">
+<meta property="article:tag" content="Software Development">
+<meta property="article:tag" content="Software Development Methodology">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://kenhuangtw.github.io/2023/09/27/IronDay27/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-TW","comments":true,"permalink":"https://kenhuangtw.github.io/2023/09/27/IronDay27/","path":"2023/09/27/IronDay27/","title":"【Day - 27】開發模式 - 隕石開發"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>【Day - 27】開發模式 - 隕石開發 | 窩不知道</title>
+  
+
+
+
+
+
+
+
+
+  
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script><script src="/js/bookmark.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/js/third-party/search/local-search.js" defer></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">窩不知道</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜尋" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>關於</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分類</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜尋
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜尋..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BB%8B%E7%B4%B9"><span class="nav-number">2.</span> <span class="nav-text">介紹</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%84%AA%E9%BB%9E"><span class="nav-number">3.</span> <span class="nav-text">優點</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BC%BA%E9%BB%9E"><span class="nav-number">4.</span> <span class="nav-text">缺點</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E7%94%A8Clean-Coder%E7%9A%84%E6%96%B9%E5%BC%8F%E5%8E%BB%E9%9D%A2%E5%B0%8D"><span class="nav-number">5.</span> <span class="nav-text">如何用Clean Coder的方式去面對</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8F%90%E5%8D%87%E8%87%AA%E8%BA%AB%E5%83%B9%E5%80%BC"><span class="nav-number">5.1.</span> <span class="nav-text">提升自身價值</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="nav-number">6.</span> <span class="nav-text">參考資料</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">KenHuang</p>
+  <div class="site-description" itemprop="description">Hi 我是 Ken, 是個後端工程師</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">44</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">22</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">41</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/KenHuangTW" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;KenHuangTW" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://kenhuangtw.github.io/2023/09/27/IronDay27/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="KenHuang">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="窩不知道">
+      <meta itemprop="description" content="Hi 我是 Ken, 是個後端工程師">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="【Day - 27】開發模式 - 隕石開發 | 窩不知道">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          【Day - 27】開發模式 - 隕石開發
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+
+      <time title="創建時間：2023-09-27 00:43:46" itemprop="dateCreated datePublished" datetime="2023-09-27T00:43:46+08:00">2023-09-27</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新於</span>
+      <time title="修改時間：2023-09-28 01:08:24" itemprop="dateModified" datetime="2023-09-28T01:08:24+08:00">2023-09-28</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分類於</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/2023%E9%90%B5%E4%BA%BA%E8%B3%BD/" itemprop="url" rel="index"><span itemprop="name">2023鐵人賽</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2023/09/27/IronDay27/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2023/09/27/IronDay27/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>文章同步於<a target="_blank" rel="noopener" href="https://ithelp.ithome.com.tw/articles/10329061">it邦</a></p>
+<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>鐵人賽來到最後3天了，我想講開發模式<br>這和程式會不會跑有什麼關係，當然有，關係可大了</p>
+<p>當你沒有思考過開發模式的時候，就很容易讓軟體開發出現問題<br>例如說：我今天走一步算一步，我就直接下去寫</p>
+<p>結果發現寫出來的和業主、PM、市場需要的產品完全不同<br>此時你會面臨幾個選項</p>
+<ol>
+<li>全部重來，但這代表你的交付時間只會延長，有簽約的狀況下還會違約</li>
+<li>硬著頭皮交差，如此一來就是損失商譽</li>
+<li><del>人生重來</del></li>
+</ol>
+<p>這兩者似乎都不是我們樂見的</p>
+<p>那又要如何選擇我們要的模式呢，就在接下來的文章介紹<br>今天先來輕鬆的介紹，惡名昭彰的隕石開發</p>
+<span id="more"></span>
+
+<h1 id="介紹"><a href="#介紹" class="headerlink" title="介紹"></a>介紹</h1><p>從前從前有一個工程師，他叫小明<br>他花了1個月的時間，把某個系統建構完成</p>
+<p>此時某位荷包蛋，我們稱它為蛋蛋君<br>蛋蛋君跟小明說：「小明阿，我發現我需求對錯了，你要把A功能整個改掉重做」<br>…說明需求…<br>小明：「可是這會涉及到很多的層面，這樣子是連核心的業務邏輯都不同了，規格書當初不是這樣…」<br>蛋蛋君：「不行，我就是需要，還有我們只有３天的時間，我已經說３天後我要交給客戶了，你一定要改出來，就這樣」<br>然後蛋蛋君就走人了</p>
+<p>1天後…<br>蛋蛋君：「小明阿，我需要幫某個網站多加一個功能，不難」<br>…說明需求…<br>小明：「這個功能涉及的層面很廣，不是說改…」<br>蛋蛋君：「照我說的做就對了，還有明天就要！交不出來就直接扣考績！還有A功能也要交出來，我跟客戶掛保證說明天就要了！」<br>小明：「不是說三天…」<br>蛋蛋君：「有時間廢話還不快點做事，我不管你怎樣做，你就是要做出來，另外這樣不能報加班，讓我看到你報加班，你連年終都不用領了。」</p>
+<p>隔天…<br>小明：「好了，我趕出來了，我在公司做到凌晨三點才走人」<br>蛋蛋君：「慢死了，你是不是沒什麼能力阿，快點走，我不想看到你。」<br>然後蛋蛋君轉頭直接跟客戶說：「是，這些都是你要的功能，在我的領導之下，雖然晚了一點，但我還是交付給您」<br>小明：#$%$#%^</p>
+<p>我們可以看到，規格書的需求被破壞、臨時的插件這些都是隕石<br>莫名其妙有個神仙從天上砸隕石下來<br>再拿你的心血說這是他的功勞</p>
+<p>更慘一點，後續還是要叫你加上其他功能<br>這就是<strong>隕石開發</strong></p>
+<h1 id="優點"><a href="#優點" class="headerlink" title="優點"></a>優點</h1><p>我條列以下優點</p>
+<ol>
+<li>逼出你個人的極限，不過高機率寫爛扣</li>
+<li>證明參與該開發模型的員工，通常CP值都非常高</li>
+</ol>
+<h1 id="缺點"><a href="#缺點" class="headerlink" title="缺點"></a>缺點</h1><p>我想應該是會折壽吧</p>
+<h1 id="如何用Clean-Coder的方式去面對"><a href="#如何用Clean-Coder的方式去面對" class="headerlink" title="如何用Clean Coder的方式去面對"></a>如何用Clean Coder的方式去面對</h1><p>不講幹話了<br>工作上就是會有那麼多無理的要求，身為一個專業人員，確實是該將公司的利益視同為自己的利益</p>
+<p>基本上身為一個專業人員，就必須從中找出良好的解方，時間趕沒錯，但還是不能像爛架構妥協<br>舉個例子：<br>約莫我在寫這篇文章的前幾天，我才被要求說要改某個核心功能<br>PM說的倒是簡單，但真的這麼做，我就必須要資料表中加入8個欄位<br>但受限於我們使用的套件，跟資料庫格式設計非常有關連，且又會影響到顯示，所以這件事其實沒有那麼容易</p>
+<p>這個欄位你就想像是，我有一個資料表示用來儲存學生的資訊，而這8個欄位儲存的是他們考試的成績<br>所以哪天他們要多考一科要在紀錄上去你就要再多開一個Column<br>大概是這個概念</p>
+<p>於是乎我就必須幫自己想個解套的方法<br>後來我找了各種文章、GitHub issue想出了一個能夠符合他們的需求，又可以保持資料表的彈性不違反正規化的作法</p>
+<p>當然啦，如果說他們只給幾小時，我可能也沒時間找了。<br>但我們還是要盡力的去說明各種做法的利弊，<strong>至少盡到告知的義務</strong></p>
+<h2 id="提升自身價值"><a href="#提升自身價值" class="headerlink" title="提升自身價值"></a>提升自身價值</h2><p>這一切聽起來都不合理<br>但仔細想想，也是我們選擇這間公司的</p>
+<p>不如思考，為什麼我們會在這個地方<br>所以，多多面試、刷題、做side project、讀書<br>身為一個Clean Coder當然是找專業的公司囉</p>
+<h1 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h1><p><a target="_blank" rel="noopener" href="https://eiki.hatenablog.jp/entry/meteo_fall">メテオフォール型開発</a><br><a target="_blank" rel="noopener" href="https://ithelp.ithome.com.tw/articles/10198394">轉載好文:隕石開發法</a></p>
+<div>
+    <script type="text/javascript">
+    document.write(
+        "<iframe scrolling='no' frameborder='0' sandbox='allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox allow-storage-access-by-user-activation' style='height: 212px; width: 100%;' src='https://button.like.co/in/embed/wtf81905/button?referrer=" +
+        encodeURIComponent(location.href.split("?")[0].split("#")[0]) + "'></iframe>");
+    </script>
+</div>
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Software-Development/" rel="tag"># Software Development</a>
+              <a href="/tags/Software-Development-Methodology/" rel="tag"># Software Development Methodology</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/09/26/IronDay26/" rel="prev" title="【Day-26】淺談DI - 可以嘗試不在function裡面建立物件">
+                  <i class="fa fa-angle-left"></i> 【Day-26】淺談DI - 可以嘗試不在function裡面建立物件
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2023/09/28/IronDay28/" rel="next" title="【Day-28】開發模式 - 瀑布開發">
+                  【Day-28】開發模式 - 瀑布開發 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  <div class="comments" id="disqus_thread">
+    <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+  </div>
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">KenHuang</span>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="回到頂端">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<script class="next-config" data-name="disqus" type="application/json">{"enable":true,"shortname":"KenH-TW","count":true,"i18n":{"disqus":"zh_TW"}}</script>
+<script src="/js/third-party/comments/disqus.js" defer></script>
+
+</body>
+</html>

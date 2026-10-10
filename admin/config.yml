@@ -1,0 +1,59 @@
+# yaml-language-server: $schema=https://unpkg.com/@sveltia/cms/schema/sveltia-cms.json
+# Sveltia CMS 設定：https://sveltiacms.app/en/docs
+# 存檔會直接 commit 到 main，GitHub Actions 再自動 build 並部署。
+
+backend:
+  name: github
+  repo: KenHuangTW/blog
+  branch: main
+  # 目前只用 Personal Access Token 登入；之後架好 OAuth（Sveltia CMS Authenticator）
+  # 再加上 base_url 並改成 [oauth, token]
+  auth_methods: [token]
+
+# 沿用既有檔名風格（例如 IronDay1、Codewars-RGB-Use-Swift），不轉小寫
+slug:
+  encoding: ascii
+  lowercase: false
+
+# 共用圖庫；文章內的圖片則放在各篇的 asset folder（見下方 collection 設定）
+media_folder: source/images
+public_folder: /images
+
+collections:
+  - name: posts
+    label: 文章
+    label_singular: 文章
+    folder: source/_posts
+    format: yaml-frontmatter
+    extension: md
+    create: true
+    # 檔名就是網址的 :title，只在新增時輸入，之後不給改以免舊網址失效
+    slug:
+      editable: [create]
+      hint: 網址用的檔名，例如 IronDay31 或 Redis-Cache-Intro
+      pattern: ['^[A-Za-z0-9][A-Za-z0-9-]*$', '只能用英文字母、數字和 -']
+    # post_asset_folder: true → 圖片存到 source/_posts/<檔名>/，內文以 ![](xxx.png) 引用
+    media_folder: '{{filename}}'
+    public_folder: ''
+    sortable_fields:
+      fields: [date, updated, title]
+      default:
+        field: date
+        direction: descending
+    fields:
+      - { label: 標題, name: title, widget: string }
+      - label: 發布時間
+        name: date
+        widget: datetime
+        format: YYYY-MM-DD HH:mm:ss
+        default: '{{now}}'
+      - label: 更新時間
+        name: updated
+        widget: datetime
+        format: YYYY-MM-DD HH:mm:ss
+        auto_now: true
+        hint: 存檔時自動更新
+      - { label: 分類, name: categories, widget: list }
+      - { label: 標籤, name: tags, widget: list }
+      # 預設用原始 Markdown 編輯，避免所見即所得模式改寫既有排版
+      - { label: 內文, name: body, widget: markdown, modes: [raw, rich_text] }

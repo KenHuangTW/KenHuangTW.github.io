@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 8.1.2">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"kenhuangtw.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.29.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"base16/tomorrow","dark":"base16/tomorrow"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜尋...","empty":"我們無法找到任何有關 ${query} 的搜索結果","hits_time":"找到 ${hits} 個搜索結果（用時 ${time} 毫秒）","hits":"找到 ${hits} 個搜索結果"},"path":"/search.json","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="文章同步於it邦 前言昨天介紹了一些比較有關程式碼部分都是跟Code比較有關的 今天會來介紹比較是設計面的問題也就是Clean Code的羽化">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【Day-4】Clean Code(中)">
+<meta property="og:url" content="https://kenhuangtw.github.io/2023/09/04/IronDay4/index.html">
+<meta property="og:site_name" content="窩不知道">
+<meta property="og:description" content="文章同步於it邦 前言昨天介紹了一些比較有關程式碼部分都是跟Code比較有關的 今天會來介紹比較是設計面的問題也就是Clean Code的羽化">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2023-09-03T18:40:33.000Z">
+<meta property="article:modified_time" content="2023-09-03T18:47:03.000Z">
+<meta property="article:author" content="KenHuang">
+<meta property="article:tag" content="Clean Code">
+<meta property="article:tag" content="Software Development">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://kenhuangtw.github.io/2023/09/04/IronDay4/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-TW","comments":true,"permalink":"https://kenhuangtw.github.io/2023/09/04/IronDay4/","path":"2023/09/04/IronDay4/","title":"【Day-4】Clean Code(中)"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>【Day-4】Clean Code(中) | 窩不知道</title>
+  
+
+
+
+
+
+
+
+
+  
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script><script src="/js/bookmark.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/js/third-party/search/local-search.js" defer></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">窩不知道</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜尋" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>關於</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分類</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜尋
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜尋..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BE%BD%E5%8C%96"><span class="nav-number">2.</span> <span class="nav-text">羽化</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B0%A1%E5%96%AE%E8%A8%AD%E8%A8%88%E5%AE%88%E5%89%87-1-%E5%9F%B7%E8%A1%8C%E5%AE%8C%E6%89%80%E6%9C%89%E6%B8%AC%E8%A9%A6"><span class="nav-number">2.1.</span> <span class="nav-text">簡單設計守則 1 : 執行完所有測試</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B0%A1%E5%96%AE%E8%A8%AD%E8%A8%88%E5%AE%88%E5%89%87-2-4-%E7%A8%8B%E5%BC%8F%E9%87%8D%E6%A7%8B"><span class="nav-number">2.2.</span> <span class="nav-text">簡單設計守則 2~4 : 程式重構</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B2%92%E6%9C%89%E9%87%8D%E8%A4%87%E7%9A%84%E9%83%A8%E5%88%86"><span class="nav-number">2.2.1.</span> <span class="nav-text">沒有重複的部分</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A1%A8%E9%81%94%E7%A8%8B%E5%BC%8F%E8%A8%AD%E8%A8%88%E5%B8%AB%E7%9A%84%E6%9C%AC%E6%84%8F"><span class="nav-number">2.2.2.</span> <span class="nav-text">表達程式設計師的本意</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%80%E5%B0%8F%E5%8C%96%E9%A1%9E%E5%88%A5%E5%92%8C%E6%96%B9%E6%B3%95%E7%9A%84%E6%95%B8%E9%87%8F"><span class="nav-number">2.2.3.</span> <span class="nav-text">最小化類別和方法的數量</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%B5%90%E8%AA%9E"><span class="nav-number">3.</span> <span class="nav-text">結語</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="nav-number">4.</span> <span class="nav-text">參考資料</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">KenHuang</p>
+  <div class="site-description" itemprop="description">Hi 我是 Ken, 是個後端工程師</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">44</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">22</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">41</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/KenHuangTW" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;KenHuangTW" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://kenhuangtw.github.io/2023/09/04/IronDay4/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="KenHuang">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="窩不知道">
+      <meta itemprop="description" content="Hi 我是 Ken, 是個後端工程師">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="【Day-4】Clean Code(中) | 窩不知道">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          【Day-4】Clean Code(中)
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+      
+
+      <time title="創建時間：2023-09-04 02:40:33 / 修改時間：02:47:03" itemprop="dateCreated datePublished" datetime="2023-09-04T02:40:33+08:00">2023-09-04</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分類於</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/2023%E9%90%B5%E4%BA%BA%E8%B3%BD/" itemprop="url" rel="index"><span itemprop="name">2023鐵人賽</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2023/09/04/IronDay4/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2023/09/04/IronDay4/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>文章同步於<a target="_blank" rel="noopener" href="https://ithelp.ithome.com.tw/articles/10314866">it邦</a></p>
+<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>昨天介紹了一些比較有關程式碼部分<br>都是跟Code比較有關的</p>
+<p>今天會來介紹比較是設計面的問題<br>也就是Clean Code的<strong>羽化</strong></p>
+<span id="more"></span>
+
+<h1 id="羽化"><a href="#羽化" class="headerlink" title="羽化"></a>羽化</h1><p>開頭我們先引用書中的說法</p>
+<blockquote>
+<p>根據Kent的說法，若遵循下列守則，一個設計就可以說是「簡單的」</p>
+<ul>
+<li>執行完所有測試</li>
+<li>沒有重複的部分</li>
+<li>表達程式設計師的本意</li>
+<li>最小化類別和方法的數量</li>
+</ul>
+<p>這些守則，根據重要性來排序<br>-Clean Code P.190</p>
+</blockquote>
+<h2 id="簡單設計守則-1-執行完所有測試"><a href="#簡單設計守則-1-執行完所有測試" class="headerlink" title="簡單設計守則 1 : 執行完所有測試"></a>簡單設計守則 1 : 執行完所有測試</h2><p>當我們的系統設計得再好，如果沒有辦法驗證系統是否能夠如預期般運作，那一切都是紙上談兵。</p>
+<p>所以必須全面的執行測試，並且能夠在<strong>所有的時間</strong>通過<strong>所有的測試</strong><br>這段話看似簡單，但如果我們沒有辦法測試，那又如何證明這些能夠運作</p>
+<p>緊密耦合的程式碼，只會造成測試撰寫的困難。<br>當我們在撰寫測試時，我們就會用越多<strong>依賴反轉的原則(DIP)<strong>也會用更多</strong>相依注入(Dependency injection)</strong>、<strong>介面(interface)</strong>、<strong>抽象概念</strong>之類的工具，來降低耦合度</p>
+<p>舉個例子</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">create_user</span>(<span class="params">user_name: <span class="built_in">str</span>, user_password: <span class="built_in">str</span></span>) -&gt; <span class="built_in">bool</span>:</span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">len</span>(user_name) &lt; <span class="number">6</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">    <span class="keyword">elif</span> <span class="built_in">len</span>(user_password) &lt; <span class="number">8</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">    </span><br><span class="line">    user_group = some_user_model.get_all_user()</span><br><span class="line">    <span class="keyword">for</span> user <span class="keyword">in</span> user_group:</span><br><span class="line">        <span class="keyword">if</span> user.user_name == user_name:</span><br><span class="line">            <span class="keyword">return</span> false</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> <span class="literal">True</span></span><br></pre></td></tr></table></figure>
+<p>這個案例我們可以看到，這些已經都把所有建立使用者的邏輯放在<code>create_user</code>這個function上<br>這會有幾個問題</p>
+<ul>
+<li>無法<strong>獨立測試</strong>驗證、確認使用者是否存在的邏輯是否正確，這會導致debug時間太長</li>
+<li>當我的驗證邏輯改變的時候，我就要在我的主流程變更程式碼，這會導致如果有複數個相通邏輯的地方都要一併變更</li>
+</ul>
+<p>這個function的耦合度就太高了，所以我們可以把它拆解為各種不同的function以符合單一職責原則(SRP)</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">create_user</span>(<span class="params">user_name: <span class="built_in">str</span>, user_password: <span class="built_in">str</span></span>) -&gt; <span class="built_in">bool</span>:</span><br><span class="line">    is_verification_successful = some_validate_model.is_validate_user_data_successful(user_name, user_password)</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> is_verification_successful:</span><br><span class="line">        <span class="keyword">return</span> false</span><br><span class="line">    </span><br><span class="line">    has_user = some_user_model.get_user(user_name, user_password)</span><br><span class="line">    <span class="keyword">if</span> has_user:</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> <span class="literal">True</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="簡單設計守則-2-4-程式重構"><a href="#簡單設計守則-2-4-程式重構" class="headerlink" title="簡單設計守則 2~4 : 程式重構"></a>簡單設計守則 2~4 : 程式重構</h2><p>也就是對應最後三點</p>
+<ul>
+<li>沒有重複的部分</li>
+<li>表達程式設計師的本意</li>
+<li>最小化類別和方法的數量</li>
+</ul>
+<h3 id="沒有重複的部分"><a href="#沒有重複的部分" class="headerlink" title="沒有重複的部分"></a>沒有重複的部分</h3><p>延續上面寫的，如果我們今天不只有使用者(user)需要建立，我們也需要建立管理員(admin)<br>如果說他們都使用同一個驗證邏輯<br>那我們就更不該把驗證邏輯寫在create的function底下<br>更應該拆成一個獨立的function提供測試以及使用</p>
+<h3 id="表達程式設計師的本意"><a href="#表達程式設計師的本意" class="headerlink" title="表達程式設計師的本意"></a>表達程式設計師的本意</h3><p>很多方法都可以達到這點，像是良好的命名習慣、讓function以及class簡短、寫單元測試等等<br>這些都可以達到<br>但是最重要最重要的事情就是<strong>嘗試</strong><br>有可能下一個看code的就是我們自己，總不能看不懂我們自己寫的東西吧<br>所以就更不能只能讓程式停留在只要能跑就好的階段<br>而是<strong>大家都要看的懂</strong></p>
+<blockquote>
+<p><em><strong>Explicit is better than implicit.</strong></em><br><em><strong>Simple is better than complex.</strong></em><br><em><strong>Complex is better than complicated.</strong></em><br>-The Zen Of Python</p>
+</blockquote>
+<h3 id="最小化類別和方法的數量"><a href="#最小化類別和方法的數量" class="headerlink" title="最小化類別和方法的數量"></a>最小化類別和方法的數量</h3><p>這應該是我覺得最困難達到的，這個很容易在過度設計跟保有彈性之間取得平衡<br>幸好這條守則比起其他的手則相對不重要，應該優先遵守其他的守則。</p>
+<p>這條守則我認為和第一條有些相關，當我們沒有什麼重複的部分，自然類別和方法也會減少一些。</p>
+<h1 id="結語"><a href="#結語" class="headerlink" title="結語"></a>結語</h1><p>我原本還想講平行化的，但我發現我已經寫太多了，再寫下去就太滿了<br>平行化就交給你們去看吧<br>我們明天見</p>
+<h1 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h1><p>Clean Code(ch.12)</p>
+<div>
+    <script type="text/javascript">
+    document.write(
+        "<iframe scrolling='no' frameborder='0' sandbox='allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox allow-storage-access-by-user-activation' style='height: 212px; width: 100%;' src='https://button.like.co/in/embed/wtf81905/button?referrer=" +
+        encodeURIComponent(location.href.split("?")[0].split("#")[0]) + "'></iframe>");
+    </script>
+</div>
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Software-Development/" rel="tag"># Software Development</a>
+              <a href="/tags/Clean-Code/" rel="tag"># Clean Code</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/09/03/IronDay3/" rel="prev" title="【Day-3】Clean Code(上)">
+                  <i class="fa fa-angle-left"></i> 【Day-3】Clean Code(上)
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2023/09/05/IronDay5/" rel="next" title="【Day-5】Clean Code(下)">
+                  【Day-5】Clean Code(下) <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  <div class="comments" id="disqus_thread">
+    <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+  </div>
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">KenHuang</span>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="回到頂端">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<script class="next-config" data-name="disqus" type="application/json">{"enable":true,"shortname":"KenH-TW","count":true,"i18n":{"disqus":"zh_TW"}}</script>
+<script src="/js/third-party/comments/disqus.js" defer></script>
+
+</body>
+</html>
